@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="zxx">
+ <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Watch shop | eCommers</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{!-- <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="public/assets_user/img/favicon.ico"> --}}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- CSS here -->
+        <link rel="stylesheet" href="/assets_user/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/assets_user/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="/assets_user/css/flaticon.css">
+        <link rel="stylesheet" href="/assets_user/css/slicknav.css">
+        <link rel="stylesheet" href="/assets_user/css/animate.min.css">
+        <link rel="stylesheet" href="/assets_user/css/magnific-popup.css">
+        <link rel="stylesheet" href="/assets_user/css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="/assets_user/css/themify-icons.css">
+        <link rel="stylesheet" href="/assets_user/css/slick.css">
+        <link rel="stylesheet" href="/assets_user/css/nice-select.css">
+        <link rel="stylesheet" href="/assets_user/css/style.css">
+
+
+</head>
+<body>
+    
+
+     {{> user_Header}}
+      <main>
+        <!-- Hero Area Start-->
+        <div class="slider-area ">
+            <div class="single-slider slider-height2 d-flex align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap text-center">
+
+                                {{!-- {{#if data}}
+                                <h2>{{data}}</h2>
+                                {{/if}} --}}
+                              
+                                <h2>{{cat}}</h2>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Hero Area End-->
+        <!-- Latest Products Start -->
+        <section class="popular-items latest-padding">
+            <div class="container">
+                <div class="row product-btn justify-content-between mb-40">
+                    <div class="properties__button">
+                        <!--Nav Button  -->
+                      
+                         <nav>   
+                                                                              
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                           
+                                   <a class="nav-item nav-link active"  href="/allCollection"> All Collection </a>
+                                 {{#each category}} 
+                                {{!-- <a class="nav-item nav-link active" id="nav-home-tab"  href="/allCollection" role="tab" aria-controls="nav-home" >All Collection</a>
+                                <a class="nav-item nav-link" id="nav-home-tab"  href="/casualstore" role="tab" aria-controls="nav-profile" > Casuals Collections</a>
+                                <a class="nav-item nav-link" id="nav-home-tab"  href="/formalstore" role="tab" aria-controls="nav-contact" > Formals Collections </a> --}}
+                                <a class="nav-item nav-link active"  href="/categoryproduct/{{this.category}}"> {{this.category}} </a>
+                                {{!-- <a class="nav-item nav-link active" href="/casualstore"> casual </a>
+                                <a class="nav-item nav-link active" href="/formalstore"> formal </a> --}}
+                                 {{/each}}
+                            </div>
+                         
+                        </nav> 
+
+
+
+                          
+                        <!--End Nav Button  -->
+                    </div>
+                    <!-- Grid and List view -->
+                    <div class="grid-list-view">
+                    </div>
+                    <!-- Select items -->
+                    {{!-- <div class="select-this">
+                        <form action="#">
+                            <div class="select-itms">
+                                <select name="select" id="select1">
+                                    <option value="">40 per page</option>
+                                    <option value="">50 per page</option>
+                                    <option value="">60 per page</option>
+                                    <option value="">70 per page</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div> --}}
+                </div>
+                <!-- Nav Card -->
+                <div class="tab-content" id="nav-tabContent">
+                    <!-- card one -->
+
+                    {{!-- {{#each product}} --}}
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="row">
+                      
+                            {{#each product}}
+                            {{#if this.display}}
+                            {{else}}
+                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 h-25">
+                                <div class="single-popular-items mb-50 text-center">
+                                    <div class="popular-img">
+                                      <a href="/productdetails/{{this.productname}}"> <img src="{{this.imagepath.[0]}}" alt="" class="h-50"></a> 
+                                        <div class="img-cap">
+                                            <span><a href="/addtocart/{{this.productname}}">Add to cart</a></span>
+                                        </div>
+                                        <div class="favorit-items">
+                                           
+                                            <a href="/addwishlist/{{this.productname}}"> <span class="flaticon-heart"></span></a>
+                                        </div>
+                                    </div>
+                                    <div class="popular-caption">
+                                        {{!-- <p>{{{this.productname}}}---Ssdkfjklsdjf</p> --}}
+                                        <h3><a href="/productdetails/{{this.productname}}">{{this.productname}}</a></h3>
+                                        {{!-- <h3><a href="/productdetails/{{encodeURIComponent this.productname}}">{{this.productname}}</a></h3> --}}
+
+                                        <span>{{this.price}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/if}}
+
+                          {{/each}}
+                        </div>
+                    </div>
+                    <!-- Card two -->
+                    
+                    <!-- Card three -->
+                    
+
+                    {{!-- {{/each}} --}}
+                </div>
+                <!-- End Nav Card -->
+            </div>
+        </section>
+        <!-- Latest Products End -->
+        <!--? Shop Method Start-->
+        <div class="shop-method-area">
+            <div class="container">
+                <div class="method-wrapper">
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-xl-4 col-lg-4 col-md-6">
+                            <div class="single-method mb-40">
+                                <i class="ti-package"></i>
+                                <h6>Free Shipping Method</h6>
+                                <p>aorem ixpsacdolor sit ameasecur adipisicing elitsf edasd.</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-6">
+                            <div class="single-method mb-40">
+                                <i class="ti-unlock"></i>
+                                <h6>Secure Payment System</h6>
+                                <p>aorem ixpsacdolor sit ameasecur adipisicing elitsf edasd.</p>
+                            </div>
+                        </div> 
+                        <div class="col-xl-4 col-lg-4 col-md-6">
+                            <div class="single-method mb-40">
+                                <i class="ti-reload"></i>
+                                <h6>Secure Payment System</h6>
+                                <p>aorem ixpsacdolor sit ameasecur adipisicing elitsf edasd.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Shop Method End-->
+    </main>
+     {{> user_Footer}}
+    <!--? Search model Begin -->
+    <div class="search-model-box">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-btn">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Searching key.....">
+            </form>
+        </div>    
+    </div>
+    <!-- Search model end -->
+    
+    <!-- JS here -->
+
+    <script src="./assets_user/js/vendor/modernizr-3.5.0.min.js"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="./assets_user/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="./assets_user/js/popper.min.js"></script>
+    <script src="./assets_user/js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="./assets_user/js/jquery.slicknav.min.js"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="./assets_user/js/owl.carousel.min.js"></script>
+    <script src="./assets_user/js/slick.min.js"></script>
+
+    <!-- One Page, Animated-HeadLin -->
+    <script src="./assets_user/js/wow.min.js"></script>
+    <script src="./assets_user/js/animated.headline.js"></script>
+    
+    <!-- Scroll up, nice-select, sticky -->
+    <script src="./public/assets_user/js/jquery.scrollUp.min.js"></script>
+    <script src="./public/assets_user/js/jquery.nice-select.min.js"></script>
+    <script src="./public/assets_user/js/jquery.sticky.js"></script>
+    <script src="./public/assets_user/js/jquery.magnific-popup.js"></script>
+
+    <!-- contact js -->
+    <script  src="./public/assets_user/js/contact.js"></script>
+    <script src="./public/assets_user/js/jquery.form.js"></script>
+    <script src="./public/assets_user/js/jquery.validate.min.js"></script>
+    <script src="./public/assets_user/js/mail-script.js"></script>
+    <script src="./public/assets_user/js/jquery.ajaxchimp.min.js"></script>
+    
+    <!-- Jquery Plugins, main Jquery -->	
+    <script src="./public/assets_user/js/plugins.js"></script>
+    <script src="./public/assets_user/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+    
+</html>

@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="zxx">
+
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Shoe shop | eCommers</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{!--
+    <link rel="manifest" href="site.webmanifest"> --}}
+    {{!--
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico"> --}}
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/assets_user/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets_user/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets_user/css/flaticon.css">
+    <link rel="stylesheet" href="/assets_user/css/slicknav.css">
+    <link rel="stylesheet" href="/assets_user/css/animate.min.css">
+    <link rel="stylesheet" href="/assets_user/css/magnific-popup.css">
+    <link rel="stylesheet" href="/assets_user/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/assets_user/css/themify-icons.css">
+    <link rel="stylesheet" href="/assets_user/css/slick.css">
+    <link rel="stylesheet" href="/assets_user/css/nice-select.css">
+    <link rel="stylesheet" href="/assets_user/css/style.css">
+
+
+
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .profile-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        .profile-details {
+            text-align: center;
+        }
+
+        .profile-details p {
+            margin: 10px 0;
+        }
+
+        .name {
+            transform: translate(-240px);
+        }
+
+        .name1 {
+            transform: translate(-230px);
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+    {{> user_Header}}
+
+    <main>
+        <!-- Hero Area Start-->
+        <div class="slider-area ">
+            <div class="single-slider slider-height2 d-flex align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap text-center">
+                                <h2>Profile</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Hero Area End-->
+
+
+
+
+
+
+
+
+        <!--================Single Product Area =================-->
+
+
+        <div class="product_image_area  ">
+            <div class="container">
+
+                {{!-- <div class="row ">
+                    <div class="col-lg-12 d-flex align-items-center justify-content-center ">
+
+                        <div class="product_img_slide owl-carousel h-50 w-50">
+                            <div class="single_product_img">
+                                <img src="{{productD.imagepath.[0]}}" alt="#" class="img-fluid w-7">
+
+                            </div>
+                            <div class="single_product_img">
+                                <img src="{{productD.imagepath.[1]}}" alt="#" class="img-fluid">
+
+                            </div>
+                            <div class="single_product_img">
+                                <img src="{{productD.imagepath.[2]}}" alt="#" class="img-fluid">
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>--}}
+
+
+                {{!-- <div class="row">
+                    <div class="col-lg-12 text-center d-flex justify-content-center">
+                        <div class="single_product_text ">
+                            <h3> {{productD.productname}}</h3>
+
+                            <p>
+
+                                {{productD.description}}
+                            </p>
+                            <div class="card_area">
+                                <div class="product_count_area">
+                                    <p>Quantity</p>
+                                    <div class="product_count d-inline-block">
+                                        <span class="product_count_item inumber-decrement"> <i
+                                                class="ti-minus"></i></span>
+                                        <input class="product_count_item input-number" type="text" value="1" min="0"
+                                            max="10">
+                                        <span class="product_count_item number-increment"> <i
+                                                class="ti-plus"></i></span>
+                                    </div>
+                                    <p>Rs.{{productD.price}}</p>
+                                </div>
+                                <div class="add_to_cart">
+                                    <a href="#" class="btn_3">add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+
+
+
+
+                <div class="container profile-container">
+                    {{!-- <div class="text-center">
+                        <img src="https://via.placeholder.com/150" alt="Profile Image" class="profile-image">
+                    </div> --}}
+                    {{!-- <div class="profile-details">
+                        <h1>User Profile</h1>
+                        <p><strong>Name:</strong> John Doe</p>
+                        <p><strong>Email:</strong> john.doe@example.com</p>
+                        <p><strong>Phone Number:</strong> (123) 456-7890</p>
+                        <p><strong>Age:</strong> 30</p>
+                        <p><strong>Address:</strong> 123 Main St, Cityville, Country</p>
+                    </div>
+                    <button type="button" class="btn btn-outline-primary mb-5"><a href="/useraddress">Saved
+                            Address</a></button>
+                </div> --}}
+
+
+
+
+                <div class="container mt-5 ">
+                    
+                    <div class="profile-details">
+
+                        <h1 class="mb-4">User Profile</h1>
+
+                        <form action="/updateProfile" method="post" class="needs-validation" novalidate>
+                            <div class="form-group">
+                                <label class="name" for="name"><strong>Name:</strong></label>
+                                <input type="text" id="name" name="name" class="form-control" value="{{userData.username}}"
+                                    readonly>
+                                <div class="invalid-feedback">Please enter your name.</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="name" for="email"><strong>Email:</strong></label>
+                                <input type="email" id="email" name="email" class="form-control" value="{{userData.email}}"
+                                    readonly>
+                                <div class="invalid-feedback">Please enter a valid email address.</div>
+
+                                
+                            </div>
+
+                            <div class="form-group">
+                                <label class="name" for="phone"><strong>Phone:</strong></label>
+                                <input type="tel" id="phone" name="phone" class="form-control"
+                                    value="{{userData.phonenumber}}" readonly>
+                                <div class="invalid-feedback">Please enter a valid phone number.</div>
+                            </div>
+
+                            {{!-- <div class="form-group">
+                                <label class="name" for="age"><strong>Age:</strong></label>
+                                <input type="number" id="age" name="age" class="form-control" value="30" required>
+                                <div class="invalid-feedback">Please enter your age.</div>
+                            </div> --}}
+                            {{#if userAddress.address}}
+
+                            <div class="form-group">
+                                <label class="name1" for="address"><strong>Address:</strong></label>
+                                {{!-- <textarea id="address" name="address" class="form-control" value="{{userAddress.housename}}" rows="4" required></textarea> --}}
+                                 <input type="tel" id="address" name="address" class="form-control" value="{{userAddress.address.housename}} {{userAddress.address.city}} {{userAddress.address.district}} {{userAddress.address.pincode}} {{userAddress.address.state}} {{userAddress.address.country}}" readonly>
+                                <div class="invalid-feedback">Please enter your address.</div>
+                            </div>
+                            {{/if}}
+                            {{!-- <button type="submit" class="btn btn-primary mt-3">Update Profile</button> --}}
+                           
+                        </form>
+                         {{!-- <a class="btn btn-danger" href="">Edit Profile</a> --}}
+                        
+                        
+                        
+                        {{#if userAddress}}
+                        <button type="button" class="btn btn-outline-primary mb-5 mt-3"><a href="/editprofile/">Edit Profile
+                        </a></button>
+                       
+                         {{else}}
+                         <button type="button" class="btn btn-outline-primary mb-5 mt-3"><a href="/addaddress">Add
+                        Address</a></button>
+                         {{/if}}
+                        <button type="button" class="btn btn-outline-primary mb-5 mt-3"><a href="/allcollection">Continue
+                        Shoping </a></button>
+
+                         <button type="button" class="btn btn-outline-primary mb-5 mt-3"><a href="/changepassword">Change Password
+                        </a></button>
+
+                        <button type="button" class="btn btn-outline-primary mb-5 mt-3"><a href="/userorders">Order History
+                        </a></button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--================End Single Product Area =================-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- subscribe part here -->
+        <section class="subscribe_part section_padding">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="subscribe_part_content">
+                            <h2>Get promotions & updates!</h2>
+                            <p>Seamlessly empower fully researched growth strategies and interoperable internal or
+                                “organic” sources credibly innovate granular internal .</p>
+                            <div class="subscribe_form">
+                                <input type="email" placeholder="Enter your mail">
+                                <a href="#" class="btn_1">Subscribe</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- subscribe part end -->
+    </main>
+
+
+    {{> user_Footer}}
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+    <!--? Search model Begin -->
+    <div class="search-model-box">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-btn">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Searching key.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search model end -->
+
+    <!-- JS here -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets_user/js/vendor/modernizr-3.5.0.min.js"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="/assets_user/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="/assets_user/js/popper.min.js"></script>
+    <script src="/assets_user/js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="/assets_user/js/jquery.slicknav.min.js"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="/assets_user/js/owl.carousel.min.js"></script>
+    <script src="/assets_user/js/slick.min.js"></script>
+
+    <!-- One Page, Animated-HeadLin -->
+    <script src="/assets_user/js/wow.min.js"></script>
+    <script src="/assets_user/js/animated.headline.js"></script>
+    <script src="/assets_user/js/jquery.magnific-popup.js"></script>
+
+    <!-- Scroll up, nice-select, sticky -->
+    <script src="/assets_user/js/jquery.scrollUp.min.js"></script>
+    <script src="/assets_user/js/jquery.nice-select.min.js"></script>
+    <script src="/assets_user/js/jquery.sticky.js"></script>
+
+    <!-- contact js -->
+    <script src="/assets_user/js/contact.js"></script>
+    <script src="/assets_user/js/jquery.form.js"></script>
+    <script src="/assets_user/js/jquery.validate.min.js"></script>
+    <script src="/assets_user/js/mail-script.js"></script>
+    <script src="/assets_user/js/jquery.ajaxchimp.min.js"></script>
+
+    <!-- Jquery Plugins, main Jquery -->
+    <script src="/assets_user/js/plugins.js"></script>
+    <script src="/assets_user/js/main.js"></script>
+
+    <!-- swiper js -->
+    <script src="/assets_user/js/swiper.min.js"></script>
+    <!-- swiper js -->
+    <script src="/assets_user/js/mixitup.min.js"></script>
+    <script src="/assets_user/js/jquery.counterup.min.js"></script>
+    <script src="/assets_user/js/waypoints.min.js"></script>
+
+</body>
+
+</html>

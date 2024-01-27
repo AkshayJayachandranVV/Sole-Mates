@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Breeze Admin</title>
+  <link rel="stylesheet" href="/assets_admin/vendors/mdi/css/materialdesignicons.min.css" />
+  <link rel="stylesheet" href="/assets_admin/vendors/flag-icon-css/css/flag-icon.min.css" />
+  <link rel="stylesheet" href="/assets_admin/vendors/css/vendor.bundle.base.css" />
+  <link rel="stylesheet" href="/assets_admin/vendors/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/assets_admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />
+  <link rel="stylesheet" href="/assets_admin/css/style.css" />
+  <link rel="shortcut icon" href="/assets_admin/images/favicon.png" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container-scroller">
+
+
+
+    {{!-- {{> admin_Sidebar}} --}}
+
+
+
+
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+      <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
+        <a class="sidebar-brand brand-logo" href="index.html"><img src="/assets_admin/images/logo.svg" alt="logo" /></a>
+        <a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="index.html"><img
+            src="/assets_admin/images/logo-mini.svg" alt="logo" /></a>
+      </div>
+      <ul class="nav">
+        <li class="nav-item nav-profile">
+          <a href="#" class="nav-link">
+            <div class="nav-profile-image">
+              <img src="/assets_admin/images/faces/face1.jpg" alt="profile" />
+              <span class="login-status online"></span>
+              <!--change to offline or busy as needed-->
+            </div>
+            <div class="nav-profile-text d-flex flex-column pr-3">
+              <span class="font-weight-medium mb-2">Henry Klein</span>
+              <span class="font-weight-normal">$8,753.00</span>
+            </div>
+            <span class="badge badge-danger text-white ml-3 rounded">3</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/dashboard">
+            <i class="mdi mdi-home menu-icon"></i>
+            <span class="menu-title">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/products">
+            <i class="mdi mdi-home menu-icon"></i>
+            <span class="menu-title">Products</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/users">
+            <i class="mdi mdi-contacts menu-icon"></i>
+            <span class="menu-title">Users</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/category">
+            <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+            <span class="menu-title">Category</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/orders">
+            <i class="mdi mdi-chart-bar menu-icon"></i>
+            <span class="menu-title">Orders</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/coupon">
+            <i class="mdi mdi-table-large menu-icon"></i>
+            <span class="menu-title">Coupon</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div class="container-fluid page-body-wrapper">
+      <div id="theme-settings" class="settings-panel">
+        <i class="settings-close mdi mdi-close"></i>
+        <p class="settings-heading">SIDEBAR SKINS</p>
+        <div class="sidebar-bg-options selected" id="sidebar-default-theme">
+          <div class="img-ss rounded-circle bg-light border mr-3"></div> Default
+        </div>
+        <div class="sidebar-bg-options" id="sidebar-dark-theme">
+          <div class="img-ss rounded-circle bg-dark border mr-3"></div> Dark
+        </div>
+        <p class="settings-heading mt-2">HEADER SKINS</p>
+        <div class="color-tiles mx-0 px-4">
+          <div class="tiles light"></div>
+          <div class="tiles dark"></div>
+        </div>
+      </div>
+
+
+
+      {{> admin_Header}}
+
+
+      <div class="main-panel">
+        <div class="content-wrapper pb-0">
+
+
+
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                {{!-- <th scope="col">#</th> --}}
+                <th scope="col">UserName</th>
+                <th scope="col">Date</th>
+                <th scope="col">Product</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+                <th scope="col">Payment</th>
+                <th scope="col">Delivery Status</th>
+                <th scope="col">Update</th>
+                <th scope="col">Remove</th>
+              </tr>
+            </thead>
+
+
+
+            {{#each orderValue}}
+            <tbody>
+              <form action="/admin/updatestatus?orderId={{this.orderId}}&proId={{this.productname}}" method="post">
+                <tr>
+                  <td>{{this.username}}</td>
+                  <td>{{formatDate this.orderdate}}</td>
+                  <td>{{this.productname}}</td>
+                  <td>{{this.quantity}}</td>
+                  <td>{{this.price}}</td>
+                  <td>COD</td>
+                  <td>
+                    <div class="form-group">
+                      <br>
+                      {{!-- <input type="text" name="category" placeholder="Category" class="form-control"> --}}
+                      {{!-- <label for="dog-names">Choose a dog name:</label> --}}
+                      {{#ifEquals this.status "CANCELLED"}}
+                      {{!-- <button class="btn btn-danger" onclick="return confirm('Do you want to cancell the oder')"> canceled</button> --}}
+                      <P style="color: RED;">CANCELLED</P>
+            {{!--         {{else}} --}}
+                      {{else ifEquals this.status "ORDER PLACED"}}
+                      <select class="btn btn-success" name="category" id="category-names">
+                        {{!-- <option value="ORDER PLACED"></option> --}}
+                        <option value="ORDER PLACED">{{this.status}}</option>
+                        <option value="ORDER SHIPPED">ORDER SHIPPED</option>
+                        <option value="OUT FOR DEIVERY">OUT FOR DEIVERY</option>
+                        <option value="DELVERED">DELVERED</option>
+                      </select>
+
+                      {{else ifEquals this.status "ORDER SHIPPED"}}
+                      <select class="btn btn-success" name="category" id="category-names">
+                        {{!-- <option value="ORDER PLACED">ORDER PLACED</option> --}}
+                        <option value="ORDER SHIPPED">ORDER SHIPPED</option>
+                        <option value="OUT FOR DEIVERY">OUT FOR DEIVERY</option>
+                        <option value="DELVERED">DELVERED</option>
+                       </select>
+                      {{else ifEquals this.status "OUT FOR DEIVERY"}}
+                      <select class="btn btn-success" name="category" id="category-names">
+                        {{!-- <option value="ORDER PLACED">ORDER PLACED</option> --}}
+                        {{!-- <option value="ORDER SHIPPED">ORDER SHIPPED</option> --}}
+                        <option value="OUT FOR DEIVERY">OUT FOR DEIVERY</option>
+                        <option value="DELVERED">DELVERED</option>
+                      </select>
+                      {{else ifEquals this.status "DELVERED"}}
+                      <select class="btn btn-success" name="category" id="category-names">
+                        <option value="DELVERED">DELVERED</option>  
+                        {{!-- <option value="formals">formals</option> --}}
+
+
+                      </select>
+                      {{/ifEquals }}
+                    </div>
+                  </td>
+                  <td>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                  </td>
+                  <td>
+                    {{!-- <button type="submit" class="btn btn-danger"><a style="text-decoration:"null"" href="/admin/removeorder/{{this.orderId}}">Delete</a></button> --}}
+                    {{!-- <a type="submit" class="btn btn-danger" href="/admin/removeorder/{{this.orderId}}">Remove</a> --}}
+             
+                      <a href="/admin/orderdetails?orderId={{this.orderId}}&proId={{this.productname}}">Order Details</a >
+                                  
+                  </td>
+                </tr>
+              </form>
+            </tbody>
+            {{/each}}
+
+
+          </table>
+
+
+
+        </div>
+        <!-- main-panel ends -->
+        {{> admin_Footer}}
+      </div>
+      <!-- page-body-wrapper ends -->
+
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="/assets_admin/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="/assets_admin/vendors/chart.js/Chart.min.js"></script>
+    <script src="/assets_admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="/assets_admin/vendors/flot/jquery.flot.js"></script>
+    <script src="/assets_admin/vendors/flot/jquery.flot.resize.js"></script>
+    <script src="/assets_admin/vendors/flot/jquery.flot.categories.js"></script>
+    <script src="/assets_admin/vendors/flot/jquery.flot.fillbetween.js"></script>
+    <script src="/assets_admin/vendors/flot/jquery.flot.stack.js"></script>
+    <script src="/assets_admin/vendors/flot/jquery.flot.pie.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="/assets_admin/js/off-canvas.js"></script>
+    <script src="/assets_admin/js/hoverable-collapse.js"></script>
+    <script src="/assets_admin/js/misc.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="/assets_admin/js/dashboard.js"></script>
+    <!-- End custom js for this page -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+      crossorigin="anonymous"></script>
+</body>
+
+</html>
