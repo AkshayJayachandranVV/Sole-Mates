@@ -33,6 +33,9 @@
             height: 80%;
         }
     </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -103,50 +106,58 @@
 
                                         </div> --}}
 
-                                        
+
 
                                         <span class="input-group-btn-vertical">
-                                            {{#ifNotEquals this.quantity "10"}}
+                                            {{!-- {{#ifNotEquals this.quantity "10"}} --}}
                                             <button class="btn btn-touchspin js-touchspin bootstrap-touchspin-up p-3 "
-                                                type="button" {{!--
-                                                onclick="quantityChange('{{this.product}}' ,'{{this.quentity}}',1)">
-                                                --}}
-                                                ><a href="/incrementquantity/{{this.productname}}">
-                                                    +
-                                                </a>
+                                                type="button"
+                                                onclick="updateProductQuantity('{{this.productname}}','{{this.price}}',{{this.quantity}},1)">
+                                                +
+                                                {{!-- ><a href="/incrementquantity/{{this.productname}}">
+
+                                                </a> --}}
                                             </button>
-                                            {{/ifNotEquals}}
+                                            {{!-- <button onclick="check()" style="color: black;">plus</button> --}}
+                                            {{!-- {{/ifNotEquals}} --}}
                                             <br>
                                             <br>
-                                          <p class="input-group form-control" id="countUpdate">{{this.quantity}}</p>
-                                          {{#ifNotEquals this.quantity "1"}}
+                                            <p class="input-group form-control" id="{{this.productname}}">
+                                                {{this.quantity}}</p>
+                                            {{!-- {{#ifNotEquals this.quantity "1"}} --}}
                                             <button class="btn btn-touchspin js-touchspin bootstrap-touchspin-down p-3"
-                                                type="button" {{!--
-                                                onclick="quantityChange('{{this.product}}' ,'{{this.quentity}}',-1)">
-                                                --}}
-                                                ><a href="/decrementquantity/{{this.productname}}">
-                                                    -
-                                                </a>
+                                                type="button"
+                                                onclick="updateProductQuantity('{{this.productname}}','{{this.price}}' ,{{this.quantity}},-1)">
+
+                                                {{!-- ><a href="/decrementquantity/{{this.productname}}">
+
+                                                </a> --}}
+                                                -
                                             </button>
-                                            {{/ifNotEquals}}
-                                           
-                                                     </span>
+                                            {{!-- {{/ifNotEquals}} --}}
+
+                                                     
+                                        </span>
                                     </td>
+
                                     <td><button class="btn btn-primary"><a
                                                 href="/removecart/{{this.productname}}">Remove</a></button>
                                     </td>
                                     <td>
-                                        {{multiply this.price this.quantity}}
+                                        <p id="total-{{this.productname}}">{{multiply this.price this.quantity}}</p>
                                     </td>
 
                                 </tr>
                             </tbody>
                             {{/each}}
+
                         </table>
 
                         <div class="total">
                             <label class="name" for="total"><strong>Total:</strong></label>
-                            <input type="Number" id="total" name="Number" class="form-control" value="{{totalAmount}}" readonly>
+                            {{!-- <input type="Number" id="totalAmount" name="Number" class="form-control"
+                                value="{{totalAmount}}" readonly> --}}
+                            <p id="totalAmount">{{totalAmount}}</p>
                         </div>
 
                     </div>
@@ -204,6 +215,51 @@
             emailerr.style.display = "none"
 
         }, 3000)
+    </script>
+
+
+    {{!--
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        // Use fetch to update the quantity in the database
+        function updateProductQuantity(productId, amount, quantity, count) {
+            fetch('/change-quentity', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    productId: productId,
+                    price: amount,
+                    newQuantity: quantity,
+                    count: count,
+
+                }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+
+                    // Update the quantity on the page after successful update
+
+                    //document.getElementById(productId).value = newQuantity;
+                    document.getElementById(`${productId}`).innerHTML = data.quantity;
+                    document.getElementById(`total-${productId}`).innerHTML = data.totalPrice;
+                    document.getElementById("totalAmount").innerHTML = data.totalAmount;
+                    console.log(data)
+                })
+                .catch(error => {
+                    console.error('Error updating quantity:', error);
+                });
+
+        }
+
     </script>
 
 

@@ -85,95 +85,111 @@
 
 
 
-
-
-
-
-
         <!--================Single Product Area =================-->
 
 
+        
+
+
         <div class="product_image_area  ">
+            
             <div class="container">
+                
 
                 <div class="container mt-5">
+
+                    
                     <h2>Order Details</h2>
+
                     {{!-- <p>{{productOrder}}</p> --}}
 
                     {{!-- {{#each productOrder}} --}}
 
                     <div class="row">
+
+                        {{#each productOrder}}
+
                         <div class="col-md-8">
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <img src="{{productOrder.image}}" alt="Product Image" style="height:500px">
+                                    <img src="{{this.image}}" alt="Product Image" style="height:500px">
                                     <br>
                                     <br>
-                                    <h4 class="card-title">Order ID:{{productOrder.orderId}} </h4>
-                                    <p class="card-text">Order Date: {{formatDate productOrder.orderdate}}</p>
-                                    <h6 class="card-title">Status: {{productOrder.status}} </h6>
+                                    <h4 class="card-title">Order ID:{{this.orderId}} </h4>
+                                    <p class="card-text">Order Date: {{formatDate this.orderdate}}</p>
+                                    <h6 class="card-title">Status: {{this.status}} </h6>
 
                                     <!-- Product List -->
                                     <h5 class="mt-4 mb-3">Products</h5>
                                     <ul class="list-group">
-                                        <li class="list-group-item">Product:{{productOrder.productname}} </li>
-                                         <li class="list-group-item">Quantity:{{productOrder.quantity   }} </li>
-                                        {{!-- <li class="list-group-item">Product: Smartphone | Quantity: 1 | Price: $800</li> --}}
+                                        <li class="list-group-item">Product:{{this.productname}} </li>
+                                        <li class="list-group-item">Quantity:{{this.quantity }} </li>
+                                        {{!-- <li class="list-group-item">Product: Smartphone | Quantity: 1 | Price:
+                                            $800</li> --}}
                                         <!-- Add more items as needed -->
                                     </ul>
 
                                     <!-- Total Price -->
-                                    <h5 class="mt-4">Total Price: {{productOrder.price}}</h5>
+                                    <h5 class="mt-4">Total Price: {{this.price}}</h5>
+                                </div>
+                                <div>
+
+
+                                    {{#ifEquals this.status "CANCELLED"}}
+                                    <h5 style="color: red;">Order Cancelled</h5>
+                                    {{else}}
+                                    <button class="btn btn-primary ml-200"><a
+                                            href="/cancelorder?orderId={{this.orderId}}&proId={{this.productname}}"
+                                            onclick="return confirm('Are you sure you want to Cancel')">Cancel</a></button>
+                                    {{/ifEquals }}
                                 </div>
                             </div>
                         </div>
+
+
+                        {{/each}}
+
+
+                         <div class="col-md-4 ">
+                            <div class="card mb-200">
+                                <div class="card-body">
+                                    <h5 class="card-title">Shipping Address</h5>
+                                    <p class="card-text">Name:{{productOrder.[0].username}}</p>
+                                    <p class="card-text">State:{{productOrder.[0].address.state}}</p>
+                                    <p class="card-text">City: {{productOrder.[0].address.city}}</p>
+                                    <p class="card-text">Housename: {{productOrder.[0].address.housename}}</p>
+                                </div>
+                            </div>
+
+
 
                         <!-- Additional Information (Billing/Shipping Address, etc.) -->
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Shipping Address</h5>
-                                    <p class="card-text">Name:{{productOrder.username}}</p>
-                                    <p class="card-text">State:{{productOrder.address.state}}</p>
-                                    <p class="card-text">City: {{productOrder.address.city}}</p>
-                                    <p class="card-text">Housename: {{productOrder.address.housename}}</p>
-                                </div>  
+
+
+
+
+                        {{!-- <div class="card mt-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Shipping Address</h5>
+                                <p class="card-text">Jane Doe</p>
+                                <p class="card-text">456 Second St</p>
+                                <p class="card-text">City: Othertown</p>
+                                <p class="card-text">Country: USA</p>
                             </div>
-
-                            {{!-- <div class="card mt-4">
-                                <div class="card-body">
-                                    <h5 class="card-title">Shipping Address</h5>
-                                    <p class="card-text">Jane Doe</p>
-                                    <p class="card-text">456 Second St</p>
-                                    <p class="card-text">City: Othertown</p>
-                                    <p class="card-text">Country: USA</p>
-                                </div>
-                            </div> --}}
-                        </div>
-                          
+                        </div> --}}
                     </div>
-                    {{!-- {{/each}} --}}
+                      
                 </div>
-
-
+                {{!-- {{/each}} --}}
             </div>
+
+
+        </div>
         </div>
 
 
 
         <!--================End Single Product Area =================-->
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

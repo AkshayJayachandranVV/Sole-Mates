@@ -5,6 +5,8 @@ const addressData = require("../../model/user_address")
 const cartData = require("../../model/user_cart")
 const orderData = require("../../model/user_Orders")
 
+const mongoose=require("mongoose")
+
 const displayCheckout = async (req, res) => {
 
 
@@ -12,7 +14,7 @@ const displayCheckout = async (req, res) => {
     console.log("displayCkeout")
 
     // let userAddressData=req.session.userAddress
-    const userAdd = await addressData.findOne({ email: req.session.email })
+    const userAdd = await addressData.find({ email: req.session.email })
     console.log(userAdd)
     res.render("checkout", { userAdd })
 
@@ -52,10 +54,44 @@ const displayOrder = async (req, res) => {
     //   req.session.userAddress = req.body
 
     // }
+
+console.log(req.body)
+
+
+
+
+    
     req.session.userAddress = req.body
 
     console.log(req.session.userAddress)
-    res.render("userPayment")
+
+    const cartCount=await cartData.find({}).count()
+
+    const totalprice=await cartData.aggregate([
+      {
+          $match:{username:req.session.username}
+      },
+      {
+          $group:{_id:"$productname",price:{$sum:"$price"},quantity:{$sum:"$quantity"}}
+      },
+      {
+          $project:{_id:0,amount:{$multiply:["$price","$quantity"]}}
+      },
+      {
+          $group:{_id:"null",total:{$sum:"$amount"}}
+      }
+  ])
+
+
+  console.log(totalprice)
+  let totalValue=totalprice[0].total
+  console.log(totalValue)
+
+  console.log(totalprice)
+
+  const User=req.session.username
+
+    res.render("userPayment",{cartCount,totalValue,User})
 
   }
   catch (e) {
@@ -139,16 +175,44 @@ const cashOnDelivery = async (req, res) => {
       await newAdd.save();
 
     }
+    if(cartProduct.length==1){
+
+    console.log("entered into the cart product if condition")
+      const newOrder = new orderData({
+        username: req.session.username,
+        quantity: cartProduct[0].quantity,
+        productname: cartProduct[0].productname,
+        price: cartProduct[0].price,
+        orderdate: date,
+        image:cartProduct[0].imagepath,
+        orderId: otpValue.OTP,
+        address: {
+          pincode: req.session.userAddress.pincode,
+          state: req.session.userAddress.state,
+          city: req.session.userAddress.city,
+          housename: req.session.userAddress.housename,
+          district: req.session.userAddress.district,
+          country: req.session.userAddress.country,
+
+        },
+        status: "ORDER PLACED",
+        cancel:0,
+
+      })
+      await newOrder.save();
+
+    }
+    else{
 
 
-
-    for (i = 0; i < cartData.length - 1; i++) {
+    for (let i = 0; i <cartProduct.length; i++) {
       console.log("enteredc into the forloop")
       console.log(cartProduct)
+       console.log(cartProduct[i].quantity)
       console.log(cartProduct[i].productname)
       const newOrder = new orderData({
         username: req.session.username,
-        quantity: 1,
+        quantity: cartProduct[i].quantity,
         productname: cartProduct[i].productname,
         price: cartProduct[i].price,
         orderdate: date,
@@ -170,6 +234,7 @@ const cashOnDelivery = async (req, res) => {
       await newOrder.save();
 
     }
+  }
 
     const order = await orderData.find({ username: req.session.username })
     console.log(order)
@@ -187,6 +252,7 @@ const cashOnDelivery = async (req, res) => {
     // console.log(cartProduct[0].productname)
     // console.log(cartProduct[0].price)
     res.render("userOrders", { order, success: "Order Placed Successfull"})
+
   }
   catch (e) {
     console.log("problem withe the cashOnDekivery" + e)
@@ -195,6 +261,8 @@ const cashOnDelivery = async (req, res) => {
 
 
 }
+
+
 
 
 const cancelOrder=async(req,res)=>{
@@ -218,4 +286,106 @@ const cancelOrder=async(req,res)=>{
 }
 
 
-module.exports = { displayCheckout, displayOrder, cashOnDelivery,cancelOrder }
+const Razorpay = require('razorpay'); 
+
+const razorpayInstance = new Razorpay({
+    key_id : process.env.RAZORPAY_ID_KEY,
+    key_secret: process.env.RAZORPAY_SECRET_KEY
+});
+
+const createOrder = async(req,res)=>{
+  try {
+
+    console.log(req.body)
+      const amount = req.body.price*100
+      console.log('0')
+      const options = {
+          amount: amount,
+          currency: 'INR',
+          receipt: 'razorUser@gmail.com'
+      }
+      console.log('1')
+      razorpayInstance.orders.create(options, 
+          (err, order)=>{
+            console.log('2')
+              if(!err){
+                console.log('3')
+                  res.status(200).send({
+                      success:true,
+                      msg:'Order Created',
+                      order_id:order.id,
+                      amount:amount,
+                      key_id:process.env.RAZORPAY_ID_KEY,
+                      //product_name:req.body.name,
+                      // description:req.body.description,
+                      //contact:"8567345632",
+                      //name: "Sandeep Sharma",
+                      //email: "sandeep@gmail.com"
+                  });
+                
+              }
+              else{
+                  res.status(400).send({success:false,msg:'Something went wrong!'});
+              }
+          }
+      );
+
+  } catch (error) {
+      console.log(error.message);
+  }
+}
+
+
+
+const fetchAdress=async(req,res)=>{
+
+  try{
+
+
+    console.log(req.body.addressId)
+
+    var id = new mongoose.Types.ObjectId(req.body.addressId);
+
+
+    const addressD=await addressData.findOne({_id:id})
+
+    console.log(addressD.fullname)
+    let fullname=addressD.fullname
+    let phonenumber=addressD.phonenumber
+    let country=addressD.address.country
+    let state=addressD.address.state
+    let pincode=addressD.address.pincode
+    let district=addressD.address.district
+    let city=addressD.address.city
+    let housename=addressD.address.housename
+
+    res.json({fullname,phonenumber,country,state,pincode,district,city,housename}  )  
+
+  }catch(e){
+    console.log("problem withe the fetchAdress"+e)
+  }
+
+}
+
+
+
+
+
+// const onlinePayment=async(req,res)=>{
+//   try{
+
+
+//     let razorpay=razorpayPayment.razorpayOnlinePayment
+
+//     console.log(razorpay)
+
+
+//   }
+//   catch(e){
+//     console.log("Problem with the onmlinePayment "+e)
+
+//   }
+// }
+
+
+module.exports = { displayCheckout, displayOrder, cashOnDelivery,cancelOrder,createOrder,fetchAdress }

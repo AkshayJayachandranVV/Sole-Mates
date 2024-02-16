@@ -12,7 +12,7 @@ const productDisplay = async (req, res) => {
 
     try {
         console.log("entered ordvt displaye")
-        const productList = await productData.find({})
+        const productList = await productData.find({}).sort({_id:-1})
         const success = req.query.success
         //  console.log(productList.list)
         //  console.log(productList)

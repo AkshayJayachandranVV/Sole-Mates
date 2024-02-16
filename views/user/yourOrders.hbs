@@ -102,49 +102,38 @@
                         <thead>
                             <tr>
                                 <th>Order Id</th>
-                                <th>Product Name</th>
-                                <th>Image</th>
-                                <th>Price</th>
+                                {{!-- <th>Product Name</th> --}}
+                                {{!-- <th>Image</th> --}}
+                                {{!-- <th>Price</th> --}}
                                 <th>Date</th>
                                 <th>Quantity</th>
-                                <th>Order Cancel</th>
+                                {{!-- <th>Order Cancel</th> --}}
                                 <th>Order Details</th>
 
                             </tr>
                         </thead>
-                        {{#each userOrder}}
+                        {{#each destructuredData}}
                         <tbody>
-
 
 
                             <tr>
 
                                 <td>{{this.orderId}}</td>
-                                <td>{{this.productname}}</td>
-                                <td>
+                                {{!-- <td>{{this.productname}}</td> --}}
+                                {{!-- <td>
                                     <img style=" height: 100px;" src="{{this.image}}" alt="Product Image">
-                                </td>
+                                </td> --}}
 
 
-                                <td>{{this.price}}</td>
+                                {{!-- <td>{{this.price}}</td> --}}
+                               
                                 <td>
-                                    {{this.quantity}}
+                                    {{formatDate this.date}}
                                 </td>
-                                <td>
-                                    {{formatDate this.orderdate}}
-                                </td>
-                                <td>
-                                    {{#ifEquals this.status "CANCELLED"}}
-                                    <P style="color: red;">Order Cancelled</P>
-                                    {{else}}
-                                    <button class="btn btn-primary"><a
-                                            href="/cancelorder?orderId={{this.orderId}}&proId={{this.productname}}"
-                                            onclick="return confirm('Are you sure you want to Cancel')">Cancel</a></button>
-                                    {{/ifEquals }}
-                                </td>
+                                 <td>{{this.quantity}}</td>
                                 <td>
                                     <a class="btn btn-info"
-                                        href="/userorderdetails?orderId={{this.orderId}}&proId={{this.productname}}">Order
+                                        href="/userorderdetails?orderId={{this.orderId}}">Order
                                         Details</a>
                                 </td>
 
@@ -169,19 +158,6 @@
 
 
         <!--================End Single Product Area =================-->
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         <!-- subscribe part here -->

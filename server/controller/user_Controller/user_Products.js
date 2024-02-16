@@ -1,18 +1,18 @@
 
 const productData = require("../../model/product_details")
 
-const cartData=require("../../model/user_cart")
-const categoryData=require("../../model/category_Model")
+const cartData = require("../../model/user_cart")
+const categoryData = require("../../model/category_Model")
 
 const HomeImages = async (req, res) => {
 
     try {
 
-       let enter=req.session.authenticated
+        let enter = req.session.authenticated
         const images = await productData.find({})
         console.log(images)
 
-        res.render("userHome", { images,enter })
+        res.render("userHome", { images, enter })
 
     }
     catch (e) {
@@ -32,10 +32,11 @@ const productDetailPage = async (req, res) => {
             console.log("insdie product detail")
             const productD = await productData.findOne({ productname: req.params.id })
 
+
             console.log(productD)
             console.log(req.method)
-            
- 
+
+
             if (productD) {
 
                 // const { productname, category, price, description, imagepath } = productD;
@@ -67,80 +68,141 @@ const productDetailPage = async (req, res) => {
 //ALL COLLECTION DATA 
 
 const allCollectionDisplay = async (req, res) => {
-
-
     try {
         console.log("entered in to the allcollection display")
 
-        const product = await productData.find({ list:0 })
-        const category=await categoryData.find({list:0})
-      
+        // const product = await productData.find({ list:0 })
+        const category = await categoryData.find({ list: 0 })
+        let currentPage = req.query.page || 0
+        console.log(currentPage)
+
+        if (req.query.next) {
+            console.log("next entred")
+            currentPage++
+
+        }
+
+        if (req.query.previous) {
+            console.log("prev entred")
+            // let nextValue=req.query.previous-2
+            // // let skipValue=nextValue*3;
+            // const product=await productData.find({list:0 }).skip(skipValue*3).limit(3)
+            // nextValue++;
+            // res.render("formalStore", { product, data: "All Collection",category,cat:"All Collection" ,nextValue,skipValue})
+            currentPage--
+        }
+        const proCount = await productData.find({ list: 0 }).count()
+        let countLimit = Math.ceil(proCount / 6);
+        let countCurrent = currentPage + 1
+        const product = await productData.find({ list: 0 }).skip(currentPage * 6).limit(6)
+
+        res.render("formalStore", { product, data: "All Collection", category, cat: "All Collection", currentPage, countLimit, countCurrent })
+
+
+
+        // let skipValue=nextValue*5;
+        //    const product=await productData.find({list:0 }).skip(skipValue).limit(7)
+        //    nextValue++;
+
+        //    res.redirect("/allcollection",{nextData})
+
         // const formalCollection = await productData.find({ category: "formals" })
         // const casualCollection = await productData.find({ category: "Casuals" })
 
-        res.render("formalStore", { product, data: "All Collection",category,cat:"All Collection" })
+        // let previous=nextValue-1
+        // let next=nextValue+2
+
+        // res.render("formalStore", { product, data: "All Collection",category,cat:"All Collection" ,nextValue})x
     }
     catch (e) {
-        console.log("error with the Allcollection "+e)
+        console.log("error with the Allcollection " + e)
     }
 }
 
 
-const displayProduct=async(req,res)=>{
+const displayProduct = async (req, res) => {
 
- try{
+    try {
 
-    console.log("entered into the displayproduct")
-    let cat=req.params.id 
-    console.log(req.params.id )
+        console.log("entered into the displayproduct")
+        let cat = req.params.id
+        console.log(req.params.id)
+        let pagenationcat = cat
+        let categoryFind = cat || req.query.nextcat || req.query.previouscat
 
-     const category=await categoryData.find({list:0})
-    const product = await productData.find({ list: 0,category:req.params.id })
-     console.log(product)
+        console.log("for pagenation " + req.query.nextcat + " " + req.query.previouscat)
 
-    res.render("formalStore", { product,category,cat })
+        let currentPage=req.query.page || 0
 
- }
- catch(e)
- {
-    console.log(" error withe displayProduct"+e)
- }
+
+        if(req.query.nextcat){
+            currentPage++;
+
+        }
+
+        if(req.query.previouscat){
+            currentPage--;
+
+        }
+
+       
+
+        const category = await categoryData.find({ list: 0 })
+        const product = await productData.find({ list: 0, category: categoryFind }).skip(currentPage*6).limit(6)
+        console.log(product)
+
+        res.render("formalStore", { product, category, categoryFind, pagenationcat,currentPage})
+
+    }
+    catch (e) {
+        console.log(" error withe displayProduct" + e)
+    }
 
 
 }
 
 
 
-const userSearchProduct=async(req,res)=>{
+const userSearchProduct = async (req, res) => {
 
-    try{
+    try {
         if (req.body.filter) {
-            const category=await categoryData.find({list:0})
+            const category = await categoryData.find({ list: 0 })
 
             const filterProduct = req.body.filter
 
-            const regex = new RegExp(`^${filterProduct}`, 'i')
+            const regex = new RegExp(`${filterProduct}`, 'i')
 
-            const product= await productData.find({ productname: { $regex: regex } })
+            const product = await productData.find({ productname: { $regex: regex } })
 
-            res.render("formalStore", { product, filterProduct,category,cat:"All Collection" })
+            res.render("formalStore", { product, filterProduct, category, cat: "All Collection" })
 
-          
+
         } else {
             res.redirect("/allcollection")
 
         }
-       
 
-      
 
     }
-    catch(e){
+    catch (e) {
         console.log()
     }
 
 
 }
+
+
+
+// const pagenation=async(req,res)=>{
+//     try{
+
+
+//     }
+//     catch(e){
+//             console.log("problem withe the pagenation"+e)
+//     }
+// }
 
 
 // // FORMAL DISPLAY CODE AND TAKING DATA IN DB
@@ -190,4 +252,4 @@ const userSearchProduct=async(req,res)=>{
 
 
 
-module.exports={productDetailPage,allCollectionDisplay,HomeImages,displayProduct,userSearchProduct}
+module.exports = { productDetailPage, allCollectionDisplay, HomeImages, displayProduct, userSearchProduct }

@@ -6,6 +6,12 @@ const session=require("express-session")
 const userRoute=require("./server/routes/user_route")
 const adminRoute=require("./server/routes/admin_route");
 const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
+dotenv.config();
+
+
+
+
 
 
 // app.use(session({
@@ -15,8 +21,7 @@ const bodyParser = require("body-parser");
 //     cookie: { maxAge: 24*60*60*7 }
 // }))
 
-const dotenv = require("dotenv");
-dotenv.config();
+
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
@@ -36,6 +41,8 @@ app.use(express.static('public'));
 // PARTIALS FOR USER
 const userPartialsPath=path.join(__dirname, 'views/partials')
 hbs.registerPartials(userPartialsPath);
+
+
 
 
 //multiply the quantity withw the total

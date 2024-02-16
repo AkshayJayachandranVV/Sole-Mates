@@ -1,145 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Breeze Admin</title>
-    <link rel="stylesheet" href="/assets_admin/vendors/mdi/css/materialdesignicons.min.css" />
-    <link rel="stylesheet" href="/assets_admin/vendors/flag-icon-css/css/flag-icon.min.css" />
-    <link rel="stylesheet" href="/assets_admin/vendors/css/vendor.bundle.base.css" />
-    <link rel="stylesheet" href="/assets_admin/vendors/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="/assets_admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />
-    <link rel="stylesheet" href="/assets_admin/css/style.css" />
-    <link rel="shortcut icon" href="/assets_admin/images/favicon.png" />
-  </head>
-  <body>
-    <div class="container-scroller">
-      
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Breeze Admin</title>
+  <link rel="stylesheet" href="/assets_admin/vendors/mdi/css/materialdesignicons.min.css" />
+  <link rel="stylesheet" href="/assets_admin/vendors/flag-icon-css/css/flag-icon.min.css" />
+  <link rel="stylesheet" href="/assets_admin/vendors/css/vendor.bundle.base.css" />
+  <link rel="stylesheet" href="/assets_admin/vendors/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/assets_admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />
+  <link rel="stylesheet" href="/assets_admin/css/style.css" />
+  <link rel="shortcut icon" href="/assets_admin/images/favicon.png" />
+
+  <style>
+    .canva-div {
+      transform: translate(-10px);
+      width: 700px;
+      height: 700px;
+    }
+
+    .canva-div-2{
+      margin-top: -300px;
+    }
+
+    canvas {
+      width: 100%;
+      height: 150%;
+    }
+
+    .order-statics {
+      width: 500px;
+      height: 350px;
+      background-color: white;
+      margin-bottom: 400px;
+      /* Replace with your desired color code */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-scroller">
 
 
 
 
 
 
-   
+
+
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
-          <a class="sidebar-brand brand-logo" href="index.html"><img src="/assets_admin/images/logo.svg" alt="logo" /></a>
-          <a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="index.html"><img src="/assets_admin/images/logo-mini.svg" alt="logo" /></a>
-        </div>
-        <ul class="nav">
-          <li class="nav-item nav-profile">
-            <a href="#" class="nav-link">
-              <div class="nav-profile-image">
-                <img src="/assets_admin/images/faces/face1.jpg" alt="profile" />
-                <span class="login-status online"></span>
-                <!--change to offline or busy as needed-->
+      <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
+        <a class="sidebar-brand brand-logo" href="index.html"><img src="/assets_admin/images/logo.svg" alt="logo" /></a>
+        <a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="index.html"><img
+            src="/assets_admin/images/logo-mini.svg" alt="logo" /></a>
+      </div>
+      <ul class="nav">
+        <li class="nav-item nav-profile">
+          <a href="#" class="nav-link">
+            <div class="nav-profile-image">
+              <img src="/assets_admin/images/faces/face1.jpg" alt="profile" />
+              <span class="login-status online"></span>
+              <!--change to offline or busy as needed-->
+            </div>
+            <div class="nav-profile-text d-flex flex-column pr-3">
+              <span class="font-weight-medium mb-2">Admin</span>
+              <span class="font-weight-normal">$8,753.00</span>
+            </div>
+            <span class="badge badge-danger text-white ml-3 rounded">3</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/dashboard">
+            <i class="mdi mdi-home menu-icon"></i>
+            <span class="menu-title">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/products">
+            <i class="mdi mdi-home menu-icon"></i>
+            <span class="menu-title">Products</span>
+          </a>
+        </li>
+        {{!-- <li class="nav-item">
+          <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+            <span class="menu-title">Basic UI Elements</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="ui-basic">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item">
+                <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
+              </li>
+            </ul>
+          </div>
+        </li> --}}
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/users">
+            <i class="mdi mdi-contacts menu-icon"></i>
+            <span class="menu-title">Users</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/category">
+            <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+            <span class="menu-title">Category</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/orders">
+            <i class="mdi mdi-chart-bar menu-icon"></i>
+            <span class="menu-title">Orders</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/coupon">
+            <i class="mdi mdi-table-large menu-icon"></i>
+            <span class="menu-title">Coupon</span>
+          </a>
+        </li>
+        {{!-- <li class="nav-item">
+          <span class="nav-link" href="#">
+            <span class="menu-title">Docs</span>
+          </span>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.bootstrapdash.com/demo/breeze-free/documentation/documentation.html">
+            <i class="mdi mdi-file-document-box menu-icon"></i>
+            <span class="menu-title">Documentation</span>
+          </a>
+        </li>
+        <li class="nav-item sidebar-actions">
+          <div class="nav-link">
+            <div class="mt-4">
+              <div class="border-none">
+                <p class="text-black">Notification</p>
               </div>
-              <div class="nav-profile-text d-flex flex-column pr-3">
-                <span class="font-weight-medium mb-2">Admin</span>
-                <span class="font-weight-normal">$8,753.00</span>
-              </div>
-              <span class="badge badge-danger text-white ml-3 rounded">3</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/dashboard">
-              <i class="mdi mdi-home menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
-            </a>
-          </li>
-             <li class="nav-item">
-            <a class="nav-link" href="/admin/products">
-              <i class="mdi mdi-home menu-icon"></i>
-              <span class="menu-title">Products</span>
-            </a>
-          </li>
-          {{!-- <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-              <span class="menu-title">Basic UI Elements</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
-                </li>
+              <ul class="mt-4 pl-0">
+                <li>Sign Out</li>
               </ul>
             </div>
-          </li> --}}
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/users">
-              <i class="mdi mdi-contacts menu-icon"></i>
-              <span class="menu-title">Users</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/category">
-              <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-              <span class="menu-title">Category</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/orders">
-              <i class="mdi mdi-chart-bar menu-icon"></i>
-              <span class="menu-title">Orders</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/coupon">
-              <i class="mdi mdi-table-large menu-icon"></i>
-              <span class="menu-title">Coupon</span>
-            </a>
-          </li>
-          {{!-- <li class="nav-item">
-            <span class="nav-link" href="#">
-              <span class="menu-title">Docs</span>
-            </span>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://www.bootstrapdash.com/demo/breeze-free/documentation/documentation.html">
-              <i class="mdi mdi-file-document-box menu-icon"></i>
-              <span class="menu-title">Documentation</span>
-            </a>
-          </li>
-          <li class="nav-item sidebar-actions">
-            <div class="nav-link">
-              <div class="mt-4">
-                <div class="border-none">
-                  <p class="text-black">Notification</p>
-                </div>
-                <ul class="mt-4 pl-0">
-                  <li>Sign Out</li>
-                </ul>
-              </div>
-            </div>
-          </li> --}}
-        </ul>
-      </nav>
-      <div class="container-fluid page-body-wrapper">
-        <div id="theme-settings" class="settings-panel">
-          <i class="settings-close mdi mdi-close"></i>
-          <p class="settings-heading">SIDEBAR SKINS</p>
-          <div class="sidebar-bg-options selected" id="sidebar-default-theme">
-            <div class="img-ss rounded-circle bg-light border mr-3"></div> Default
           </div>
-          <div class="sidebar-bg-options" id="sidebar-dark-theme">
-            <div class="img-ss rounded-circle bg-dark border mr-3"></div> Dark
-          </div>
-          <p class="settings-heading mt-2">HEADER SKINS</p>
-          <div class="color-tiles mx-0 px-4">
-            <div class="tiles light"></div>
-            <div class="tiles dark"></div>
-          </div>
+        </li> --}}
+      </ul>
+    </nav>
+    <div class="container-fluid page-body-wrapper">
+      <div id="theme-settings" class="settings-panel">
+        <i class="settings-close mdi mdi-close"></i>
+        <p class="settings-heading">SIDEBAR SKINS</p>
+        <div class="sidebar-bg-options selected" id="sidebar-default-theme">
+          <div class="img-ss rounded-circle bg-light border mr-3"></div> Default
         </div>
+        <div class="sidebar-bg-options" id="sidebar-dark-theme">
+          <div class="img-ss rounded-circle bg-dark border mr-3"></div> Dark
+        </div>
+        <p class="settings-heading mt-2">HEADER SKINS</p>
+        <div class="color-tiles mx-0 px-4">
+          <div class="tiles light"></div>
+          <div class="tiles dark"></div>
+        </div>
+      </div>
 
 
 
@@ -147,35 +175,309 @@
 
 
 
-         {{> admin_Header}}
+      {{> admin_Header}}
+
+
+
+
+      <div class="main-panel">
+        <div class="content-wrapper pb-0">
+
+
+
+
+          <div class="row">
+            <div class="col-xl-3 col-lg-12 stretch-card grid-margin">
+              <div class="row">
+                <div class="col-xl-12 col-md-6 stretch-card grid-margin grid-margin-sm-0 pb-sm-3">
+                  <div class="card bg-warning">
+                    <div class="card-body px-3 py-4">
+                      <div class="d-flex justify-content-between align-items-start">
+                        <div class="color-card">
+                          <p class="mb-0 color-card-head">Sales</p>
+                          <h2 class="text-white"> {{totalSales.[0].count}}<span class="h5">Rs</span>
+                          </h2>
+                        </div>
+                        <i class="card-icon-indicator mdi mdi-basket bg-inverse-icon-warning"></i>
+                      </div>
+                      <h6 class="text-white">18.33% Since last month</h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-12 col-md-6 stretch-card grid-margin grid-margin-sm-0 pb-sm-3">
+                  <div class="card bg-danger">
+                    <div class="card-body px-3 py-4">
+                      <div class="d-flex justify-content-between align-items-start">
+                        <div class="color-card">
+                          <p class="mb-0 color-card-head">Margin</p>
+                          <h2 class="text-white"> $5,300.<span class="h5">00</span>
+                          </h2>
+                        </div>
+                        <i class="card-icon-indicator mdi mdi-cube-outline bg-inverse-icon-danger"></i>
+                      </div>
+                      <h6 class="text-white">13.21% Since last month</h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-12 col-md-6 stretch-card grid-margin grid-margin-sm-0 pb-sm-3 pb-lg-0 pb-xl-3">
+                  <div class="card bg-primary">
+                    <div class="card-body px-3 py-4">
+                      <div class="d-flex justify-content-between align-items-start">
+                        <div class="color-card">
+                          <p class="mb-0 color-card-head">Orders</p>
+                          <h2 class="text-white"> $1,753.<span class="h5">00</span>
+                          </h2>
+                        </div>
+                        <i class="card-icon-indicator mdi mdi-briefcase-outline bg-inverse-icon-primary"></i>
+                      </div>
+                      <h6 class="text-white">67.98% Since last month</h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-12 col-md-6 stretch-card pb-sm-3 pb-lg-0">
+                  <div class="card bg-success">
+                    <div class="card-body px-3 py-4">
+                      <div class="d-flex justify-content-between align-items-start">
+                        <div class="color-card">
+                          <p class="mb-0 color-card-head">Affiliate</p>
+                          <h2 class="text-white">2368</h2>
+                        </div>
+                        <i class="card-icon-indicator mdi mdi-account-circle bg-inverse-icon-success"></i>
+                      </div>
+                      <h6 class="text-white">20.32% Since last month</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-xl-9 stretch-card grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-7">
+                      <h5>Sales Survey</h5>
+                      <p class="text-muted"> Show overview jan 2018 - Dec 2019 <a
+                          class="text-muted font-weight-medium pl-2" href="#"><u>See Details</u></a>
+                      </p>
+                    </div>
+                    <div class="col-sm-5 text-md-right">
+                      <button type="button"
+                        class="btn btn-icon-text mb-3 mb-sm-0 btn-inverse-primary font-weight-normal">
+                        <i class="mdi mdi-email btn-icon-prepend"></i>Download Report </button>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="card mb-3 mb-sm-0">
+                        <div class="card-body py-3 px-4">
+                          <p class="m-0 survey-head">Total Users</p>
+                          <div class="d-flex justify-content-between align-items-end flot-bar-wrapper">
+                            <div>
+                              <h3 class="m-0 survey-value">{{userCount}}</h3>
+                              {{!-- <p class="text-success m-0">-310 avg. sales</p> --}}
+                            </div>
+                            {{!-- <div id="earningChart" class="flot-chart"></div> --}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="card mb-3 mb-sm-0">
+                        <div class="card-body py-3 px-4">
+                          <p class="m-0 survey-head">Product Products</p>
+                          <div class="d-flex justify-content-between align-items-end flot-bar-wrapper">
+                            <div>
+                              <h3 class="m-0 survey-value">{{productCount}}</h3>
+                              {{!-- <p class="text-danger m-0">-310 avg. sales</p> --}}
+                            </div>
+                            {{!-- <div id="productChart" class="flot-chart"></div> --}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="card">
+                        <div class="card-body py-3 px-4">
+                          <p class="m-0 survey-head">Orders</p>
+                          <div class="d-flex justify-content-between align-items-end flot-bar-wrapper">
+                            <div>
+                              <h3 class="m-0 survey-value">{{orderCount}}</h3>
+                              {{!-- <p class="text-success m-0">-310 avg. sales</p> --}}
+                            </div>
+                            {{!-- <div id="orderChart" class="flot-chart"></div> --}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row my-3">
+                    <div class="col-sm-12">
+                      <div class="flot-chart-wrapper">
+                        <div class="canva-div">
+                          <canvas id="myChart" width="200" height="100"></canvas>
+                        </div>
+
+                      </div>
+                       <div class="canva-div-2">
+                          <canvas id="my-2-Chart" width="200" height="100"></canvas>
+                        </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <p class="text-muted mb-0"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                        eiusmod tempor incididunt ut labore et dolore. <b>Learn More</b>
+                      </p>
+                    </div>
+                    <div class="col-sm-4">
+                      <p class="mb-0 text-muted">Sales Revenue</p>
+                      <h5 class="d-inline-block survey-value mb-0"> $2,45,500 </h5>
+                      <p class="d-inline-block text-danger mb-0"> last 8 months </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+           <div class="order-statics">
+                 <h3>Order Statistics</h3>
+                 {{!-- <p>categorySplitting</p> --}}
+                 {{#each orderCategorydata}}
+
+                 <p>{{this._id}}:{{this.count}}</p>
+                 {{/each}}
+
+                       {{!-- <p>Category Sales</p> --}}
+                        <h3>Category Sales</h3>
+                  {{#each categoryData}}
+
+                 <p>{{this._id}}:{{this.count}}</p>
+                 {{/each}}
+             </div>
+
+
+
+
+          {{!-- {{#each yearAndmonth}}
+          <p id="year">Year: {{this.year}}
+          <p> Month: {{this.month}}</p>
+          {{/each}} --}}
+
+          {{!-- <div class="canva-div">
+            <canvas id="myChart" width="200" height="100"></canvas>
+          </div> --}}
 
 
 
 
 
-
-
-
-
-
-        <div class="main-panel">
-          <div class="content-wrapper pb-0">
-           
-        
-
-
-     
 
         </div>
         <!-- main-panel ends -->
-          {{> admin_Footer}}
+        {{> admin_Footer}}
       </div>
       <!-- page-body-wrapper ends -->
-    
+
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="/assets_admin/vendors/js/vendor.bundle.base.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log("hai");
+
+        // Fetch sales data from the server
+        fetch('http://localhost:4000/admin/sales')
+          .then(response => response.json())
+          .then(data => {
+            // Process the data and create the Chart.js chart
+
+            // Extracting labels and counts from the fetched data
+            const labels = data.map(entry => `${entry._id.year} - ${entry._id.month} `);
+            console.log(labels)
+            const counts = data.map(entry => entry.count);
+
+            // Get the canvas context
+            const ctx = document.getElementById('my-2-Chart').getContext('2d');
+
+            // Create a bar chart using Chart.js
+            new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: labels,
+                datasets: [{
+                  label: 'Orders per Day',
+                  data: counts,
+                  backgroundColor: ['rgba(75, 192, 192, 0.2)', "green", "red"],
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  borderWidth: 1
+                }]
+              }
+            });
+          })
+          .catch(error => console.error('Error fetching chart data:', error));
+      });
+    </script>
+
+
+
+
+
+
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log("hai");
+
+        // Fetch sales data from the server
+        fetch('http://localhost:4000/admin/sales')
+          .then(response => response.json())
+          .then(data => {
+            // Process the data and create the Chart.js chart
+
+            // Extracting labels and counts from the fetched data
+            const labels = data.map(entry => `${entry._id.year} `);
+            console.log(labels)
+            const counts = data.map(entry => entry.count);
+
+            // Get the canvas context
+            const ctx = document.getElementById('myChart').getContext('2d');
+
+            // Create a bar chart using Chart.js
+            new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: labels,
+                datasets: [{
+                  label: 'Orders per Day',
+                  data: counts,
+                  backgroundColor: ['rgba(75, 192, 192, 0.2)', "green", "red"],
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  borderWidth: 1
+                }]
+              }
+            });
+          })
+          .catch(error => console.error('Error fetching chart data:', error));
+      });
+    </script>
+
+
+
+
+
     <!-- endinject -->
     <!-- Plugin js for this page -->
     <script src="/assets_admin/vendors/chart.js/Chart.min.js"></script>
@@ -195,5 +497,8 @@
     <!-- Custom js for this page -->
     <script src="/assets_admin/js/dashboard.js"></script>
     <!-- End custom js for this page -->
-  </body>
+
+
+</body>
+
 </html>

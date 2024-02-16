@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt")
 const productData = require("../../model/product_details")
 const categoryData=require("../../model/category_Model")
 const addressData=require("../../model/user_address")
-
 // generate otp part
 const expressAsyncHandler = require("express-async-handler");
 const dotenv = require("dotenv");
@@ -41,24 +40,24 @@ const renderHome=async(req,res)=>{
 
 }
 
-const AuthorizeCheck=async(req,res,next)=>{
+// const AuthorizeCheck=async(req,res,next)=>{
 
-  try{
-       if(req.session.authenticated)
-       {
-             next()
-       }
-       else
-       {
-        res.redirect("/userLogin")
-       }
-  }
-  catch(e)
-  {
-    console.log("the error with  authorize cehck"+e)
-  }
+//   try{
+//        if(req.session.authenticated)
+//        {
+//              next()
+//        }
+//        else
+//        {
+//         res.redirect("/userLogin")
+//        }
+//   }
+//   catch(e)
+//   {
+//     console.log("the error with  authorize cehck"+e)
+//   }
 
-}
+// }
 
 
 
@@ -333,4 +332,4 @@ const AuthorizeCheck=async(req,res,next)=>{
 
 
 //   module.exports = { sendEmail,otpValidation };  
-module.exports = {renderHome,AuthorizeCheck}
+module.exports = {renderHome}

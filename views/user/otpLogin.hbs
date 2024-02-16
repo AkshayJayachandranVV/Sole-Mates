@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="zxx">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -8,22 +9,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="public/assets_user/img/favicon.ico">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- CSS here -->
-        <link rel="stylesheet" href="/assets_user/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/assets_user/css/owl.carousel.min.css">
-        <link rel="stylesheet" href="/assets_user/css/flaticon.css">
-        <link rel="stylesheet" href="/assets_user/css/slicknav.css">
-        <link rel="stylesheet" href="/assets_user/css/animate.min.css">
-        <link rel="stylesheet" href="/assets_user/css/magnific-popup.css">
-        <link rel="stylesheet" href="/assets_user/css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="/assets_user/css/themify-icons.css">
-        <link rel="stylesheet" href="/assets_user/css/slick.css">
-        <link rel="stylesheet" href="/assets_user/css/nice-select.css">
-        <link rel="stylesheet" href="/assets_user/css/style.css">
+    <link rel="stylesheet" href="/assets_user/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets_user/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets_user/css/flaticon.css">
+    <link rel="stylesheet" href="/assets_user/css/slicknav.css">
+    <link rel="stylesheet" href="/assets_user/css/animate.min.css">
+    <link rel="stylesheet" href="/assets_user/css/magnific-popup.css">
+    <link rel="stylesheet" href="/assets_user/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/assets_user/css/themify-icons.css">
+    <link rel="stylesheet" href="/assets_user/css/slick.css">
+    <link rel="stylesheet" href="/assets_user/css/nice-select.css">
+    <link rel="stylesheet" href="/assets_user/css/style.css">
 </head>
+
 <body>
-  {{> user_Header}}
+    {{> user_Header}}
     <main>
         <!-- Hero Area Start-->
         <div class="slider-area ">
@@ -59,16 +62,14 @@
                             <div class="login_part_form_iner">
                                 <h3>Welcome Back ! <br>
                                     Please Sign in now</h3>
-                                <form class="row contact_form"  method="post" novalidate="novalidate">
+
+                                    
+                                <form class="row contact_form" method="post" novalidate="novalidate">
                                     <div class="col-md-12 form-group p_star">
 
-                                {{!-- need to start from here i need to hide the form data to get the value in the otp validation --}}
-
-                                {{!-- i need to find out how to five email to this input i need to pass from previous route --}}
-                                {{!-- <input type="hidden" class="form-control" id="name" name="email" value="{{}}"
-                                            placeholder="Username"> --}}
                                     </div>
                                     <div class="col-md-12 form-group p_star">
+                                        <p style="color: red;font: size 15px;" id="otp-seconds"></p>
                                         <input type="password" class="form-control" id="password" name="otp" value=""
                                             placeholder="OTP">
                                     </div>
@@ -77,13 +78,31 @@
                                             <input type="checkbox" id="f-option" name="selector">
                                             <label for="f-option">Remember me</label>
                                         </div>
-                                        <button type="submit" value="submit"  class="btn_3">
+                                        <button id="submit-button" type="submit" value="submit" class="btn_3">
                                             log in
                                         </button>
+
+                                           <button id="resend-button" style="display: none;" id="submit-button"  value="submit" class="btn_3">
+                                            <a href="/resendotpexpire"> Resend</a>
+                                        </button>
+
+                                        {{!-- <a class="btn btn-primary"   id="resend-button" href="/resendotpexpire"> Resend</a> --}}
+                                          
+                                     
+                                        
+                                         {{!-- <button id="resend-button" style="display: none;" type="submit" value="submit" class="btn_3"><a href="/resendotpexpire"> Resend</a>
+
+                                         
+                                         
+                                        </button> --}}
+
+                                        {{!-- <a id="resend-button" style="display: none;" type="submit" href="/resendotpexpire"> Resend</a> --}}
+
+                                        {{!-- <a id="resend-button" class="btn btn-primary" style="display:none;" href="/resendotpexpire">Submit</a> --}}
                                         {{!-- <a class="lost_pass" href="#">forget password?</a> --}}
                                     </div>
                                 </form>
-                            </div>    
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -91,7 +110,7 @@
         </section>
         <!--================login_part end =================-->
     </main>
-   {{> user_Footer}}
+    {{> user_Footer}}
     <!--? Search model Begin -->
     <div class="search-model-box">
         <div class="h-100 d-flex align-items-center justify-content-center">
@@ -102,10 +121,55 @@
         </div>
     </div>
     <!-- Search model end -->
-    
+
     <!-- JS here -->
 
     <script src="./assets_user/js/vendor/modernizr-3.5.0.min.js"></script>
+
+
+
+
+
+
+        <script>
+            let seconds = 60;
+
+            const intervalId = setInterval(function() {
+                console.log(`Seconds: ${seconds}`);
+              document.getElementById("otp-seconds").innerHTML=`OTP will Expire on ${seconds} seconds`
+            // Your code here: Perform actions you want to repeat every second
+
+            seconds--;
+
+            if (seconds === 0) {
+                clearInterval(intervalId); // Stop the interval after 60 seconds
+            console.log('Interval stopped after 60 seconds.');
+
+              document.getElementById("otp-seconds").innerHTML=`OTP has Expired`
+
+           // let data=document.getElementById("otp-seconds")
+           // data.style.display="none"
+      }
+    }, 1000); // Run every 1000 milliseconds (1 second)
+
+    intervalId()
+    </script>
+
+
+    <script>
+        setTimeout(()=>{
+            let submit=document.getElementById("submit-button")
+            let resend=document.getElementById("resend-button")
+
+            submit.style.display="none"
+            resend.style.display="inline"
+        },60*1000)
+    </script>
+
+
+
+
+
     <!-- Jquery, Popper, Bootstrap -->
     <script src="./assets_user/js/vendor/jquery-1.12.4.min.js"></script>
     <script src="./assets_user/js/popper.min.js"></script>
@@ -120,7 +184,7 @@
     <!-- One Page, Animated-HeadLin -->
     <script src="./assets_user/js/wow.min.js"></script>
     <script src="./assets_user/js/animated.headline.js"></script>
-    
+
     <!-- Scroll up, nice-select, sticky -->
     <script src="./public/assets_user/js/jquery.scrollUp.min.js"></script>
     <script src="./public/assets_user/js/jquery.nice-select.min.js"></script>
@@ -128,19 +192,25 @@
     <script src="./public/assets_user/js/jquery.magnific-popup.js"></script>
 
     <!-- contact js -->
-    <script  src="./public/assets_user/js/contact.js"></script>
+    <script src="./public/assets_user/js/contact.js"></script>
     <script src="./public/assets_user/js/jquery.form.js"></script>
     <script src="./public/assets_user/js/jquery.validate.min.js"></script>
     <script src="./public/assets_user/js/mail-script.js"></script>
     <script src="./public/assets_user/js/jquery.ajaxchimp.min.js"></script>
-    
-    <!-- Jquery Plugins, main Jquery -->	
+
+    <!-- Jquery Plugins, main Jquery -->
     <script src="./public/assets_user/js/plugins.js"></script>
     <script src="./public/assets_user/js/main.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
 </body>
-    
+
 </html>

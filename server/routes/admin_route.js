@@ -9,7 +9,8 @@ const adminUsers=require("../controller/admin_Controller/admin_UserController")
 const adminProduct=require("../controller/admin_Controller/admin_ProductController")
 const adminCategory=require("../controller/admin_Controller/admin_CategoryContoller")
 const adminOrder=require("../controller/admin_Controller/admin_OrderController")
-
+const middleware=require("../middleware/middleware")
+const dashboard=require("../controller/admin_Controller/admin_DashboardController")
 
 
 route.use(session({
@@ -114,28 +115,14 @@ route.use(function (req, res, next) {
 
 // })
 
-route.get("/",(req,res)=>{
+route.get("/",middleware.adminAuthorizeCheck)
 
-   const val= req.query.pass
-   const name=req.query.name
 
-    console.log("admin entered")
+route.get("/dashboard",dashboard.dashboardData)
 
-    if(req.session.auth)
-    {
-         res.render("adminPanel")
-    }
-    else
-    {
-        res.render("adminLogin",{val,name})
-    }
-   
-})
+route.get('/sales',dashboard.dashboardDisplay)
 
 route.post("/",userData.Login)
-
-
-
 
 
 
@@ -181,19 +168,7 @@ route.post("/editproducts/:id", [upload.array("avatar",4),adminProduct.updatePro
 
 
 // DASHBOARD
-route.get("/dashboard",(req,res)=>{
-
-    if(req.session.auth)
-    {
-         res.render("adminPanel")
-    }
-    else
-    {
-        res.render("adminLogin")
-    }
-
-    //  res.render("adminPanel")
-})
+route.get("/dashboard",[dashboard.dashboardDisplay,dashboard.dashboardData])
 
 
 

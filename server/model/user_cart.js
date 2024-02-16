@@ -33,7 +33,6 @@ const cartData=mongoose.Schema({
     }
     
 
-
 })
 
 module.exports=mongoose.model("cartData",cartData)

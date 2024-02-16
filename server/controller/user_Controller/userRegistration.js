@@ -83,6 +83,7 @@ const userRegister = async (req, res) => {
         req.session.details = req.body
         console.log(req.session.details)
         const email = req.body.email
+        req.session.emailotp=req.body.email
         const phone = req.body.phonenumber
         const password=req.body.password
 
@@ -384,6 +385,10 @@ const sendEmail = expressAsyncHandler(async (req, res, next) => {
 //OTP verification password reset
 
 const resetValidationOtp = async (req, res) => {
+
+    try{
+
+    
     console.log("user entered otp")
     console.log(req.body.otp)
 
@@ -402,20 +407,27 @@ const resetValidationOtp = async (req, res) => {
         const currentTime = Date.now();
         const timeDifference = currentTime - otp.timestamp;
 
+
+        console.log("time diffreb=nce checking")
+
         console.log(timeDifference)
 
 
-        expiryTimeInMilliseconds = 5 * 60 * 1000
+        expiryTimeInMilliseconds = 60 * 1000
         console.log(expiryTimeInMilliseconds)
 
         if (timeDifference <= expiryTimeInMilliseconds) {
 
-            res.render("resetPassword")
+            console.log("time diffrence xpired OTP")
+
+            res.redirect("/otplogin")
+
+            // res.redirect("/signup")
 
         } else {
 
             console.log("invalid otp")
-            res.render("otpLogin")
+            res.redirect("/otplogin")
         }
 
 
@@ -423,8 +435,13 @@ const resetValidationOtp = async (req, res) => {
     else {
 
         console.log("invalid otp")
-        res.render("otpLogin")
+        res.redirect("/otplogin")
+        // res.render("otpLogin")
     }
+}
+catch(e){
+    console.log("problem withe the resetValidationOtp"+e)
+}
 
 
 }
@@ -436,14 +453,15 @@ const resetValidationOtp = async (req, res) => {
 //OTP VALIDATION PART
 
 const otpValidation = async (req, res) => {
-    console.log("user entered otp")
+    console.log("user entered otp of otpValidation")
     console.log(req.body.otp)
 
     console.log("firdt otp")
 
     // const preGeneratedOTP = generateOTP();
-    console.log(otp.OTP)
-    console.log(otp.timestamp)
+    // console.log(otp)
+    // console.log(otp.OTP)
+    // console.log(otp.timestamp)
 
 
     console.log("hdhddd")
@@ -457,7 +475,7 @@ const otpValidation = async (req, res) => {
         console.log(timeDifference)
 
 
-        expiryTimeInMilliseconds = 5 * 60 * 1000
+        expiryTimeInMilliseconds = 60 * 1000
         console.log(expiryTimeInMilliseconds)
 
         if (timeDifference <= expiryTimeInMilliseconds) {
@@ -506,6 +524,11 @@ const otpValidation = async (req, res) => {
 
             console.log("Signup session entered")
                res.redirect("/userLogin")
+        }else{
+
+            console.log("invalid otp of otpValidation")
+            res.redirect("/signup")
+
         }
     }
     else {
@@ -517,7 +540,155 @@ const otpValidation = async (req, res) => {
 
 }
 
-module.exports = {sendEmail,resetValidationOtp,otpValidation,CheckUserIn,renderotpLogin,newPassword,renderforgetPassword,otpLogin,forgotpasspost,renderOtpGeneration,userRegister,renderSignup,userLogin}
+
+
+let transporterresend = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    secure: false,
+    auth: {
+      user: process.env.SMTP_MAIL,
+      pass: process.env.SMTP_PASSWORD,
+    },
+  });
+  
+  const sendEmailChangeresend = expressAsyncHandler(async (req, res, next) => {
+    try {
+  
+      console.log("sendEmail for otp resend enetered")
+  
+      console.log(req.session.emailotp)
+      let email =req.session.emailotp
+      // const phone = req.body.phonenumber
+      // console.log("sendemail entered")
+      // console.log(req.body.email)
+      // const email = req.body.email;
+      // console.log("email entered")
+      // const emailString = email.toString();
+      // console.log(emailString);
+  
+  
+      otp = generateOTP();
+  
+      console.log(otp)
+      // console.log(otp.OTP)
+      //    console.log(otp.timestamp)
+  
+      var mailOptions = {
+        from: process.env.SMTP_MAIL,
+        to: email,
+        subject: "OTP for Email Verfication",
+        text: `Your OTP is: ${otp.OTP}`,
+      };
+  
+      transporterresend.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+          res.status(500).send('Error sending email');
+        } else {
+          console.log("Email sent successfully!");
+          res.render("otpLogin")
+          // return otp;
+  
+  
+        }
+      });
+  
+    }
+  
+  
+    catch (error) {
+      console.error(error);
+      res.status(500).send('Error sending email');
+  
+    }
+  });
+
+
+
+
+
+  //OTP VALIDATION PART
+
+const otpValidationResendOtp = async (req, res) => {
+    console.log("user entered otp")
+    console.log(req.body.otp)
+  
+  
+    // let otpvalue=sendEmailChange();
+    // console.log(otpvalue)
+  
+    console.log("firdt otp")
+  
+    // const preGeneratedOTP = generateOTP();
+    // console.log(otp.OTP)
+    // console.log(otp.timestamp)
+  
+  
+    console.log("hdhddd")
+  
+    if (otp.OTP == req.body.otp) {
+      console.log("both otp are same")
+  
+      const currentTime = Date.now();
+      const timeDifference = currentTime - otp.timestamp;
+  
+      console.log(timeDifference)
+  
+  
+      expiryTimeInMilliseconds = 5 * 60 * 1000
+      console.log(expiryTimeInMilliseconds)
+  
+      if (timeDifference <= expiryTimeInMilliseconds) {
+  
+  
+        const userValue = req.session.details
+
+        console.log(userValue)
+
+
+        const hashedpassword = await bcrypt.hash(userValue.password, 10)
+        console.log("after password")
+
+
+        const newUser = new user({
+
+            username: userValue.username,
+            email: userValue.email,
+            phonenumber: userValue.phonenumber,
+            password: hashedpassword,
+            isAdmin: 0,
+            status: 1
+            // confirmpassword:req.body.confirmpassword
+
+        })
+
+        console.log("beforre saving the file int db")
+
+        req.session.user = newUser
+        await newUser.save();
+        // const emailCheck=req.body.email;
+        // console.log(emailCheck)
+
+        console.log(req.session.signup)
+
+        
+
+        console.log("Signup session entered")
+           res.redirect("/userLogin")
+      }
+    }
+    else {
+  
+      console.log("invalid otp in otpValidationChangePass")
+      res.render("otpLogin")
+    }
+  
+  
+  }
+  
+
+module.exports = {sendEmail,resetValidationOtp,otpValidation,CheckUserIn,renderotpLogin,newPassword,renderforgetPassword,otpLogin,forgotpasspost,renderOtpGeneration,userRegister,renderSignup,userLogin,sendEmailChangeresend,otpValidationResendOtp}
 
 
 

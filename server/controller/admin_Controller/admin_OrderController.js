@@ -14,7 +14,7 @@ const displayOrder=async(req,res)=>{
    
     try{
 
-        const orderValue=await orderData.find({})
+        const orderValue=await orderData.find({}).sort({_id:-1})
 
         res.render("adminOrders",{orderValue});
 

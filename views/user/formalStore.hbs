@@ -1,34 +1,43 @@
 <!doctype html>
 <html lang="zxx">
- <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Watch shop | eCommers</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{!-- <link rel="manifest" href="site.webmanifest">
+    {{!--
+    <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="public/assets_user/img/favicon.ico"> --}}
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- CSS here -->
-        <link rel="stylesheet" href="/assets_user/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/assets_user/css/owl.carousel.min.css">
-        <link rel="stylesheet" href="/assets_user/css/flaticon.css">
-        <link rel="stylesheet" href="/assets_user/css/slicknav.css">
-        <link rel="stylesheet" href="/assets_user/css/animate.min.css">
-        <link rel="stylesheet" href="/assets_user/css/magnific-popup.css">
-        <link rel="stylesheet" href="/assets_user/css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="/assets_user/css/themify-icons.css">
-        <link rel="stylesheet" href="/assets_user/css/slick.css">
-        <link rel="stylesheet" href="/assets_user/css/nice-select.css">
-        <link rel="stylesheet" href="/assets_user/css/style.css">
+    <link rel="stylesheet" href="/assets_user/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets_user/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets_user/css/flaticon.css">
+    <link rel="stylesheet" href="/assets_user/css/slicknav.css">
+    <link rel="stylesheet" href="/assets_user/css/animate.min.css">
+    <link rel="stylesheet" href="/assets_user/css/magnific-popup.css">
+    <link rel="stylesheet" href="/assets_user/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/assets_user/css/themify-icons.css">
+    <link rel="stylesheet" href="/assets_user/css/slick.css">
+    <link rel="stylesheet" href="/assets_user/css/nice-select.css">
+    <link rel="stylesheet" href="/assets_user/css/style.css">
+    <style>
+        .pagenation {
+            margin-left: 800px;
+        }
+    </style>
 
 
 </head>
-<body>
-    
 
-     {{> user_Header}}
-      <main>
+<body>
+
+
+    {{> user_Header}}
+    <main>
         <!-- Hero Area Start-->
         <div class="slider-area ">
             <div class="single-slider slider-height2 d-flex align-items-center">
@@ -40,9 +49,13 @@
                                 {{!-- {{#if data}}
                                 <h2>{{data}}</h2>
                                 {{/if}} --}}
-                              
+                                {{#if categoryFind}}
+
+                                <h2>{{categoryFind}}</h2>
+                                {{else}}
                                 <h2>{{cat}}</h2>
-                                
+                                {{/if}}
+
                             </div>
                         </div>
                     </div>
@@ -56,27 +69,31 @@
                 <div class="row product-btn justify-content-between mb-40">
                     <div class="properties__button">
                         <!--Nav Button  -->
-                      
-                         <nav>   
-                                                                              
+
+                        <nav>
+
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                           
-                                   <a class="nav-item nav-link active"  href="/allCollection"> All Collection </a>
-                                 {{#each category}} 
-                                {{!-- <a class="nav-item nav-link active" id="nav-home-tab"  href="/allCollection" role="tab" aria-controls="nav-home" >All Collection</a>
-                                <a class="nav-item nav-link" id="nav-home-tab"  href="/casualstore" role="tab" aria-controls="nav-profile" > Casuals Collections</a>
-                                <a class="nav-item nav-link" id="nav-home-tab"  href="/formalstore" role="tab" aria-controls="nav-contact" > Formals Collections </a> --}}
-                                <a class="nav-item nav-link active"  href="/categoryproduct/{{this.category}}"> {{this.category}} </a>
+
+                                <a class="nav-item nav-link active" href="/allCollection"> All Collection </a>
+                                {{#each category}}
+                                {{!-- <a class="nav-item nav-link active" id="nav-home-tab" href="/allCollection"
+                                    role="tab" aria-controls="nav-home">All Collection</a>
+                                <a class="nav-item nav-link" id="nav-home-tab" href="/casualstore" role="tab"
+                                    aria-controls="nav-profile"> Casuals Collections</a>
+                                <a class="nav-item nav-link" id="nav-home-tab" href="/formalstore" role="tab"
+                                    aria-controls="nav-contact"> Formals Collections </a> --}}
+                                <a class="nav-item nav-link active" href="/categoryproduct/{{this.category}}">
+                                    {{this.category}} </a>
                                 {{!-- <a class="nav-item nav-link active" href="/casualstore"> casual </a>
                                 <a class="nav-item nav-link active" href="/formalstore"> formal </a> --}}
-                                 {{/each}}
+                                {{/each}}
                             </div>
-                         
-                        </nav> 
+
+                        </nav>
 
 
 
-                          
+
                         <!--End Nav Button  -->
                     </div>
                     <!-- Grid and List view -->
@@ -103,26 +120,30 @@
                     {{!-- {{#each product}} --}}
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                         <div class="row">
-                      
+
                             {{#each product}}
                             {{#if this.display}}
                             {{else}}
                             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 h-25">
                                 <div class="single-popular-items mb-50 text-center">
                                     <div class="popular-img">
-                                      <a href="/productdetails/{{this.productname}}"> <img src="{{this.imagepath.[0]}}" alt="" class="h-50"></a> 
+                                        <a href="/productdetails/{{this.productname}}"> <img
+                                                src="{{this.imagepath.[0]}}" alt="" class="h-50"></a>
                                         <div class="img-cap">
                                             <span><a href="/addtocart/{{this.productname}}">Add to cart</a></span>
                                         </div>
                                         <div class="favorit-items">
-                                           
-                                            <a href="/addwishlist/{{this.productname}}"> <span class="flaticon-heart"></span></a>
+
+                                            <a href="/addwishlist/{{this.productname}}"> <span
+                                                    class="flaticon-heart"></span></a>
                                         </div>
                                     </div>
                                     <div class="popular-caption">
                                         {{!-- <p>{{{this.productname}}}---Ssdkfjklsdjf</p> --}}
                                         <h3><a href="/productdetails/{{this.productname}}">{{this.productname}}</a></h3>
-                                        {{!-- <h3><a href="/productdetails/{{encodeURIComponent this.productname}}">{{this.productname}}</a></h3> --}}
+                                        {{!-- <h3><a
+                                                href="/productdetails/{{encodeURIComponent this.productname}}">{{this.productname}}</a>
+                                        </h3> --}}
 
                                         <span>{{this.price}}</span>
                                     </div>
@@ -130,13 +151,78 @@
                             </div>
                             {{/if}}
 
-                          {{/each}}
+                            {{/each}}
                         </div>
                     </div>
                     <!-- Card two -->
-                    
+
                     <!-- Card three -->
-                    
+
+                    {{#if pagenationcat}}
+                     <div class="pagenation">
+                     <nav aria-label="...">
+                            <ul class="pagination">
+                                  <div class="showing col col-xs-12 mr-10">
+                                    <span>SHOWING {{countCurrent}} OF {{countLimit}} </span>
+                                    </div>
+
+                                {{#if currentPage}}
+                                <li class="page-item">
+                                    {{!-- <span class="page-link">Previous</span> --}}
+                                    <a class="page-link" href="/categorypagenation?previouscat={{categoryFind}}&page={{currentPage}}">Previous</a>
+                                </li>
+                                {{/if}}
+
+                                {{!-- <li class="page-item"><a class="page-link" href="/pagenation"> {{previous}}</a>
+                                </li> --}}
+                                {{!-- <li class="page-item active">
+                                    <span class="page-link">
+                                        {{nextValue}}
+                                        <span class="sr-only">(current)</span>
+                                    </span>
+                                </li> --}}
+                                {{!-- <li class="page-item"><a class="page-link"
+                                        href="/pagenation?next={{nextValue}}">{{nextValue}}</a></li> --}}
+                                <li class="page-item">
+                                    <a class="page-link" href="/categorypagenation?nextcat={{categoryFind}}&page={{currentPage}}">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    {{else}}
+
+
+                    <div class="pagenation">
+                     <nav aria-label="...">
+                            <ul class="pagination">
+                                  <div class="showing col col-xs-12 mr-10">
+                                    <span>SHOWING {{countCurrent}} OF {{countLimit}} </span>
+                                    </div>
+
+                                {{#if currentPage}}
+                                <li class="page-item">
+                                    {{!-- <span class="page-link">Previous</span> --}}
+                                    <a class="page-link" href="/pagenation?previous=2&page={{currentPage}}">Previous</a>
+                                </li>
+                                {{/if}}
+
+                                {{!-- <li class="page-item"><a class="page-link" href="/pagenation"> {{previous}}</a>
+                                </li> --}}
+                                {{!-- <li class="page-item active">
+                                    <span class="page-link">
+                                        {{nextValue}}
+                                        <span class="sr-only">(current)</span>
+                                    </span>
+                                </li> --}}
+                                {{!-- <li class="page-item"><a class="page-link"
+                                        href="/pagenation?next={{nextValue}}">{{nextValue}}</a></li> --}}
+                                <li class="page-item">
+                                    <a class="page-link" href="/pagenation?next=1&page={{currentPage}}">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    {{/if}}
 
                     {{!-- {{/each}} --}}
                 </div>
@@ -162,7 +248,7 @@
                                 <h6>Secure Payment System</h6>
                                 <p>aorem ixpsacdolor sit ameasecur adipisicing elitsf edasd.</p>
                             </div>
-                        </div> 
+                        </div>
                         <div class="col-xl-4 col-lg-4 col-md-6">
                             <div class="single-method mb-40">
                                 <i class="ti-reload"></i>
@@ -176,7 +262,7 @@
         </div>
         <!-- Shop Method End-->
     </main>
-     {{> user_Footer}}
+    {{> user_Footer}}
     <!--? Search model Begin -->
     <div class="search-model-box">
         <div class="h-100 d-flex align-items-center justify-content-center">
@@ -184,10 +270,10 @@
             <form class="search-model-form">
                 <input type="text" id="search-input" placeholder="Searching key.....">
             </form>
-        </div>    
+        </div>
     </div>
     <!-- Search model end -->
-    
+
     <!-- JS here -->
 
     <script src="./assets_user/js/vendor/modernizr-3.5.0.min.js"></script>
@@ -205,7 +291,7 @@
     <!-- One Page, Animated-HeadLin -->
     <script src="./assets_user/js/wow.min.js"></script>
     <script src="./assets_user/js/animated.headline.js"></script>
-    
+
     <!-- Scroll up, nice-select, sticky -->
     <script src="./public/assets_user/js/jquery.scrollUp.min.js"></script>
     <script src="./public/assets_user/js/jquery.nice-select.min.js"></script>
@@ -213,19 +299,25 @@
     <script src="./public/assets_user/js/jquery.magnific-popup.js"></script>
 
     <!-- contact js -->
-    <script  src="./public/assets_user/js/contact.js"></script>
+    <script src="./public/assets_user/js/contact.js"></script>
     <script src="./public/assets_user/js/jquery.form.js"></script>
     <script src="./public/assets_user/js/jquery.validate.min.js"></script>
     <script src="./public/assets_user/js/mail-script.js"></script>
     <script src="./public/assets_user/js/jquery.ajaxchimp.min.js"></script>
-    
-    <!-- Jquery Plugins, main Jquery -->	
+
+    <!-- Jquery Plugins, main Jquery -->
     <script src="./public/assets_user/js/plugins.js"></script>
     <script src="./public/assets_user/js/main.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
 </body>
-    
+
 </html>

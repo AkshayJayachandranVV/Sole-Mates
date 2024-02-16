@@ -13,7 +13,7 @@ const showUser = async (req, res) => {
 
     try {
 
-        const value = await userData.find({})
+        const value = await userData.find({}).sort({_id:-1})
 
         // console.log(value)
 

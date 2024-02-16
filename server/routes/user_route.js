@@ -8,6 +8,7 @@ const wishList=require("../controller/user_Controller/wishlist_Controller")
 const profile=require("../controller/user_Controller/userprofile_Controller")
 const Order=require("../controller/user_Controller/user_Order")
 const Email=require("../controller/user_Controller/generateOTP")
+const middleware=require("../middleware/middleware")
 //  const otpValidation=require("../controller/emal-Sending")
 const session = require("express-session")
 
@@ -72,11 +73,18 @@ route.post("/resetPassword", userRegister.newPassword)
 
 
 
+route.get("/resendotpexpire",userRegister.sendEmailChangeresend)
+
+route.post("/resendotpexpire",userRegister.otpValidationResendOtp)
+
+
+
 
 
 
 //Entry to Home
 route.get("/home",User.renderHome)
+
 
 
 
@@ -87,34 +95,35 @@ route.get("/", userProduct.HomeImages)
 route.get("/productdetails/:id",userProduct.productDetailPage)
 
 
-
-
 // ALL COLLECTION
 route.get("/allcollection",userProduct.allCollectionDisplay)
-
-
-// //FORMAL STORE
-
-// route.get("/formalstore",userProduct.formalDisplay)
-
-
-
-// // // CASUAL STORE
-
-// route.get("/casualstore",userProduct.casualDisplay)
 
 
 //DISPLAY PRODUCT ON THE BASIS OF CATEGORY
 
 route.get("/categoryproduct/:id",userProduct.displayProduct)
 
+
+//PAGENATION ALL COLLECTION
+route.get("/pagenation",userProduct.allCollectionDisplay)
+
+//PAGENATION CATEGORY COLLECTION
+route.get("/categorypagenation",userProduct.displayProduct)
+
+route.post("/searchproduct",userProduct.userSearchProduct)
+
+
+
+
+
+
+
+
+
+
+
 //CART DISPLAY
 route.get("/cart",addCart.userAuthorize,addCart.cartDisplay)
-
-
-
-
-
 
 //ADD TO CART
 
@@ -127,24 +136,28 @@ route.get("/decrementquantity/:proId",addCart.decrementData)
 route.get("/incrementquantity/:proId",addCart.incrementData)
 
 
-
-// route.get("/displaycart",addCart.)
-
-
-
 //ADD TO CART REMOVE PRODUCT
 route.get("/removecart/:proId",addCart.cartRemoving)
 
 
+
+
+
+
+
+
+
+
+
+
+
 //DISPLAY THE USER PROFILE
-route.get("/profile",User.AuthorizeCheck,profile.displayProfile)
+route.get("/profile",middleware.userAuthorizeCheck,profile.displayProfile)
 
 //EDIT PROFILE 
 route.get("/editprofile",profile.displayEditprofile)
 
 route.post("/editprofile",profile.updateProfile)
-
-
 
 
 
@@ -170,14 +183,39 @@ route.post("/profileresetpass",profile.newPasswordProfile)
 
 
 
+
+
+
+
+
+
+
+
+
+
 //DISPLAY THE USER WISHLIST
 
-route.get("/wishlist",User.AuthorizeCheck,wishList.displayWishlist)
+route.get("/wishlist",middleware.userAuthorizeCheck,wishList.displayWishlist)
 
 
 route.get("/addwishlist/:proId",wishList.addWishlist)
 
 route.get("/delwishlist/:wishId",wishList.deleteWishlist)
+
+
+
+
+
+
+
+
+
+route.post('/createOrder', Order.createOrder);
+
+
+
+
+
 
 
 //DISPLAY
@@ -188,13 +226,25 @@ route.get("/orderplaced",Order.displayOrder)
 
 route.get("/cod",Order.cashOnDelivery)
 
+
+// route.post("/createOrder",Order.razorpayOnlinePayment)
+
+
+ 
+
+
 route.get("/cancelorder",Order.cancelOrder)
 
+// route.post("/onlinecreateOrder",Order.razorpayOnlinePayment)
 
 
-route.post("/searchproduct",userProduct.userSearchProduct)
+route.post("/fetch-address",Order.fetchAdress)
 
 
+
+route.post("/change-quentity",addCart.updateQuantity)
+
+route.post("/profile-fetchpassword",profile.profilefetchAddress)
 
 
 
@@ -238,7 +288,7 @@ route.post("/searchproduct",userProduct.userSearchProduct)
 
 
 
-// Forget password
+
 
 
 route.get("/signout",(req,res)=>

@@ -32,10 +32,11 @@ const categoryDelete = async (req, res) => {
 const categoryDetails = async (req, res) => {
 
     try {
-
+          console.log(req.query.alreadycat)
+          let categoryPresented=req.query.alreadycat
 
         console.log("entered into the categorydetails")
-        const categoryData = await catData.find({})
+        const categoryData = await catData.find({}).sort({_id:-1})
 
         console.log(req.query.edit)
         let success=req.query.edit
@@ -48,7 +49,7 @@ const categoryDetails = async (req, res) => {
 
         // const count=await productData.aggregate([{$group:{_id:"$category",count:{$sum:1}}}])
 
-        res.render("adminCategory", { categoryData,success })
+        res.render("adminCategory", { categoryData,success,categoryPresented })
 
         // console.log(categoryData)
         // console.log(count)
@@ -69,6 +70,16 @@ const storeCategory = async (req, res) => {
     try {
 
         console.log(req.body.category)
+
+        const filter=req.body.category
+        const regex = new RegExp(`^${filter}`, 'i')
+
+        const Alreadycategory=await catData.find({category:{$regex:regex}})
+        console.log(Alreadycategory)
+        if(Alreadycategory){
+            res.redirect("/admin/category?alreadycat=Category Already Present")
+
+        }else{
         const newCategory = new catData({
 
             category: req.body.category,
@@ -80,6 +91,7 @@ const storeCategory = async (req, res) => {
         console.log(newCategory)
 
         res.redirect("/admin/category")
+    }
 
     }
     catch {

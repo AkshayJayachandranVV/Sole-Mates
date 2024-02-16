@@ -8,6 +8,12 @@
     <title>Shoe shop | eCommers</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+
+
     {{!--
     <link rel="manifest" href="site.webmanifest"> --}}
     {{!--
@@ -35,7 +41,7 @@
         }
 
         .profile-container {
-            max-width: 600px;
+            max-width: 550px;
             margin: 50px auto;
             background-color: #ffffff;
             padding: 20px;
@@ -60,11 +66,63 @@
         }
 
         .name {
-            transform: translate(-240px);
+            transform: translate(-200px);
         }
 
         .name1 {
-            transform: translate(-230px);
+            transform: translate(-200px);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .profile-sidebar {
+            width: 350px;
+            height: 500px;
+            margin-top: 50px;
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 20px;
+           
+        }
+
+        .profile-info img {
+            border-radius: 50%;
+            max-width: 100%;
+        }
+
+        .profile-info h2 {
+            margin-top: 10px;
+        }
+
+        .profile-links {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .profile-links li {
+            margin-bottom: 10px;
+        }
+
+        .profile-links a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            display: block;
+        }
+
+        .profile-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        .profile{
+            margin-left: 450px;
         }
     </style>
 
@@ -83,7 +141,7 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="hero-cap text-center">
-                                <h2>Profile</h2>
+                                <h2 class="profile">Profile</h2>
                             </div>
                         </div>
                     </div>
@@ -96,14 +154,31 @@
 
 
 
-
-
-
         <!--================Single Product Area =================-->
 
 
         <div class="product_image_area  ">
             <div class="container">
+
+                <aside class="profile-sidebar">
+                    <!-- Your profile sidebar content goes here -->
+                    <div class="profile-info">
+                        {{!-- <img src="profile-image.jpg" alt="Profile Image"> --}}
+                        <h2>{{userData.username}}</h2>
+                        <p style="color: #ffffff;">Email: {{userData.email}}</p> 
+                    </div>
+                    <ul class="profile-links">
+                        {{!-- <li><a href="#">Dashboard</a></li> --}}
+                        <li><a href="/addaddress">Add Profile</a></li>
+                         <li><a href="/editprofile">Edit Profile</a></li>
+                        <li><a href="/changepassword">Change Password</a></li>
+                        <li><a href="/userorders">Order History</a></li>
+                         <li><a href="/allcollection">Continue Shopping</a></li>
+                         <li><a href="">SignOut</a></li>
+                        <!-- Add more profile-related links as needed -->
+                    </ul>
+                </aside>
+
 
                 {{!-- <div class="row ">
                     <div class="col-lg-12 d-flex align-items-center justify-content-center ">
@@ -181,7 +256,7 @@
 
 
                 <div class="container mt-5 ">
-                    
+
                     <div class="profile-details">
 
                         <h1 class="mb-4">User Profile</h1>
@@ -189,18 +264,18 @@
                         <form action="/updateProfile" method="post" class="needs-validation" novalidate>
                             <div class="form-group">
                                 <label class="name" for="name"><strong>Name:</strong></label>
-                                <input type="text" id="name" name="name" class="form-control" value="{{userData.username}}"
-                                    readonly>
+                                <input type="text" id="name" name="name" class="form-control"
+                                    value="{{userData.username}}" readonly>
                                 <div class="invalid-feedback">Please enter your name.</div>
                             </div>
 
                             <div class="form-group">
                                 <label class="name" for="email"><strong>Email:</strong></label>
-                                <input type="email" id="email" name="email" class="form-control" value="{{userData.email}}"
-                                    readonly>
+                                <input type="email" id="email" name="email" class="form-control"
+                                    value="{{userData.email}}" readonly>
                                 <div class="invalid-feedback">Please enter a valid email address.</div>
 
-                                
+
                             </div>
 
                             <div class="form-group">
@@ -219,34 +294,34 @@
 
                             <div class="form-group">
                                 <label class="name1" for="address"><strong>Address:</strong></label>
-                                {{!-- <textarea id="address" name="address" class="form-control" value="{{userAddress.housename}}" rows="4" required></textarea> --}}
-                                 <input type="tel" id="address" name="address" class="form-control" value="{{userAddress.address.housename}} {{userAddress.address.city}} {{userAddress.address.district}} {{userAddress.address.pincode}} {{userAddress.address.state}} {{userAddress.address.country}}" readonly>
+                                {{!-- <textarea id="address" name="address" class="form-control"
+                                    value="{{userAddress.housename}}" rows="4" required></textarea> --}}
+                                <input type="tel" id="address" name="address" class="form-control"
+                                    value="{{userAddress.address.housename}} {{userAddress.address.city}} {{userAddress.address.district}} {{userAddress.address.pincode}} {{userAddress.address.state}} {{userAddress.address.country}}"
+                                    readonly>
                                 <div class="invalid-feedback">Please enter your address.</div>
                             </div>
                             {{/if}}
                             {{!-- <button type="submit" class="btn btn-primary mt-3">Update Profile</button> --}}
-                           
+
                         </form>
-                         {{!-- <a class="btn btn-danger" href="">Edit Profile</a> --}}
-                        
-                        
-                        
+                        {{!-- <a class="btn btn-danger" href="">Edit Profile</a> --}}
+
+
+
                         {{#if userAddress}}
-                        <button type="button" class="btn btn-outline-primary mb-5 mt-3"><a href="/editprofile/">Edit Profile
-                        </a></button>
-                       
-                         {{else}}
-                         <button type="button" class="btn btn-outline-primary mb-5 mt-3"><a href="/addaddress">Add
-                        Address</a></button>
-                         {{/if}}
-                        <button type="button" class="btn btn-outline-primary mb-5 mt-3"><a href="/allcollection">Continue
-                        Shoping </a></button>
+                        <button type="button" class="btn btn-outline-primary mb-5 mt-3"><a href="/editprofile">Edit
+                                Profile
+                            </a></button>
 
-                         <button type="button" class="btn btn-outline-primary mb-5 mt-3"><a href="/changepassword">Change Password
-                        </a></button>
+                        {{else}}
+                        <button type="button" class="btn btn-outline-primary mb-5 mt-3"><a href="/addaddress">Add
+                                Address</a></button>
+                        {{/if}}
+                        <button type="button" class="btn btn-outline-primary mb-5 mt-3"><a
+                                href="/allcollection">Continue
+                                Shoping </a></button>
 
-                        <button type="button" class="btn btn-outline-primary mb-5 mt-3"><a href="/userorders">Order History
-                        </a></button>
 
                     </div>
                 </div>

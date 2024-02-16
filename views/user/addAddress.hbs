@@ -51,6 +51,53 @@
     <h1 class="mb-4">Add Address</h1>
      <p style="color: green;" id="success-msg">{{addData}}</p>
 
+
+       <div class="container-fluid">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-lg-12">
+                    <div class="row g-4">
+                        <h1 class="mb-4">Billing details</h1>
+                        {{#each userAdd}}
+                        <div class="col-md-6 col-lg-4 col-xl-3 mx-3">
+                            {{!-- copy --}}
+                            <div class="col-md-12 ">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="addressCheck" type="radio" value=""
+                                        id="defaultCheck1" onchange="fetchAddress('{{this._id}}')" <label
+                                        class="form-check-label" for="defaultCheck1">
+                                    {{!-- copy --}}
+                                    <div class="card" style="width: 18rem;">
+                                        <div class="card-header">
+                                            Address
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">{{this.fullname}}</li>
+                                            <li class="list-group-item">{{this.address.housename}}</li>
+                                            <li class="list-group-item">{{this.address.city}}</li>
+                                            <li class="list-group-item">{{this.address.state}}</li>
+                                            <li class="list-group-item">{{this.address.pincode}}</li>
+                                            <li class="list-group-item">{{this.address.country}}</li>
+                                        </ul>
+                                    </div>
+
+                                    </label>
+                                </div>
+                            </div>
+                            {{!-- copy --}}
+                        </div>
+                        {{/each}}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
    {{#if userAdd}}
     <form method="post">
         <!-- Full Name -->
@@ -115,7 +162,6 @@
 
 
 {{else}}
-
 
 
 
@@ -243,6 +289,57 @@
     <!-- Search model end -->
     
     <!-- JS here -->
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+         // Use fetch to update the quantity in the database
+       function fetchAddress(addressId) {
+      fetch('/profile-fetchpassword', {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({
+            addId: addressId,
+            
+           
+         }),
+      })
+        .then(response => {
+         if (!response.ok) {
+            throw new Error('Network response was not ok');
+         }
+         return response.json();
+      })
+      .then(data => {
+        
+         // Update the quantity on the page after successful update
+         
+              document.getElementById("fullname").value = data.fullname;
+        document.getElementById("phonenumber").value = data.phonenumber;
+        
+        // console.log(data.address.country)
+       document.getElementById("country").value = data.country 
+        document.getElementById("state").value = data.state;
+       document.getElementById("district").value = data.district;
+       document.getElementById("city").value= data.city;
+       document.getElementById("housename").value = data.housename;
+        document.getElementById("state").value = data.state;
+         document.getElementById("pincode").value = data.pincode;
+         console.log(data)
+      })    
+      .catch(error => {
+         console.error('Error updating quantity:', error);
+      });
+    
+       }
+        
+    </script>
 
     <script>
         setTimeout(()=>{
