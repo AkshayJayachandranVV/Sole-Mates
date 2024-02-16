@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Breeze Admin</title>
+    <title>ADMIN SOLE MATES</title>
     <link rel="stylesheet" href="/assets_admin/vendors/mdi/css/materialdesignicons.min.css" />
     <link rel="stylesheet" href="/assets_admin/vendors/flag-icon-css/css/flag-icon.min.css" />
     <link rel="stylesheet" href="/assets_admin/vendors/css/vendor.bundle.base.css" />
@@ -30,7 +30,7 @@
               </div>
               <div class="nav-profile-text d-flex flex-column pr-3">
                 <span class="font-weight-medium mb-2">Admin</span>
-                <span class="font-weight-normal">$8,753.00</span>
+                {{!-- <span class="font-weight-normal">$8,753.00</span> --}}
               </div>
               <span class="badge badge-danger text-white ml-3 rounded">3</span>
             </a>
@@ -165,6 +165,7 @@
         <h2>Order Details</h2>
         {{!-- <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
           labore et dolore magna aliqua.</p> --}}
+        <p>Product Name: {{orderDetails.productname}}</p>
         <p>Price: {{orderDetails.price}}</p>
         <p>Quantity: {{orderDetails.quantity}}</p>
         <p>Payment Type: COD</p>
@@ -173,6 +174,13 @@
         <p>City: {{orderDetails.address.city}}</p>
         <p>Pin Code: {{orderDetails.address.pincode}}</p>
         <p>Country: {{orderDetails.address.country}}</p>
+        <p>Status: {{orderDetails.status}}</p>
+         <h3 style="color: RED;">Return Reason: {{orderDetails.reason}}</h3>
+         {{#ifEquals orderDetails.status "REQUEST TO RETURN"}}
+        <button class="btn btn-success" onclick="return confirm('Do you want to Acceot the return')"><a href="/admin/returnaccept?proId={{orderDetails.productname}}&orderId={{orderDetails.orderId}}">Accept</a></button>
+        <button class="btn btn-danger" onclick="return confirm('Do you want to reject the return')"><a href="/admin/returnreject?proId={{orderDetails.productname}}&orderId={{orderDetails.orderId}}">Reject</a></button>
+        {{/ifEquals}}
+          {{!-- <P style="color: RED;">REQUEST TO RETURN</P> --}}
         {{!-- <p>Order Status: {{orderDetails.address.country}}</p> --}}
         {{!-- <div class="form-group">
           <label for="quantity">Quantity:</label>

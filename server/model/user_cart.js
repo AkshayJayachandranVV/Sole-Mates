@@ -30,6 +30,10 @@ const cartData=mongoose.Schema({
     quantity:{
         type:Number,
         require:true
+    },
+    category:{
+        type:String,
+        require:true
     }
     
 

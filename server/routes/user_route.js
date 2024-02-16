@@ -83,37 +83,54 @@ route.post("/resendotpexpire",userRegister.otpValidationResendOtp)
 
 
 //Entry to Home
+
+
+
+
+
+
+
+route.get("/signout",(req,res)=>
+{
+    req.session.destroy()
+    res.redirect("/home")
+})
+
+route.get("/",userProduct.HomeImages)
+
 route.get("/home",User.renderHome)
 
 
+// route.use(middleware.userAuthorizeCheck)
 
 
 
-route.get("/", userProduct.HomeImages)
 
 
-route.get("/productdetails/:id",userProduct.productDetailPage)
+route.get("/productdetails/:id",middleware.userAuthorizeCheck,userProduct.productDetailPage)
 
 
 // ALL COLLECTION
-route.get("/allcollection",userProduct.allCollectionDisplay)
+route.get("/allcollection",middleware.userAuthorizeCheck,userProduct.allCollectionDisplay)
 
 
 //DISPLAY PRODUCT ON THE BASIS OF CATEGORY
 
-route.get("/categoryproduct/:id",userProduct.displayProduct)
+route.get("/categoryproduct/:id",middleware.userAuthorizeCheck,userProduct.displayProduct)
 
 
 //PAGENATION ALL COLLECTION
-route.get("/pagenation",userProduct.allCollectionDisplay)
+route.get("/pagenation",middleware.userAuthorizeCheck,userProduct.allCollectionDisplay)
 
 //PAGENATION CATEGORY COLLECTION
-route.get("/categorypagenation",userProduct.displayProduct)
+route.get("/categorypagenation",middleware.userAuthorizeCheck,userProduct.displayProduct)
 
 route.post("/searchproduct",userProduct.userSearchProduct)
 
 
+route.get("/hightolow",middleware.userAuthorizeCheck,userProduct.HightoLow)
 
+route.get("/lowtohigh",middleware.userAuthorizeCheck,userProduct.lowToHigh)
 
 
 
@@ -127,7 +144,7 @@ route.get("/cart",addCart.userAuthorize,addCart.cartDisplay)
 
 //ADD TO CART
 
-route.get("/addtocart/:prodname",addCart.addToCart)
+route.get("/addtocart/:prodname",middleware.userAuthorizeCheck,addCart.addToCart)
 
 
 //UPDATE THE QUANTITY OF THE CART PRODUCT
@@ -137,7 +154,7 @@ route.get("/incrementquantity/:proId",addCart.incrementData)
 
 
 //ADD TO CART REMOVE PRODUCT
-route.get("/removecart/:proId",addCart.cartRemoving)
+route.get("/removecart/:proId",middleware.userAuthorizeCheck,addCart.cartRemoving)
 
 
 
@@ -155,31 +172,34 @@ route.get("/removecart/:proId",addCart.cartRemoving)
 route.get("/profile",middleware.userAuthorizeCheck,profile.displayProfile)
 
 //EDIT PROFILE 
-route.get("/editprofile",profile.displayEditprofile)
+route.get("/editprofile",middleware.userAuthorizeCheck,profile.displayEditprofile)
 
 route.post("/editprofile",profile.updateProfile)
 
 
 
-route.get("/userorders",profile.profileYourOrders)
+route.get("/userorders",middleware.userAuthorizeCheck,profile.profileYourOrders)
 
-route.get("/userorderdetails",profile.userOrderDetailsPage)
+route.get("/userorderdetails",middleware.userAuthorizeCheck,profile.userOrderDetailsPage)
 
 
 //DISPLAY THE ADDRESS OF USER
 
-route.get("/addaddress",profile.addAddress)
+route.get("/addaddress",middleware.userAuthorizeCheck,profile.addAddress)
 
 route.post("/addaddress",profile.storeAddress)
 
 
 // DISPLAY THE USER PROFILE OTP PAGE
 
-route.get("/changepassword",profile.sendEmailChange)
+// route.get("/changepassword",profile.sendEmailChange)
 
-route.post("/changepassword",profile.otpValidationChangePass)
+ route.post("/changepassword",profile.otpValidationChangePass)
 
-route.post("/profileresetpass",profile.newPasswordProfile)
+
+route.get("/profileresetpass",middleware.userAuthorizeCheck,profile.displayChangePassword)
+
+route.post("/profileresetpass",middleware.userAuthorizeCheck,profile.newPasswordProfile)
 
 
 
@@ -198,11 +218,9 @@ route.post("/profileresetpass",profile.newPasswordProfile)
 route.get("/wishlist",middleware.userAuthorizeCheck,wishList.displayWishlist)
 
 
-route.get("/addwishlist/:proId",wishList.addWishlist)
+route.get("/addwishlist/:proId",middleware.userAuthorizeCheck,wishList.addWishlist)
 
-route.get("/delwishlist/:wishId",wishList.deleteWishlist)
-
-
+route.get("/delwishlist/:wishId",middleware.userAuthorizeCheck,wishList.deleteWishlist)
 
 
 
@@ -210,27 +228,25 @@ route.get("/delwishlist/:wishId",wishList.deleteWishlist)
 
 
 
-route.post('/createOrder', Order.createOrder);
+
+
+route.post('/createOrder',middleware.userAuthorizeCheck, Order.createOrder);
 
 
 
 
+route.post("/checkcoupon",Order.couponVerify)
 
-
+route.post("/returnorder",Order.returnOrder)
 
 //DISPLAY
- route.get("/checkout",Order.displayCheckout)
+ route.get("/checkout",middleware.userAuthorizeCheck,Order.displayCheckout)
 
-route.post("/orderplaced",Order.displayOrder)
-route.get("/orderplaced",Order.displayOrder)
+route.post("/orderplaced",middleware.userAuthorizeCheck,Order.displayOrder)
+route.get("/orderplaced",middleware.userAuthorizeCheck,Order.displayOrder)
 
-route.get("/cod",Order.cashOnDelivery)
+route.get("/cod",middleware.userAuthorizeCheck,Order.cashOnDelivery)
 
-
-// route.post("/createOrder",Order.razorpayOnlinePayment)
-
-
- 
 
 
 route.get("/cancelorder",Order.cancelOrder)
@@ -238,7 +254,18 @@ route.get("/cancelorder",Order.cancelOrder)
 // route.post("/onlinecreateOrder",Order.razorpayOnlinePayment)
 
 
+
+route.post("/applywallet",Order.walletApply)
+
+route.post("/removewallet",Order.walletRemove)
+
+
+
+
 route.post("/fetch-address",Order.fetchAdress)
+
+
+route.post("/remove-coupon",Order.removeCoupon)
 
 
 
@@ -246,7 +273,9 @@ route.post("/change-quentity",addCart.updateQuantity)
 
 route.post("/profile-fetchpassword",profile.profilefetchAddress)
 
-
+route.get("/error",(req,res)=>{
+    res.render("errorPage")
+})
 
 
 
@@ -291,11 +320,7 @@ route.post("/profile-fetchpassword",profile.profilefetchAddress)
 
 
 
-route.get("/signout",(req,res)=>
-{
-    req.session.destroy()
-    res.redirect("/home")
-})
+
 
 
 

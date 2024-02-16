@@ -4,6 +4,7 @@ const userAuthorizeCheck = async (req, res, next) => {
 
     try {
         if (req.session.authenticated) {
+            console.log("userAuthorizeCheck"+req.session.authenticated)
             next()
         }
         else {
@@ -18,19 +19,23 @@ const userAuthorizeCheck = async (req, res, next) => {
 
 
 
-const adminAuthorizeCheck = async (req, res) => {
+const adminAuthorizeCheck = async (req, res,next) => {
     try {
 
         const val = req.query.pass
         const name = req.query.name
 
         console.log("admin entered")
+        console.log(req.session.auth)
 
         if (req.session.auth) {
-            res.render("adminPanel")
+            next()
         }
         else {
-            res.render("adminLogin", { val, name })
+            console.log("else works")
+            res.redirect("/admin")
+
+            // res.render("adminLogin", { val, name })
         }
 
     }

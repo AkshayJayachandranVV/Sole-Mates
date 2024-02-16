@@ -37,6 +37,7 @@ const displayProfile = async (req, res) => {
   }
   catch (e) {
     console.log("Problem witn the  display profile" + e)
+    res.redirect("/error")
   }
 
 
@@ -60,6 +61,7 @@ const addAddress = async (req, res) => {
   }
   catch (e) {
     console.log("error with the displayAddress" + e)
+    res.redirect("/error")
   }
 
 }
@@ -101,6 +103,7 @@ const storeAddress = async (req, res) => {
   }
   catch (e) {
     console.log("error with the storeAddress" + e)
+    res.redirect("/error")
   }
 
 
@@ -123,6 +126,7 @@ const displayEditprofile = async (req, res) => {
   }
   catch (e) {
     console.log("Problem with the displayEditprofile")
+    res.redirect("/error")
   }
 
 
@@ -134,8 +138,6 @@ const updateProfile = async (req, res) => {
 
     console.log(req.body.city)
     console.log(req.session.email)
-
-
 
     const update = await addressData.updateOne({ email: req.session.email }, {
       fullname: req.body.fullname, phonenumber: req.body.phone,
@@ -157,6 +159,7 @@ const updateProfile = async (req, res) => {
   }
   catch (e) {
     console.log("Problem with the updateProfile " + e)
+    res.redirect("/error")
   }
 
 
@@ -177,6 +180,7 @@ const changePassowrd = async (req, res) => {
   catch (e) {
 
     console.log("problem with user profile changepassword" + e)
+    res.redirect("/error")
 
   }
 
@@ -308,6 +312,15 @@ const otpValidationChangePass = async (req, res) => {
 
 
 
+const displayChangePassword=async(req,res)=>{
+  try{
+    res.render("resetPassword")
+
+  }catch(e){
+    console.log("problem withe displayChangePassword"+e)
+  }
+}
+
 
 const newPasswordProfile = async (req, res) => {
 
@@ -343,6 +356,7 @@ const newPasswordProfile = async (req, res) => {
   }
   catch (e) {
     console.log("problem with the newPasswordProfile" + e)
+    res.redirect("/error")
   }
 
 }
@@ -356,23 +370,32 @@ const profileYourOrders = async (req, res) => {
 
     // const userOrder=await orderData.find({username:req.session.username})
 
-    // const orderAggregate=await orderData.aggregate([{$group:{_id:{orderId:"$orderId",date:"$date"},price:{$sum:"$price"},quantity:{$sum:"$quantity"}}}])
-    const orderAggregate = await orderData.aggregate([
-      { $match: { username: req.session.username } },
-      {
-        $group: {
-          _id: {
-            orderId: "$orderId",
-            date: "$orderdate",
-            status: "$status",
-            productname: "$productname"
-          },
-          price: { $sum: "$price" },
-          quantity: { $sum: "$quantity" }
-        }
+  
+  // const userchechdata=await orderData.find({ username: req.session.username })
+
+  // console.log(userchechdata)
+
+  const orderAggregate = await orderData.aggregate([
+    { $match: { username: req.session.username, totalAmount: { $exists: true } } }, // Filter documents where totalAmount exists
+    {
+      $group: {
+        _id: {
+          orderId: "$orderId",
+          date: "$orderdate",
+          totalAmount:"$totalAmount" 
+        },
+        price: { $sum: "$price" },
+        quantity: { $sum: "$quantity" },
+       
       }
-    ]);
-    
+    },
+    { $sort: { "_id.date": -1 } } // Sort based on the date field within the _id object in ascending order
+  ]);
+  
+
+  
+console.log(orderAggregate + " tttttttttttttttttttttttttttttttttttt")
+   
 
     // console.log(orderAggregate._id.orderId)
     // console.log(orderAggregate._id.date)
@@ -382,9 +405,9 @@ const profileYourOrders = async (req, res) => {
      aggregateDestructure = orderAggregate
 
 
-     const destructuredData = aggregateDestructure.map(({ _id, price, quantity }) => {
-      const { orderId, date,status,productname } = _id;
-      return { orderId, date,productname,status ,price, quantity };
+     const destructuredData = aggregateDestructure.map(({ _id, price, quantity}) => {
+      const { orderId, date,status,productname,totalAmount } = _id;
+      return { orderId, date,totalAmount,productname,status ,price, quantity };
     });
 
     console.log("heheheh")
@@ -407,8 +430,8 @@ const profileYourOrders = async (req, res) => {
   }
   catch (e) {
     console.log("problem with the profileYourOrders" + e)
+    res.redirect("/error")
   }
-
 
 }
 
@@ -428,6 +451,7 @@ const userOrderDetailsPage = async (req, res) => {
   }
   catch (e) {
     console.log("Problem with the userOrderDetailsPage" + e)
+    res.redirect("/error")
   }
 
 
@@ -465,6 +489,7 @@ const profilefetchAddress=async(req,res)=>{
     
   }catch(e){
     console.log("problem with the profilefetchPassword"+e)
+    res.redirect("/error")
   }
 }
 
@@ -501,5 +526,6 @@ module.exports = {
   newPasswordProfile,
   profileYourOrders,
   userOrderDetailsPage,
-  profilefetchAddress
+  profilefetchAddress,
+  displayChangePassword
 }

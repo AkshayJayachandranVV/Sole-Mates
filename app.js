@@ -12,15 +12,19 @@ dotenv.config();
 
 
 
+// route.use(session({
+//   secret: 'idkhudebsdhbedbbdejsdnjncantfindme',
+//   resave: false,
+//   saveUninitialized: false,
+ 
+//   // cookie: { maxAge: 24*60*60*7*4 }
 
-
-// app.use(session({
-//     secret: 'idkhudebsdhbedbbdejsdnjncantfindme',
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: { maxAge: 24*60*60*7 }
+//   cookie: {
+//       httpOnly: true,
+//       maxAge: 1*60*60*1000
+//     }
 // }))
-
+ 
 
 
 app.use(bodyParser.json())

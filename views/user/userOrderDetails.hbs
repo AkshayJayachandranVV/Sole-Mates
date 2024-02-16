@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Shoe shop | eCommers</title>
+    <title>SOLE MATES</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {{!--
@@ -57,6 +57,66 @@
         .profile-details p {
             margin: 10px 0;
         }
+
+        .return-p {
+            margin-left: 460px;
+            margin-top: -20px;
+        }
+
+        .cancel-p {
+            margin-left: 240px;
+        }
+
+        .popup {
+            width: 400px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.1);
+            background-color: rgb(197, 217, 197);
+            align-items: center;
+            padding: 0 30px 30px;
+            color: #333;
+            text-align: center;
+            justify-content: center;
+            visibility: hidden;
+            transition: transform 0.4s, top 0.4s;
+        }
+
+        .popupOpen {
+            top: 100%;
+            transform: translate(-50%, -50%) scale(1);
+            visibility: visible;
+        }
+
+        .popup button {
+            width: 100%;
+            margin-top: 50px;
+            padding: 10px 0;
+            background-color: #6fd649;
+            color: #fff;
+            outline: none;
+            font-size: 18px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .applyCoupon {
+            visibility: visible;
+        }
+
+        .removeCoupon {
+            visibility: hidden;
+        }
+
+        #couponCode {
+            height: 60px;
+            width: 140px;
+        }
+
+        .coupon-div {
+            margin-right: 290px;
+        }
     </style>
 
 </head>
@@ -88,78 +148,136 @@
         <!--================Single Product Area =================-->
 
 
-        
+
 
 
         <div class="product_image_area  ">
-            
+
             <div class="container">
-                
+
 
                 <div class="container mt-5">
 
-                    
-                    <h2>Order Details</h2>
-
-                    {{!-- <p>{{productOrder}}</p> --}}
-
-                    {{!-- {{#each productOrder}} --}}
-
-                    <div class="row">
-
-                        {{#each productOrder}}
-
-                        <div class="col-md-8">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <img src="{{this.image}}" alt="Product Image" style="height:500px">
-                                    <br>
-                                    <br>
-                                    <h4 class="card-title">Order ID:{{this.orderId}} </h4>
-                                    <p class="card-text">Order Date: {{formatDate this.orderdate}}</p>
-                                    <h6 class="card-title">Status: {{this.status}} </h6>
-
-                                    <!-- Product List -->
-                                    <h5 class="mt-4 mb-3">Products</h5>
-                                    <ul class="list-group">
-                                        <li class="list-group-item">Product:{{this.productname}} </li>
-                                        <li class="list-group-item">Quantity:{{this.quantity }} </li>
-                                        {{!-- <li class="list-group-item">Product: Smartphone | Quantity: 1 | Price:
-                                            $800</li> --}}
-                                        <!-- Add more items as needed -->
-                                    </ul>
-
-                                    <!-- Total Price -->
-                                    <h5 class="mt-4">Total Price: {{this.price}}</h5>
-                                </div>
-                                <div>
 
 
+
+
+                <h2>Order Details</h2>
+
+                {{!-- <p>{{productOrder}}</p> --}}
+
+                {{!-- {{#each productOrder}} --}}
+
+                <div class="row">
+
+                    {{#each productOrder}}
+
+                    <div class="col-md-8">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <img src="{{this.image}}" alt="Product Image" style="height:500px">
+                                <br>
+                                <br>
+                                <h4 class="card-title">Order ID:<p id="getorderid">{{this.orderId}}</p>
+                                </h4>
+                                <p class="card-text">Order Date: {{formatDate this.orderdate}}</p>
+                                <h6 class="card-title">Status: {{this.status}} </h6>
+
+                                <!-- Product List -->
+                                <h5 class="mt-4 mb-3">Products</h5>
+                                <ul class="list-group">
+                                    <li class="list-group-item">Product:<p id="getproductname">{{this.productname}}</p>
+                                    </li>
+                                    <li class="list-group-item">Quantity:{{this.quantity }} </li>
+                                    {{!-- <li class="list-group-item">Product: Smartphone | Quantity: 1 | Price:
+                                        $800</li> --}}
+                                    <!-- Add more items as needed -->
+                                </ul>
+
+                                <!-- Total Price -->
+                                <h5 class="mt-4">Total Price: {{this.price}}</h5>
+                            </div>
+                            <div>
+
+                                {{#ifNotEquals this.status "DELVERED"}} 
                                     {{#ifEquals this.status "CANCELLED"}}
-                                    <h5 style="color: red;">Order Cancelled</h5>
+                                    <h4 class="cancel-p" style="color: red;">Order Cancelled</h4>
                                     {{else}}
                                     <button class="btn btn-primary ml-200"><a
                                             href="/cancelorder?orderId={{this.orderId}}&proId={{this.productname}}"
                                             onclick="return confirm('Are you sure you want to Cancel')">Cancel</a></button>
                                     {{/ifEquals }}
-                                </div>
+                                {{/ifNotEquals }}
+                                
+                                {{#ifEquals this.status "REQUEST TO RETURN"}}
+                                <h4 class="return-p" style="color: red;">REQUEST TO RETURN</h4>
+                                {{else}}
+                                
+                                {{#ifEquals this.status "RETURN ACCEPTED"}}
+                                <h4 class="cancel-p" style="color:green;margin-left:340px;margin-top:-40px">RETURN ACCEPTED</h4>
+                                {{else ifEquals this.status "RETURN REJECTED"}}
+                                 <h4 class="return-p" style="color: red;">RETURN REJECTED</h4>
+                                {{!-- <button o class="btn btn-primary ml-40">Return Order</button> --}}
+                                {{else}}
+                                {{#ifEquals this.status "DELVERED"}}
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#exampleModal{{@key}}">
+                                    Return Order
+                                </button>
+
+                                <!-- Modal -->
+
+                                <form action="/returnorder?orderId={{this.orderId}}&proId={{this.productname}}" method="post">
+                                    <div class="modal fade" id="exampleModal{{@key}}" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Reason For Return</label>
+                                                        <input type="text" name="reason"
+                                                            placeholder="Return Reason" class="form-control"
+                                                            value="">
+                                                    </div>
+                                                 
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                {{/ifEquals}}
+                               {{/ifEquals }}
+                                {{/ifEquals }}
                             </div>
                         </div>
+                    </div>
 
 
-                        {{/each}}
+                    {{/each}}
 
 
-                         <div class="col-md-4 ">
-                            <div class="card mb-200">
-                                <div class="card-body">
-                                    <h5 class="card-title">Shipping Address</h5>
-                                    <p class="card-text">Name:{{productOrder.[0].username}}</p>
-                                    <p class="card-text">State:{{productOrder.[0].address.state}}</p>
-                                    <p class="card-text">City: {{productOrder.[0].address.city}}</p>
-                                    <p class="card-text">Housename: {{productOrder.[0].address.housename}}</p>
-                                </div>
+                    <div class="col-md-4 ">
+                        <div class="card mb-200">
+                            <div class="card-body">
+                                <h5 class="card-title">Shipping Address</h5>
+                                <p class="card-text">Name:{{productOrder.[0].username}}</p>
+                                <p class="card-text">State:{{productOrder.[0].address.state}}</p>
+                                <p class="card-text">City: {{productOrder.[0].address.city}}</p>
+                                <p class="card-text">Housename: {{productOrder.[0].address.housename}}</p>
                             </div>
+                        </div>
 
 
 
@@ -231,6 +349,7 @@
     <!-- Search model end -->
 
     <!-- JS here -->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/assets_user/js/vendor/modernizr-3.5.0.min.js"></script>
     <!-- Jquery, Popper, Bootstrap -->

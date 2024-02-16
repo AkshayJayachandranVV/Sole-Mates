@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <title>Breeze Admin</title>
+  <title>ADMIN SOLE MATES</title>
   <link rel="stylesheet" href="/assets_admin/vendors/mdi/css/materialdesignicons.min.css" />
   <link rel="stylesheet" href="/assets_admin/vendors/flag-icon-css/css/flag-icon.min.css" />
   <link rel="stylesheet" href="/assets_admin/vendors/css/vendor.bundle.base.css" />
@@ -40,8 +40,8 @@
               <!--change to offline or busy as needed-->
             </div>
             <div class="nav-profile-text d-flex flex-column pr-3">
-              <span class="font-weight-medium mb-2">Henry Klein</span>
-              <span class="font-weight-normal">$8,753.00</span>
+              <span class="font-weight-medium mb-2">Admin</span>
+              {{!-- <span class="font-weight-normal">$8,753.00</span> --}}
             </div>
             <span class="badge badge-danger text-white ml-3 rounded">3</span>
           </a>
@@ -109,19 +109,19 @@
         <div class="content-wrapper pb-0">
 
 
-         <p style="color: :green;" id="Success">{{success}}</p>
-         <h4 id="category-preseneted" style="color: red;">{{categoryPresented}}</h4>
+          <p style="color: :green;" id="Success">{{success}}</p>
+          <h4 id="category-preseneted" style="color: red;">{{categoryPresented}}</h4>
           {{!-- <button type="button" class="btn btn-outline-primary mb-5"><a href="/admin/editcategory">Add
               Category</a></button> --}}
           <div class="container">
 
-            
+
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
               Add Category
             </button>
 
             <!-- Modal -->
-            <form  method="post" >
+            <form method="post">
               <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -135,13 +135,13 @@
                     <div class="modal-body">
                       <div class="form-group">
                         <label class="form-control-label">Name of Category</label>
-                        <input type="text" name="category" placeholder="Category Name" class="form-control"
+                        <input type="text" name="categoryname" placeholder="Category Name" class="form-control"
                           value="{{this.category}}">
-                        
+
                       </div>
-                    
-                     
-                    
+
+
+
                       {{!-- <div>
 
                         <input type="file" name="avatar" />
@@ -160,7 +160,7 @@
                 </div>
               </div>
             </form>
-           
+
           </div>
 
 
@@ -197,62 +197,63 @@
 
         </div>
         </td>
-        {{!-- <td> <button class="btn btn-danger"><a href="/admin/categorydel/{{this.category}}">Delete</a></button></td> --}}
-         <td> 
+        {{!-- <td> <button class="btn btn-danger"><a href="/admin/categorydel/{{this.category}}">Delete</a></button>
+        </td> --}}
+        <td>
           <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{@key}}">
-                    Edit
-                  </button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{@key}}">
+            Edit
+          </button>
 
-                  <!-- Modal -->
-                  
-                  <form action="/admin/editcategory/{{this.category}}" method="post" >
-                    <div class="modal fade" id="exampleModal{{@key}}" tabindex="-1" role="dialog"
-                      aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                             <div class="form-group">
-                                                <label class="form-control-label">Name Of Category</label>
-                                                <input type="text" name="categoryname" placeholder="Product Name"
-                                                    class="form-control" value="{{this.category}}">
-                                                <input type="hidden" name="oldcategoryname" value="{{this.category}}">
-                                            </div>
-                                            {{!-- <div class="form-group">
-                                                <label class="form-control-label">Category</label>
-                                                <input type="text" name="category" placeholder="Category"
-                                                    class="form-control" value="{{editData.category}}">
-                                            </div> --}}
-                                              
-                                            
-                                           
-                                            {{!-- <div>
+          <!-- Modal -->
 
-                                                <input type="file" name="avatar" />
-
-                                            </div> --}}
-
-                                            {{!-- <div class="form-group">
-                                                <input type="submit" value="Edit" class="btn btn-primary">
-                                            </div> --}}
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
-                          </div>
-                        </div>
-                      </div>
+          <form action="/admin/editcategory/{{this.category}}" method="post">
+            <div class="modal fade" id="exampleModal{{@key}}" tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <label class="form-control-label">Name Of Category</label>
+                      <input type="text" name="categoryname" placeholder="Product Name" class="form-control"
+                        value="{{this.category}}">
+                      <input type="hidden" name="oldcategoryname" value="{{this.category}}">
                     </div>
-                  </form>
+                    {{!-- <div class="form-group">
+                      <label class="form-control-label">Category</label>
+                      <input type="text" name="category" placeholder="Category" class="form-control"
+                        value="{{editData.category}}">
+                    </div> --}}
 
 
-         </td>
+
+                    {{!-- <div>
+
+                      <input type="file" name="avatar" />
+
+                    </div> --}}
+
+                    {{!-- <div class="form-group">
+                      <input type="submit" value="Edit" class="btn btn-primary">
+                    </div> --}}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+
+        </td>
         </tr>
         </tbody>
 
@@ -271,19 +272,19 @@
     <!-- page-body-wrapper ends -->
 
     <script>
-    setTimeout(()=>{
+      setTimeout(() => {
 
-        const data=document.getElementById("Success")
+        const data = document.getElementById("Success")
 
-         data.style.display="none"
-    },4000)
-</script>
-<script>
-  setTimeout(()=>{
-    const data=document.getElementById("category-preseneted")
-    data.style.display="none"
-  },4000)
-</script>
+        data.style.display = "none"
+      }, 4000)
+    </script>
+    <script>
+      setTimeout(() => {
+        const data = document.getElementById("category-preseneted")
+        data.style.display = "none"
+      }, 4000)
+    </script>
 
   </div>
   <!-- container-scroller -->

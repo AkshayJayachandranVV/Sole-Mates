@@ -7,16 +7,24 @@ const categoryData = require("../../model/category_Model")
 const HomeImages = async (req, res) => {
 
     try {
-
+   console.log("entered to homeimages")
         let enter = req.session.authenticated
-        const images = await productData.find({})
-        console.log(images)
+        if(req.session.authenticated){
 
-        res.render("userHome", { images, enter })
+            const images = await productData.find({})
+            console.log(images)
+    
+            res.render("userHome", { images, enter })
+
+        }else{
+            res.redirect("/home")
+        }
+       
 
     }
     catch (e) {
         console.log(e)
+        res.redirect("/error")
     }
 
 }
@@ -56,6 +64,7 @@ const productDetailPage = async (req, res) => {
     }
     catch (e) {
         console.log(e)
+        res.redirect("/error")
     }
 }
 
@@ -116,6 +125,7 @@ const allCollectionDisplay = async (req, res) => {
     }
     catch (e) {
         console.log("error with the Allcollection " + e)
+        res.redirect("/error")
     }
 }
 
@@ -156,6 +166,7 @@ const displayProduct = async (req, res) => {
     }
     catch (e) {
         console.log(" error withe displayProduct" + e)
+        res.redirect("/error")
     }
 
 
@@ -180,6 +191,7 @@ const userSearchProduct = async (req, res) => {
 
         } else {
             res.redirect("/allcollection")
+            res.redirect("/error")
 
         }
 
@@ -193,63 +205,114 @@ const userSearchProduct = async (req, res) => {
 }
 
 
+const lowToHigh=async(req,res)=>{
+    try{
+        console.log("entered in to the allcollection display")
+        console.log(req.query.data)
+        // const product = await productData.find({ list:0 })
+        const category = await categoryData.find({ list: 0 })
+        let currentPage = req.query.page || 0
+        console.log(currentPage)
 
-// const pagenation=async(req,res)=>{
-//     try{
+        if (req.query.next) {
+            console.log("next entred")
+            currentPage++
 
+        }
 
-//     }
-//     catch(e){
-//             console.log("problem withe the pagenation"+e)
-//     }
-// }
+        if (req.query.previous) {
+            console.log("prev entred")
+            // let nextValue=req.query.previous-2
+            // // let skipValue=nextValue*3;
+            // const product=await productData.find({list:0 }).skip(skipValue*3).limit(3)
+            // nextValue++;
+            // res.render("formalStore", { product, data: "All Collection",category,cat:"All Collection" ,nextValue,skipValue})
+            currentPage--
+        }
+        const proCount = await productData.find({ list: 0 }).count()
+        let countLimit = Math.ceil(proCount / 6);
+        let countCurrent = currentPage + 1
+        let product
+        let cat
+        let categoryFind
+    
+        
+        if(!req.query.data){
+            console.log("enteredd into the if")
+           product = await productData.find({ list: 0 }).skip(currentPage* 6).limit(6).sort({price:1})
+           console.log(product.length+ " length of cominhg product")
+           cat="All Collection"
+        }else{
+            console.log("enteredd into the else")
+           product = await productData.find({category:req.query.data, list: 0 }).skip(currentPage * 6).limit(6).sort({price:1})
+           categoryFind=req.query.data
+        }
 
+        res.render("formalStore", { product, data: "All Collection", category, cat: "All Collection", currentPage, countLimit, countCurrent,categoryFind })
 
-// // FORMAL DISPLAY CODE AND TAKING DATA IN DB
-// const formalDisplay = async (req, res) => {
-
-//     try {
-
-//         const product = await productData.find({ $and: [{ category: "formals" }, { list: 0 }] })
-//         console.log(product)
-
-//         res.render("formalStore", { product, data: "Formal Store" })
-
-//     }
-//     catch (e) {
-//         console.log(e)
-//     }
-
-// }
-
-
-
-
-// // FORMAL DISPLAY CODE AND TAKING DATA IN DB
-// const casualDisplay = async (req, res) => {
-
-//     try {
-
-//         const product = await productData.find({ $and: [{ category: "casuals " }, { list: 0 }] })
-//         console.log(product)
-
-//         res.render("formalStore", { product, data: "Casual Store" })
-
-//     }
-//     catch (e) {
-//         console.log(e)
-//     }
-
-
-// }
-
-
-
+    }catch(e){
+        console.log("problem with the lowToHigh"+e)
+        res.redirect("/error")
+    }
+}
 
 
 
 
+const HightoLow=async(req,res)=>{
+    try{
+        console.log("entered in to the allcollection display")
+
+        console.log(req.query.data)
+
+       
+
+        // const product = await productData.find({ list:0 })
+        const category = await categoryData.find({ list: 0 })
+        let currentPage = req.query.page || 0
+        console.log(currentPage)
+
+        if (req.query.next) {
+            console.log("next entred")
+            currentPage++
+
+        }
+
+        if (req.query.previous) {
+            console.log("prev entred")
+            // let nextValue=req.query.previous-2
+            // // let skipValue=nextValue*3;
+            // const product=await productData.find({list:0 }).skip(skipValue*3).limit(3)
+            // nextValue++;
+            // res.render("formalStore", { product, data: "All Collection",category,cat:"All Collection" ,nextValue,skipValue})
+            currentPage--
+        }
+        const proCount = await productData.find({ list: 0 }).count()
+        let countLimit = Math.ceil(proCount / 6);
+        let countCurrent = currentPage + 1
+
+        let product
+        let cat
+        let categoryFind
+        if(!req.query.data){
+             product = await productData.find({ list: 0 }).skip(currentPage * 6).limit(6).sort({price:-1})
+             cat="All Collection"
+        }else{
+             product = await productData.find({category:req.query.data, list: 0 }).skip(currentPage * 6).limit(6).sort({price:-1})
+             categoryFind=req.query.data
+        }
+        
+
+        res.render("formalStore", { product, data: "All Collection", category, cat: "All Collection", currentPage, countLimit, countCurrent,categoryFind })
+
+    }catch(e){
+        console.log("problem with the lowToHigh"+e)
+        res.redirect("/error")
+    }
+}
 
 
 
-module.exports = { productDetailPage, allCollectionDisplay, HomeImages, displayProduct, userSearchProduct }
+
+
+module.exports = { productDetailPage, allCollectionDisplay, HomeImages, displayProduct, userSearchProduct,lowToHigh,HightoLow }

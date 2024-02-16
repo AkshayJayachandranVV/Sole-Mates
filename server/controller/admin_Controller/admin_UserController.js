@@ -13,11 +13,26 @@ const showUser = async (req, res) => {
 
     try {
 
-        const value = await userData.find({}).sort({_id:-1})
+
+        let currentValue=req.query.page || 0
+
+        if(req.query.next){
+            currentValue++
+
+        }
+
+        if(req.query.previous){
+            currentValue--
+
+        }
+
+        const userList=await userData.find({}).skip(currentValue*6).limit(6).sort({_id:-1})
+
+        // const value = await userData.find({}).sort({_id:-1})
 
         // console.log(value)
 
-        res.render("adminUsers", { value })
+        res.render("adminUsers",{userList,currentValue})
 
     }
     catch (e) {

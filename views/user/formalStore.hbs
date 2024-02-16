@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Watch shop | eCommers</title>
+    <title>SOLE MATES</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {{!--
@@ -96,26 +96,47 @@
 
                         <!--End Nav Button  -->
                     </div>
+
+                    <div>
+                       
+                    </div>
                     <!-- Grid and List view -->
                     <div class="grid-list-view">
+                        <!-- Sidebar -->
+                        <div >
+    <!-- Sidebar -->
+    <!-- Sidebar -->
+<div class="sidebar">
+    <h2 style="color: #333; font-size: 18px; margin-bottom: 15px;">Sort by Price</h2>
+    <ul style="list-style: none; padding: 0;">
+        <li style="margin-bottom: 10px;">
+            <a href="/lowtohigh?data={{categoryFind}}" style="display: block; padding: 10px; max-width: 150px; background-color: #f0f0f0; color: #333; text-decoration: none; border-radius: 5px;">Price Low to High</a>
+        </li>
+        <li>
+            <a href="/hightolow?data={{categoryFind}}" style="display: block; padding: 10px; max-width: 150px; background-color: #f0f0f0; color: #333; text-decoration: none; border-radius: 5px;">Price High to Low</a>
+        </li>
+    </ul>
+</div>
+
+
+
+
+</div>
+
+                       
+
                     </div>
                     <!-- Select items -->
-                    {{!-- <div class="select-this">
-                        <form action="#">
-                            <div class="select-itms">
-                                <select name="select" id="select1">
-                                    <option value="">40 per page</option>
-                                    <option value="">50 per page</option>
-                                    <option value="">60 per page</option>
-                                    <option value="">70 per page</option>
-                                </select>
-                            </div>
-                        </form>
-                    </div> --}}
+                   <div class="select-this">
+                         
+                  </div>
+
                 </div>
                 <!-- Nav Card -->
                 <div class="tab-content" id="nav-tabContent">
                     <!-- card one -->
+                  
+                  
 
                     {{!-- {{#each product}} --}}
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
@@ -159,17 +180,18 @@
                     <!-- Card three -->
 
                     {{#if pagenationcat}}
-                     <div class="pagenation">
-                     <nav aria-label="...">
+                    <div class="pagenation">
+                        <nav aria-label="...">
                             <ul class="pagination">
-                                  <div class="showing col col-xs-12 mr-10">
+                                <div class="showing col col-xs-12 mr-10">
                                     <span>SHOWING {{countCurrent}} OF {{countLimit}} </span>
-                                    </div>
+                                </div>
 
                                 {{#if currentPage}}
                                 <li class="page-item">
                                     {{!-- <span class="page-link">Previous</span> --}}
-                                    <a class="page-link" href="/categorypagenation?previouscat={{categoryFind}}&page={{currentPage}}">Previous</a>
+                                    <a class="page-link"
+                                        href="/categorypagenation?previouscat={{categoryFind}}&page={{currentPage}}">Previous</a>
                                 </li>
                                 {{/if}}
 
@@ -184,7 +206,8 @@
                                 {{!-- <li class="page-item"><a class="page-link"
                                         href="/pagenation?next={{nextValue}}">{{nextValue}}</a></li> --}}
                                 <li class="page-item">
-                                    <a class="page-link" href="/categorypagenation?nextcat={{categoryFind}}&page={{currentPage}}">Next</a>
+                                    <a class="page-link"
+                                        href="/categorypagenation?nextcat={{categoryFind}}&page={{currentPage}}">Next</a>
                                 </li>
                             </ul>
                         </nav>
@@ -193,11 +216,11 @@
 
 
                     <div class="pagenation">
-                     <nav aria-label="...">
+                        <nav aria-label="...">
                             <ul class="pagination">
-                                  <div class="showing col col-xs-12 mr-10">
+                                <div class="showing col col-xs-12 mr-10">
                                     <span>SHOWING {{countCurrent}} OF {{countLimit}} </span>
-                                    </div>
+                                </div>
 
                                 {{#if currentPage}}
                                 <li class="page-item">

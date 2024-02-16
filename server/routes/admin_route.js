@@ -11,14 +11,23 @@ const adminCategory=require("../controller/admin_Controller/admin_CategoryContol
 const adminOrder=require("../controller/admin_Controller/admin_OrderController")
 const middleware=require("../middleware/middleware")
 const dashboard=require("../controller/admin_Controller/admin_DashboardController")
-
+const adminCoupon=require("../controller/admin_Controller/admin_CouponController")
+const authAdmin=require("../../server/middleware/middleware")
 
 route.use(session({
     secret: 'idkhudebsdhbedbbdejsdnjncantfindme',
     resave: false,
-    saveUninitialized: false,
-    cookie: { maxAge: 24*60*60*7*4 }
+    saveUninitialized: true,
+   
+    // cookie: { maxAge: 24*60*60*7*4 }
+
+    cookie: {
+        httpOnly: true,
+        maxAge: 1*60*60*1000
+      }
 }))
+
+
 
 
 route.use(function (req, res, next) {
@@ -115,15 +124,55 @@ route.use(function (req, res, next) {
 
 // })
 
-route.get("/",middleware.adminAuthorizeCheck)
+
+// function adminAuthorizeCheck(req, res,next){
+//     try {
+
+//         const val = req.query.pass
+//         const name = req.query.name
+
+//         console.log("admin entered")
+//         console.log(req.session.auth)
+
+//         if (req.session.auth) {
+//             console.log("req.session entered")
+//             next();
+//         }
+//         else {
+//             res.render("adminLogin", { val, name })
+//         }
+
+//     }
+//     catch (e) {
+
+//         console.log("problem with the adminAuthorizeCheck" + e)
+
+//     }
+// }
+
+
+route.get("/",userData.displayPanel)
+
+
+route.post("/",userData.Login)
+
+route.get("/signout",userData.signout)
+
+route.use(authAdmin.adminAuthorizeCheck)
+
+//SIGNOUT ADMIN
+
+
 
 
 route.get("/dashboard",dashboard.dashboardData)
 
 route.get('/sales',dashboard.dashboardDisplay)
 
-route.post("/",userData.Login)
 
+
+
+route.post('/salesReport',dashboard.salesReport)
 
 
 //MULTER IMAGE UPLOAD
@@ -159,8 +208,6 @@ route.post("/editproducts/:id", [upload.array("avatar",4),adminProduct.updatePro
 //         console.error("Error uploading file:", req.file);   
 //         res.status(500).send("Error uploading file");
 //     }
-
-
 // })
 
 
@@ -175,6 +222,8 @@ route.get("/dashboard",[dashboard.dashboardDisplay,dashboard.dashboardData])
 
 //USERS
 route.get("/users",adminUsers.showUser)
+
+route.get("/userpagenation",adminUsers.showUser)
 
 route.post("/users",adminUsers.searchUser) 
 
@@ -191,8 +240,10 @@ route.get("/addproducts",adminProduct.addProductDisplay)
 
 route.get("/productdelete/:product",adminProduct.deleteProduct)
 
-// route.get("/editproducts/:edit",adminProduct.editProduct)
 
+route.get("/productpagenation",adminProduct.productDisplay)
+
+// route.get("/editproducts/:edit",adminProduct.editProduct)
 
 
 
@@ -213,9 +264,7 @@ route.get("/categorydel/:catId",adminCategory.categoryDelete)
 route.post("/editcategory/:catid",adminCategory.editCategory)
 
 
-
-
-//ORDERS
+//ORDERSUPDATE
 route.get("/orders",adminOrder.displayOrder)
 
 //ORDER STATUS UPDATE
@@ -228,19 +277,23 @@ route.get("/removeorder/:orderId",adminOrder.deleteOrder)
 route.get("/orderdetails",adminOrder.displayOderDetails)
 
 
+route.get("/returnaccept",adminOrder.returnAccept)
+
+route.get("/returnreject",adminOrder.returnReject)
+
 
 
 //COUPON
-route.get("/coupon",(req,res)=>{
-    res.render("adminCoupon")
-})
+route.get("/coupon",adminCoupon.displayCouponPage)
+
+route.post("/coupon",adminCoupon.addCoupon)
+
+route.get("/deletecoupon",adminCoupon.deleteCoupon)
+
+route.post("/editcoupon/:id",adminCoupon.editcoupon)
 
 
-
-//SIGNOUT ADMIN
-
-route.get("/signout",userData.signout)
-
+route.get("/orderpagenation",adminOrder.displayOrder)
 
 
 module.exports=route     

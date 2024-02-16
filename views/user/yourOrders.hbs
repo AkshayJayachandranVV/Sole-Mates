@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Shoe shop | eCommers</title>
+    <title>SOLE MATES</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {{!--
@@ -86,10 +86,6 @@
 
 
 
-
-
-
-
         <!--================Single Product Area =================-->
 
 
@@ -104,9 +100,10 @@
                                 <th>Order Id</th>
                                 {{!-- <th>Product Name</th> --}}
                                 {{!-- <th>Image</th> --}}
-                                {{!-- <th>Price</th> --}}
+                                <th>Price</th>
                                 <th>Date</th>
                                 <th>Quantity</th>
+                                {{!-- <th>Total Amount</th> --}}
                                 {{!-- <th>Order Cancel</th> --}}
                                 <th>Order Details</th>
 
@@ -125,12 +122,13 @@
                                 </td> --}}
 
 
-                                {{!-- <td>{{this.price}}</td> --}}
+                                <td>{{this.totalAmount}}</td>
                                
                                 <td>
                                     {{formatDate this.date}}
                                 </td>
                                  <td>{{this.quantity}}</td>
+                                 {{!-- <td>{{this.price}}</td> --}}
                                 <td>
                                     <a class="btn btn-info"
                                         href="/userorderdetails?orderId={{this.orderId}}">Order

@@ -32,6 +32,7 @@ const userAuthorize = async (req, res, next) => {
     }
     catch (e) {
         console.log(e)
+        res.redirect("/error")
     }
 }
 
@@ -76,7 +77,8 @@ const addToCart = async (req, res) => {
                 price: addCart.price,
                 removevalue: 0,
                 username: req.session.username,
-                quantity: 1
+                quantity: 1,
+                category:addCart.category
 
 
             })
@@ -97,6 +99,7 @@ const addToCart = async (req, res) => {
     catch (e) {
 
         console.log("error in the addToCart part" + e)
+        res.redirect("/error")
 
     }
 }
@@ -150,6 +153,7 @@ const cartDisplay = async (req, res) => {
     }
     catch (e) {
         console.log("The error with cartDisplay" + e)
+        res.redirect("/error")
 
     }
 }
@@ -180,6 +184,7 @@ const cartRemoving = async (req, res) => {
     }
     catch (e) {
         console.log("the error is present in cartRemoving")
+        res.redirect("/error")
     }
 
 
@@ -209,6 +214,7 @@ const incrementData = async (req, res) => {
     }
     catch (e) {
         console.log("Problem with the incrementData" + e)
+        res.redirect("/error")
     }
 }
 
@@ -229,6 +235,7 @@ const decrementData = async (req, res) => {
     }
     catch (e) {
         console.log("Problem with the incrementData" + e)
+        res.redirect("/error")
     }
 }
 
@@ -252,15 +259,26 @@ const updateQuantity = async (req, res) => {
 
         // console.log("vallllllllllllllllllll" + val)
         const cartCheck = await cartData.find({ username: req.session.username, productname: req.body.productId })
+        const productCheck = await productData.findOne({ productname: req.body.productId })
+        console.log("-----------------------------------")
+       
+        console.log(productCheck)    
+        console.log(productCheck.stock)
+        console.log("------------------------------------------------------------------")
         console.log("the product from db" + cartCheck[0].quantity)
 
         let cartQuantity = cartCheck[0].quantity
         let valuecheck = cartQuantity + req.body.count
-        if (valuecheck >= 1 & valuecheck <= 10) {
+        console.log(valuecheck+"      requested price")
+        if(valuecheck<=productCheck.stock ){
+                if (valuecheck >= 1 & valuecheck <= 10) {
 
-            console.log("entered into the checkQuantity if condition")
-            const userquantity = await cartData.updateOne({ $and: [{ username: req.session.username }, { productname: req.body.productId }] }, { $inc: { quantity: req.body.count } })
-            console.log(" To check Update or not " + userquantity)
+                    console.log("entered into the checkQuantity if condition")
+                    const userquantity = await cartData.updateOne({ $and: [{ username: req.session.username }, { productname: req.body.productId }] }, { $inc: { quantity: req.body.count } })
+                    console.log(" To check Update or not " + userquantity)
+                }
+        }else{
+            res.json({ success: false, msg:"Stock has reach the limit" })
         }
         const cartlen = await cartData.find({ username: req.session.username, productname: req.body.productId })
         console.log(cartlen)
@@ -304,8 +322,89 @@ const updateQuantity = async (req, res) => {
     }
     catch (e) {
         console.log("problem with the updateQuality" + e)
+        // res.redirect("/error")
     }
 
 }
+
+
+
+
+
+// const updateQuantity = async (req, res) => {
+//     try {
+//         let quantity
+//         let totalAmount
+
+//         console.log("updatewQuantity................-------------------------------------")
+//         // console.log(req.body)
+//         // console.log(req.body.count)
+//         // console.log(req.body.newQuantity)
+//         let checkQuantity = req.body.newQuantity
+//         // console.log("chweckquantity" + checkQuantity)
+//         // console.log(req.body.price)
+//         let productPrice = req.body.price
+//         console.log(req.session.username)
+//         let val = Number(req.body.newQuantity) + req.body.count
+
+//         // console.log("vallllllllllllllllllll" + val)
+//         const cartCheck = await cartData.find({ username: req.session.username, productname: req.body.productId })
+//         console.log("the product from db" + cartCheck[0].quantity)
+
+//         let cartQuantity = cartCheck[0].quantity
+//         let valuecheck = cartQuantity + req.body.count
+//         if (valuecheck >= 1 & valuecheck <= 10) {
+
+//             console.log("entered into the checkQuantity if condition")
+//             const userquantity = await cartData.updateOne({ $and: [{ username: req.session.username }, { productname: req.body.productId }] }, { $inc: { quantity: req.body.count } })
+//             console.log(" To check Update or not " + userquantity)
+//         }
+//         const cartlen = await cartData.find({ username: req.session.username, productname: req.body.productId })
+//         console.log(cartlen)
+//         quantity = cartlen[0].quantity
+
+
+//         const totalprice = await cartData.aggregate([
+//             {
+//                 $match: { username: req.session.username }
+//             },
+//             {
+//                 $group: { _id: "$productname", price: { $sum: "$price" }, quantity: { $sum: "$quantity" } }
+//             },
+//             {
+//                 $project: { _id: 0, amount: { $multiply: ["$price", "$quantity"] } }
+//             },
+//             {
+//                 $group: { _id: "null", total: { $sum: "$amount" } }
+//             }
+//         ])
+
+//         console.log(totalprice)
+
+
+//         if (totalprice.length < 1) {
+//             totalAmount = 0
+//         }
+//         else {
+//             console.log(totalprice[0].total)
+//             totalAmount = totalprice[0].total
+
+//         }
+
+
+//         let totalPrice = quantity * productPrice
+//         console.log("totalprice" + totalPrice)
+//         res.json({ success: true, quantity, totalPrice, totalAmount })
+
+
+
+//     }
+//     catch (e) {
+//         console.log("problem with the updateQuality" + e)
+//         res.redirect("/error")
+//     }
+
+// }
+
 
 module.exports = { addToCart, cartRemoving, cartDisplay, userAuthorize, incrementData, decrementData, updateQuantity }

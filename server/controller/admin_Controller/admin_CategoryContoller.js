@@ -69,20 +69,24 @@ const categoryDetails = async (req, res) => {
 const storeCategory = async (req, res) => {
     try {
 
-        console.log(req.body.category)
+        console.log("entered int o the storeCategory")
 
-        const filter=req.body.category
+        console.log(req.body.categoryname)
+        console.log(req.body)
+
+        const filter=req.body.categoryname
         const regex = new RegExp(`^${filter}`, 'i')
 
         const Alreadycategory=await catData.find({category:{$regex:regex}})
-        console.log(Alreadycategory)
-        if(Alreadycategory){
+
+        console.log(Alreadycategory.length+ "lengthhhhhhhhhhhhhhhhhhhhhhhhh")
+        if(Alreadycategory.length>0){
             res.redirect("/admin/category?alreadycat=Category Already Present")
 
         }else{
         const newCategory = new catData({
 
-            category: req.body.category,
+            category: req.body.categoryname,
             list: 0
 
         })
@@ -153,7 +157,15 @@ const editCategory=async(req,res)=>{
          
   
           const changecat=await catData.findOne({category:req.params.catid})
-          await catData.updateMany({category:req.params.catid},{$set:{category:req.body.categoryname}})
+          console.log(changecat)
+          if(changecat)
+          {
+               res.redirect("/admin/category?alreadycat=Category Already Present")
+          }else{
+               await catData.updateMany({category:req.params.catid},{$set:{category:req.body.categoryname}})
+
+          }
+         
   
           // const changepro=await productData.updateMany({category:req.params.catid},{$set:{category:req.body.categoryname}})
   

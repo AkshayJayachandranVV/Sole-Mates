@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <title>Breeze Admin</title>
+  <title>ADMIN SOLE MATES</title>
   <link rel="stylesheet" href="/assets_admin/vendors/mdi/css/materialdesignicons.min.css" />
   <link rel="stylesheet" href="/assets_admin/vendors/flag-icon-css/css/flag-icon.min.css" />
   <link rel="stylesheet" href="/assets_admin/vendors/css/vendor.bundle.base.css" />
@@ -42,8 +42,8 @@
               <!--change to offline or busy as needed-->
             </div>
             <div class="nav-profile-text d-flex flex-column pr-3">
-              <span class="font-weight-medium mb-2">Henry Klein</span>
-              <span class="font-weight-normal">$8,753.00</span>
+              <span class="font-weight-medium mb-2">Admin</span>
+              {{!-- <span class="font-weight-normal">$8,753.00</span> --}}
             </div>
             <span class="badge badge-danger text-white ml-3 rounded">3</span>
           </a>
@@ -132,7 +132,7 @@
 
 
 
-            {{#each orderValue}}
+            {{#each orderList}}
             <tbody>
               <form action="/admin/updatestatus?orderId={{this.orderId}}&proId={{this.productname}}" method="post">
                 <tr>
@@ -147,10 +147,19 @@
                       <br>
                       {{!-- <input type="text" name="category" placeholder="Category" class="form-control"> --}}
                       {{!-- <label for="dog-names">Choose a dog name:</label> --}}
-                      {{#ifEquals this.status "CANCELLED"}}
+                       {{#ifEquals this.status "CANCELLED"}}
                       {{!-- <button class="btn btn-danger" onclick="return confirm('Do you want to cancell the oder')"> canceled</button> --}}
                       <P style="color: RED;">CANCELLED</P>
-            {{!--         {{else}} --}}
+                       {{else ifEquals this.status "RETURN REJECTED"}}
+                      {{!-- <button class="btn btn-danger" onclick="return confirm('Do you want to cancell the oder')"> canceled</button> --}}
+                      <P style="color: RED;">RETURN REJECTED</P>
+                      {{else ifEquals this.status "RETURN ACCEPTED"}}
+                      {{!-- <button class="btn btn-danger" onclick="return confirm('Do you want to cancell the oder')"> canceled</button> --}}
+                      <P style="color:green;">RETURN ACCEPTED</P>
+                      {{else ifEquals this.status "REQUEST TO RETURN"}}
+                      {{!-- <button class="btn btn-danger" onclick="return confirm('Do you want to cancell the oder')"> canceled</button> --}}
+                      <P style="color: RED;">REQUEST TO RETURN</P>
+                      {{!--         {{else}} --}}
                       {{else ifEquals this.status "ORDER PLACED"}}
                       <select class="btn btn-success" name="category" id="category-names">
                         {{!-- <option value="ORDER PLACED"></option> --}}
@@ -201,6 +210,37 @@
 
 
           </table>
+
+           <div class="pagenation">
+                     <nav aria-label="...">
+                            <ul class="pagination">
+                                  <div class="showing col col-xs-12 mr-10">
+                                    <span>SHOWING        OF     </span>
+                                    </div>
+
+                                {{#if currentValue}}
+                                <li class="page-item">
+                                    {{!-- <span class="page-link">Previous</span> --}}
+                                    <a class="page-link" href="/admin/orderpagenation?previous=1&page={{currentValue}}">Previous</a>
+                                </li>
+                                {{/if}}
+
+                                {{!-- <li class="page-item"><a class="page-link" href="/pagenation"> {{previous}}</a>
+                                </li> --}}
+                                {{!-- <li class="page-item active">
+                                    <span class="page-link">
+                                        {{nextValue}}
+                                        <span class="sr-only">(current)</span>
+                                    </span>
+                                </li> --}}
+                                {{!-- <li class="page-item"><a class="page-link"
+                                        href="/pagenation?next={{nextValue}}">{{nextValue}}</a></li> --}}
+                                <li class="page-item">
+                                    <a class="page-link" href="/admin/orderpagenation?next=2&page={{currentValue}}" >Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
 
 
 

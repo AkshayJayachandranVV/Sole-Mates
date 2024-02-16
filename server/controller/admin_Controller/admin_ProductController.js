@@ -4,6 +4,9 @@ const bcrypt = require("bcrypt")
 const productData = require("../../model/product_details")
 const catData = require("../../model/category_Model")
 const orderData = require("../../model/user_Orders")
+var fs = require('fs');
+const sharp = require('sharp');
+var path = require('path');
 
 
 //DISPLAY THE PRDUCTS IN ADMIN PRODUCT PAGE
@@ -12,7 +15,21 @@ const productDisplay = async (req, res) => {
 
     try {
         console.log("entered ordvt displaye")
-        const productList = await productData.find({}).sort({_id:-1})
+        let currentValue=req.query.page || 0
+
+        if(req.query.next){
+            currentValue++
+
+        }
+
+        if(req.query.previous){
+            currentValue--
+
+        }
+
+        const productList=await productData.find({}).skip(currentValue*6).limit(6).sort({_id:-1})
+
+        // const productList = await productData.find({}).sort({_id:-1})
         const success = req.query.success
         //  console.log(productList.list)
         //  console.log(productList)
@@ -28,7 +45,7 @@ const productDisplay = async (req, res) => {
             //     console.log("enterd if")
             //     res.render("adminProducts", { productList, success })
             // }
-            res.render("adminProducts", { productList, success })
+            res.render("adminProducts", { productList, success,currentValue })
 
         }
 
@@ -50,17 +67,67 @@ const productDetails = async (req, res) => {
         console.log(data.stock)
         console.log(req.files)
         let imagePath = []
-        console.log("adata saveed")
+        console.log("productDetails saveed")
 
-        for (let i = 0; i < req.files.length; i++) {
-            imagePath[i] = req.files[i].path.replace(/\\/g, "/").replace('public/', '/')
-        }
+      
 
         // imagePath[0] = req.files[0].path.replace(/\\/g, "/").replace('public/', '/')
         // imagePath[1] = req.files[1].path.replace(/\\/g, "/").replace('public/', '/')
         // imagePath[2] = req.files[2].path.replace(/\\/g, "/").replace('public/', '/')
         // imagePath[3] = req.files[3].path.replace(/\\/g, "/").replace('public/', '/')
         console.log("adata saveed")
+        const filter=req.body.productname
+        const regex = new RegExp(`^${filter}`, 'i')
+
+        const AlreadyProduct=await productData.findOne({productname:{$regex:regex}})
+        console.log(AlreadyProduct)
+        if(AlreadyProduct){
+            console.log("Already Presented")
+        res.redirect("/admin/addproducts?success=Productname Already presented")
+        }else{
+    
+
+            //================================================start crop image==========================================
+        const files = req.files;
+        const uploadedImages = [];
+        let fileName
+        let filePath 
+
+        for (const file of files) {
+          const resizedImageBuffer = await sharp(file.path)
+            .resize({ width: 300, height: 300 }) // Set your desired dimensions
+            .toBuffer();
+
+
+          fileName = Date.now() + '-' + file.originalname; // Use a function to generate a unique filename
+          filePath = path.join('./public/images/', fileName);
+          console.log(filePath, 'filePath kitti--------------')
+
+          // Write the resized image buffer to the file
+          fs.writeFileSync(filePath, resizedImageBuffer);
+
+          // Process or store the resized image buffer as needed
+          uploadedImages.push({
+            originalname: file.originalname,
+            mimetype: file.mimetype,
+            size: resizedImageBuffer.length,
+            buffer: resizedImageBuffer,
+            path: filePath
+          });
+        } 
+        for (const image of uploadedImages){
+            console.log(image)
+        } 
+
+
+        //-----------------------------------------------end file crop ---------------------------------------------------
+
+             for (let i=0;i<uploadedImages.length;i++) {
+                console.log(uploadedImages[i].path)
+                 imagePath[i] = uploadedImages[i].path.replace(/\\/g, "/").replace('public/', '/')
+             }
+
+      
         const newProduct = new productData({
 
             productname: data.productname,
@@ -79,6 +146,7 @@ const productDetails = async (req, res) => {
         await newProduct.save()
         console.log("adata saveed")
         res.redirect("/admin/addproducts?success=Data Uploaded Successfully")
+      }
     }
 
     catch (e) {
@@ -209,14 +277,55 @@ const updateProduct = async (req, res) => {
         console.log(req.files)
         console.log('req.files')
 
-        let img = []
-        for (let i = 0; i < req.files.length; i++) {
-            img[i] = req.files[i].path.replace(/\\/g, "/").replace('public/', '/')
-            await productData.updateOne(
-                { productname: req.body.productname },
-                { $set: { [`imagepath.${i}`]: img[i] } }
-            )
-        }
+        // let img = []
+        // for (let i = 0; i < req.files.length; i++) {
+        //     img[i] = req.files[i].path.replace(/\\/g, "/").replace('public/', '/')
+        //     await productData.updateOne(
+        //         { productname: req.body.productname },
+        //         { $set: { [`imagepath.${i}`]: img[i] } }
+        //     )
+        // }
+
+
+        const files = req.files;
+        const uploadedImages = [];
+        let fileName
+        let filePath 
+        let imagePath = []
+        for (const file of files) {
+          const resizedImageBuffer = await sharp(file.path)
+            .resize({ width: 300, height: 300 }) // Set your desired dimensions
+            .toBuffer();
+
+
+          fileName = Date.now() + '-' + file.originalname; // Use a function to generate a unique filename
+          filePath = path.join('./public/images/', fileName);
+          console.log(filePath, 'filePath kitti--------------')
+
+          // Write the resized image buffer to the file
+          fs.writeFileSync(filePath, resizedImageBuffer);
+
+          // Process or store the resized image buffer as needed
+          uploadedImages.push({
+            originalname: file.originalname,
+            mimetype: file.mimetype,
+            size: resizedImageBuffer.length,
+            buffer: resizedImageBuffer,
+            path: filePath
+          });
+        } 
+        for (const image of uploadedImages){
+            console.log(image)
+        } 
+
+
+        //-----------------------------------------------a bug here when we are uodating one other images are not added its removed???????? ---------------------------------------------------
+
+             for (let i=0;i<uploadedImages.length;i++) {
+                console.log(uploadedImages[i].path)
+                 imagePath[i] = uploadedImages[i].path.replace(/\\/g, "/").replace('public/', '/')
+             }
+
 
         console.log(req.body)
 
@@ -234,7 +343,7 @@ const updateProduct = async (req, res) => {
             const color = req.body.color
             const waranty = req.body.waranty
             const stock = req.body.stock
-            const update = await productData.updateOne({ productname: oldname }, { $set: { productname: newname, category: category1, price: price, description: description, color: color, waranty: waranty, stock:stock } })
+            const update = await productData.updateOne({ productname: oldname }, { $set: { productname: newname, category: category1, price: price, description: description, color: color, waranty: waranty, stock:stock,imagepath:imagePath } })
 
             console.log(update)
 
@@ -255,6 +364,29 @@ const updateProduct = async (req, res) => {
 
 }
 
+
+
+const productPagenation=async(req,res)=>{
+    try{
+
+        let currentValue=req.query.page || 0
+
+        if(req.query.next){
+            currentValue++
+
+        }
+
+        if(req.query.previous){
+            currentValue--
+
+        }
+     res.render("adminProducts",{currentValue})
+
+    }catch(e){
+        console.log("problem withe the productPagenation"+e)
+    }
+}
+
 module.exports = {
     productDisplay,
     productDetails,
@@ -262,6 +394,7 @@ module.exports = {
     addProductDisplay,
     deleteProduct,
     editProduct,
-    updateProduct
+    updateProduct,
+    productPagenation
 
 }

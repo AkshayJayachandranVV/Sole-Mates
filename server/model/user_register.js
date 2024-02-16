@@ -31,6 +31,14 @@ const userRegister=mongoose.Schema({
     status: {
         type: Number,    
         require: true
+    },
+    couponArray: {
+        type: Array,    
+        require: true
+    },
+    wallet: {
+        type: Number,    
+        require: true
     }
 })
 

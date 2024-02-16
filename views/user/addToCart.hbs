@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Watch shop | eCommers</title>
+    <title>SOLE MATES</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {{!--
@@ -68,7 +68,7 @@
             write the code here
          -->
 
-
+      <h4 style="color: green;" id="cartmssg"></h4>
 
                     <div class="table-responsive">
                         <table class="table align-middle">
@@ -167,9 +167,9 @@
                     {{#if cartlen}}
 
                     <a class="btn btn-danger " style="width: 250px;" href="/checkout">Proceed TO Checkout</a>
-                    <a class="btn btn-danger ml-5" style="width: 250px;" href="/home">Continue</a>
+                    <a class="btn btn-danger ml-5" style="width: 250px;" href="/home">Continue Shopping</a>
                     {{else}}
-                    <a class="btn btn-danger ml-5" style="width: 250px;" href="/home">Continue</a>
+                    <a class="btn btn-danger ml-5" style="width: 250px;" href="/home">Continue Shopping</a>
                     {{/if}}
 
 
@@ -191,6 +191,18 @@
         </div>
     </div>
     <!-- Search model end -->
+
+    <script>
+    setTimeout(()=>{
+
+        const data=document.getElementById("cartmssg")
+
+         data.style.display="none"
+    },5000)
+</script>
+
+
+
     <script>
 
         // settimeot for invalid email
@@ -246,6 +258,8 @@
                 })
                 .then(data => {
 
+                      if (data.success) {
+
                     // Update the quantity on the page after successful update
 
                     //document.getElementById(productId).value = newQuantity;
@@ -253,6 +267,9 @@
                     document.getElementById(`total-${productId}`).innerHTML = data.totalPrice;
                     document.getElementById("totalAmount").innerHTML = data.totalAmount;
                     console.log(data)
+                      }else{
+                          document.getElementById("cartmssg").innerHTML = `${data.msg}`;
+                      }
                 })
                 .catch(error => {
                     console.error('Error updating quantity:', error);

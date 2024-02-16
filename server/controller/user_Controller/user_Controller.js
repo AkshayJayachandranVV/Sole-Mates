@@ -36,6 +36,7 @@ const renderHome=async(req,res)=>{
     catch(e)
     {
         console.log(e)
+        res.redirect("/error")
     }
 
 }

@@ -34,6 +34,7 @@ const userLogin=async(req,res)=>{
     catch(e)
     {
         console.log(e)
+        res.redirect("/error")
     }
 
 
@@ -66,6 +67,7 @@ const renderSignup=async(req,res)=>{
     catch(e)
     {
         console.log("This is the render the signup renderSignup")
+        res.redirect("/error")
     }
 
 
@@ -120,6 +122,7 @@ const userRegister = async (req, res) => {
     }
     catch (e) {
         console.log(e)
+        res.redirect("/error")
 
     }
 }
@@ -137,6 +140,7 @@ const renderOtpGeneration=async(req,res)=>{
     catch(e)
     {
         console.log("This for function renderOtpGeneration")
+          res.redirect("/error")
     }
 
 
@@ -151,6 +155,7 @@ const forgotpasspost = async (req, res) => {
 
         console.log("forgot passpost entered")
         const email = req.body.email;
+        req.session.emailpass=email
         const emailExist = await user.findOne({ email: email })
 
         if (emailExist) {
@@ -168,6 +173,7 @@ const forgotpasspost = async (req, res) => {
     catch (error) {
         console.log(error)
         console.log("passpost error")
+        res.redirect("/error")
 
     }
 
@@ -188,6 +194,7 @@ const otpLogin=async (req,res)=>{
     catch(e)
     {
         console.log(e)
+        res.redirect("/error")
     }
 
 }
@@ -203,6 +210,7 @@ const renderforgetPassword=async(req,res)=>{
     catch(e)
     {
         console.log("This for function renderOtpLogin")
+        res.redirect("/error")
     }
 
 
@@ -210,6 +218,9 @@ const renderforgetPassword=async(req,res)=>{
 
 
 const newPassword = async (req, res) => {
+    try{
+
+    
 
     console.log("new password entered")
     console.log(req.body.password)
@@ -217,7 +228,8 @@ const newPassword = async (req, res) => {
     // console.log(checkEmail)
     // const email=req.body.email;
     console.log(req.session.user)
-    const forgotEmail = req.session.details.email
+    console.log(req.session.emailpass)
+    const forgotEmail = req.session.emailpass
     if (req.body.password == req.body.confirmpassword) {
         console.log("check confirm password ")
         const emailExist = await user.findOne({ email: forgotEmail })
@@ -234,6 +246,10 @@ const newPassword = async (req, res) => {
     else {
         res.render("forgetPassword")
     }
+   }catch(e){
+    console.log("problem with the newPassword"+e)
+    res.redirect("/error")
+ }
 
 }
 
@@ -249,6 +265,7 @@ const renderotpLogin=async(req,res)=>{
     catch(e)
     {
         console.log("This for function renderOtpLogin")
+        res.redirect("/error")
     }
 
 
@@ -312,6 +329,7 @@ const CheckUserIn = async (req, res) => {
     catch (e) {
         console.log("check user catch enterert")
         console.log(e)
+        res.redirect("/error")
     }
 }
 
@@ -389,7 +407,7 @@ const resetValidationOtp = async (req, res) => {
     try{
 
     
-    console.log("user entered otp")
+    console.log("Entered in tooooooo the resetvalidationotp to forget password")
     console.log(req.body.otp)
 
     console.log("firdt otp")
@@ -408,7 +426,7 @@ const resetValidationOtp = async (req, res) => {
         const timeDifference = currentTime - otp.timestamp;
 
 
-        console.log("time diffreb=nce checking")
+        console.log("time diffrence checking")
 
         console.log(timeDifference)
 
@@ -418,9 +436,9 @@ const resetValidationOtp = async (req, res) => {
 
         if (timeDifference <= expiryTimeInMilliseconds) {
 
-            console.log("time diffrence xpired OTP")
+           
 
-            res.redirect("/otplogin")
+            res.redirect("/resetPassword")
 
             // res.redirect("/signup")
 
@@ -441,6 +459,7 @@ const resetValidationOtp = async (req, res) => {
 }
 catch(e){
     console.log("problem withe the resetValidationOtp"+e)
+    res.redirect("/error")
 }
 
 
@@ -600,6 +619,7 @@ let transporterresend = nodemailer.createTransport({
     catch (error) {
       console.error(error);
       res.status(500).send('Error sending email');
+      res.redirect("/error")
   
     }
   });
@@ -658,7 +678,8 @@ const otpValidationResendOtp = async (req, res) => {
             phonenumber: userValue.phonenumber,
             password: hashedpassword,
             isAdmin: 0,
-            status: 1
+            status: 1,
+            wallet:0
             // confirmpassword:req.body.confirmpassword
 
         })

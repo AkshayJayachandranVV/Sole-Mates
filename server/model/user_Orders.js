@@ -67,6 +67,22 @@ const userOrder=mongoose.Schema({
     cancel:{
         type:Number,
         require:true
+    },
+    category:{
+        type:String,
+        require:true
+    },
+    reason:{
+        type:String,
+        require:true
+    },
+    cod:{
+        type:Number,
+        require:true
+    },
+    totalAmount:{
+        type:Number,
+        require:true
     }
 
 })

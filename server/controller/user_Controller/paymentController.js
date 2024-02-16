@@ -14,6 +14,7 @@ const renderProductPage = async(req,res)=>{
 
     } catch (error) {
         console.log(error.message);
+        res.redirect("/error")
     }
 
 }
@@ -51,6 +52,7 @@ const createOrder = async(req,res)=>{
 
     } catch (error) {
         console.log(error.message);
+        res.redirect("/error")
     }
 }
 

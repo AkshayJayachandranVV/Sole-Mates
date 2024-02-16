@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <title>Breeze Admin</title>
+  <title>ADMIN SOLE MATES</title>
   <link rel="stylesheet" href="/assets_admin/vendors/mdi/css/materialdesignicons.min.css" />
   <link rel="stylesheet" href="/assets_admin/vendors/flag-icon-css/css/flag-icon.min.css" />
   <link rel="stylesheet" href="/assets_admin/vendors/css/vendor.bundle.base.css" />
@@ -40,8 +40,8 @@
               <!--change to offline or busy as needed-->
             </div>
             <div class="nav-profile-text d-flex flex-column pr-3">
-              <span class="font-weight-medium mb-2">Henry Klein</span>
-              <span class="font-weight-normal">$8,753.00</span>
+              <span class="font-weight-medium mb-2">Admin</span>
+              {{!-- <span class="font-weight-normal">$8,753.00</span> --}}
             </div>
             <span class="badge badge-danger text-white ml-3 rounded">3</span>
           </a>
@@ -147,19 +147,7 @@
 
 
 
-
-
-
       {{> admin_Header}}
-
-
-
-
-
-
-
-
-
       <div class="main-panel">
 
 
@@ -185,11 +173,9 @@
                 <th scope="col">Price</th>
 
                 <th scope="col">Waranty</th>
+                <th scope="col">Display</th>
+                <th scope="col">Edit</th>
                 <th scope="col">Image</th>
-                <th scope="col">Image</th>
-                <th scope="col">Image</th>
-
-
 
               </tr>
             </thead>
@@ -262,7 +248,7 @@
                     </div>
                     <div class="form-group">
                       <label class="form-control-label">Price</label>
-                      <input type="number" name="price" placeholder="Price" class="form-control" value="{{this.price}}">
+                      <input type="number" name="price" min="1" placeholder="Price" class="form-control" value="{{this.price}}">
                     </div>
                     <div class="form-group">
                       <label class="form-control-label">Description</label>
@@ -280,7 +266,7 @@
                     </div>
                     <div class="form-group">
                       <label class="form-control-label">Stock</label>
-                      <input type="text" name="stock" placeholder="Stock" class="form-control" value="{{this.stock}}">
+                      <input type="text" name="stock" min="1" placeholder="Stock" class="form-control" value="{{this.stock}}">
                     </div>
                     <div>
                       <img src="{{this.imagepath.[0]}}" alt="product-Image-1">
@@ -343,7 +329,36 @@
 
 
 
+           <div class="pagenation">
+                     <nav aria-label="...">
+                            <ul class="pagination">
+                                  <div class="showing col col-xs-12 mr-10">
+                                    <span>SHOWING        OF     </span>
+                                    </div>
 
+                                {{#if currentValue}}
+                                <li class="page-item">
+                                    {{!-- <span class="page-link">Previous</span> --}}
+                                    <a class="page-link" href="/admin/productpagenation?previous=1&page={{currentValue}}">Previous</a>
+                                </li>
+                                {{/if}}
+
+                                {{!-- <li class="page-item"><a class="page-link" href="/pagenation"> {{previous}}</a>
+                                </li> --}}
+                                {{!-- <li class="page-item active">
+                                    <span class="page-link">
+                                        {{nextValue}}
+                                        <span class="sr-only">(current)</span>
+                                    </span>
+                                </li> --}}
+                                {{!-- <li class="page-item"><a class="page-link"
+                                        href="/pagenation?next={{nextValue}}">{{nextValue}}</a></li> --}}
+                                <li class="page-item">
+                                    <a class="page-link" href="/admin/productpagenation?next=2&page={{currentValue}}">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
 
 
 

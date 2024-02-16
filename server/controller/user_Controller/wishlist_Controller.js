@@ -18,6 +18,7 @@ const displayWishlist=async(req,res)=>{
     catch(e)
     {
       console.log("error with the displayWishlist" + e)
+      res.redirect("/error")
     }
   
 
@@ -58,6 +59,7 @@ const addWishlist=async(req,res)=>{
     catch(e)
     {
         console.log("problem with addWishlist"+e)
+        res.redirect("/error")
     }
 
 
@@ -84,6 +86,7 @@ const deleteWishlist=async(req,res)=>{
  catch(e)
  {
     console.log("problem with the deleteWishlist"+e)
+    res.redirect("/error")
  }
 
 

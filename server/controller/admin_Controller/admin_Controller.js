@@ -14,6 +14,8 @@ const Login = async (req, res) => {
 
     try {
 
+        console.log("entered to")
+
         console.log(req.body.username)
         console.log(req.body.password)
 
@@ -64,25 +66,24 @@ const signout = async (req, res) => {
 
 
 
-// //SHOW THE USER DATA IN ADMINPANEL
+const displayPanel = async (req, res) => {
 
-// const showUser = async (req, res) => {
+    try {
 
-//     try {
+        if(req.session.auth){
+            res.redirect("/admin/dashboard")
 
-//         const value = await userData.find({})
+        }
 
-//         // console.log(value)
+        res.render("adminLogin")
 
-//         res.render("adminUsers", { value })
+    }
+    catch (e) {
 
-//     }
-//     catch (e) {
+        console.log(e)
 
-//         console.log(e)
-
-//     }
-// }
+    }
+}
 
 // // ADMIN SEARCH FOR SPECIFIC USER
 
@@ -699,4 +700,5 @@ const signout = async (req, res) => {
 module.exports = {
     Login,
     signout,
+    displayPanel
 }
