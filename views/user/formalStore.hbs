@@ -7,9 +7,6 @@
     <title>SOLE MATES</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{!--
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="shortcut icon" type="image/x-icon" href="public/assets_user/img/favicon.ico"> --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- CSS here -->
@@ -45,10 +42,6 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="hero-cap text-center">
-
-                                {{!-- {{#if data}}
-                                <h2>{{data}}</h2>
-                                {{/if}} --}}
                                 {{#if categoryFind}}
 
                                 <h2>{{categoryFind}}</h2>
@@ -69,76 +62,59 @@
                 <div class="row product-btn justify-content-between mb-40">
                     <div class="properties__button">
                         <!--Nav Button  -->
-
                         <nav>
-
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-
                                 <a class="nav-item nav-link active" href="/allCollection"> All Collection </a>
                                 {{#each category}}
-                                {{!-- <a class="nav-item nav-link active" id="nav-home-tab" href="/allCollection"
-                                    role="tab" aria-controls="nav-home">All Collection</a>
-                                <a class="nav-item nav-link" id="nav-home-tab" href="/casualstore" role="tab"
-                                    aria-controls="nav-profile"> Casuals Collections</a>
-                                <a class="nav-item nav-link" id="nav-home-tab" href="/formalstore" role="tab"
-                                    aria-controls="nav-contact"> Formals Collections </a> --}}
                                 <a class="nav-item nav-link active" href="/categoryproduct/{{this.category}}">
                                     {{this.category}} </a>
-                                {{!-- <a class="nav-item nav-link active" href="/casualstore"> casual </a>
-                                <a class="nav-item nav-link active" href="/formalstore"> formal </a> --}}
                                 {{/each}}
                             </div>
 
                         </nav>
-
-
-
-
-                        <!--End Nav Button  -->
                     </div>
 
                     <div>
-                       
+
                     </div>
                     <!-- Grid and List view -->
                     <div class="grid-list-view">
                         <!-- Sidebar -->
-                        <div >
-    <!-- Sidebar -->
-    <!-- Sidebar -->
-<div class="sidebar">
-    <h2 style="color: #333; font-size: 18px; margin-bottom: 15px;">Sort by Price</h2>
-    <ul style="list-style: none; padding: 0;">
-        <li style="margin-bottom: 10px;">
-            <a href="/lowtohigh?data={{categoryFind}}" style="display: block; padding: 10px; max-width: 150px; background-color: #f0f0f0; color: #333; text-decoration: none; border-radius: 5px;">Price Low to High</a>
-        </li>
-        <li>
-            <a href="/hightolow?data={{categoryFind}}" style="display: block; padding: 10px; max-width: 150px; background-color: #f0f0f0; color: #333; text-decoration: none; border-radius: 5px;">Price High to Low</a>
-        </li>
-    </ul>
-</div>
+                        <div>
+
+                            <div class="sidebar">
+                                <h2 style="color: #333; font-size: 18px; margin-bottom: 15px;">Sort by Price</h2>
+                                <ul style="list-style: none; padding: 0;">
+                                    <li style="margin-bottom: 10px;">
+                                        <a href="/lowtohigh?data={{categoryFind}}"
+                                            style="display: block; padding: 10px; max-width: 150px; background-color: #f0f0f0; color: #333; text-decoration: none; border-radius: 5px;">Price
+                                            Low to High</a>
+                                    </li>
+                                    <li>
+                                        <a href="/hightolow?data={{categoryFind}}"
+                                            style="display: block; padding: 10px; max-width: 150px; background-color: #f0f0f0; color: #333; text-decoration: none; border-radius: 5px;">Price
+                                            High to Low</a>
+                                    </li>
+                                </ul>
+                            </div>
 
 
 
 
-</div>
+                        </div>
 
-                       
+
 
                     </div>
                     <!-- Select items -->
-                   <div class="select-this">
-                         
-                  </div>
+                    <div class="select-this">
+
+                    </div>
 
                 </div>
                 <!-- Nav Card -->
                 <div class="tab-content" id="nav-tabContent">
                     <!-- card one -->
-                  
-                  
-
-                    {{!-- {{#each product}} --}}
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                         <div class="row">
 
@@ -160,13 +136,15 @@
                                         </div>
                                     </div>
                                     <div class="popular-caption">
-                                        {{!-- <p>{{{this.productname}}}---Ssdkfjklsdjf</p> --}}
                                         <h3><a href="/productdetails/{{this.productname}}">{{this.productname}}</a></h3>
-                                        {{!-- <h3><a
-                                                href="/productdetails/{{encodeURIComponent this.productname}}">{{this.productname}}</a>
-                                        </h3> --}}
-
-                                        <span>{{this.price}}</span>
+                                        {{!-- <span>{{this.price}}</span> --}}
+                                        {{#if this.offerprice}}
+                                        <span style="font-size: 26px;" class="price">Rs.{{this.offerprice}}</span>
+                                        <span style="margin-left: 15px;"><del style="font-size: 20px;"
+                                                id="orginal-price">{{this.price}}</del></span>
+                                        {{else}}
+                                        <span style="font-size: 26px;" class="price">Rs.{{this.price}}</span>
+                                        {{/if}}
                                     </div>
                                 </div>
                             </div>
@@ -175,11 +153,10 @@
                             {{/each}}
                         </div>
                     </div>
-                    <!-- Card two -->
-
-                    <!-- Card three -->
 
                     {{#if pagenationcat}}
+                    {{!-- <p>{{pagenationcat}}</p> --}}
+                    {{#if lowtohighcat}}
                     <div class="pagenation">
                         <nav aria-label="...">
                             <ul class="pagination">
@@ -189,22 +166,54 @@
 
                                 {{#if currentPage}}
                                 <li class="page-item">
-                                    {{!-- <span class="page-link">Previous</span> --}}
+                                    <a class="page-link"
+                                        href="/lowtohighcatpagenation?data={{categoryFind}}&page={{currentPage}}&previous=1">Previous</a>
+                                </li>
+                                {{/if}}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                        href="/lowtohighcatpagenation?data={{categoryFind}}&page={{currentPage}}&next=2">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    {{/if}}
+                    {{#if hightolowcat}}
+                    <div class="pagenation">
+                        <nav aria-label="...">
+                            <ul class="pagination">
+                                <div class="showing col col-xs-12 mr-10">
+                                    <span>SHOWING {{countCurrent}} OF {{countLimit}} </span>
+                                </div>
+
+                                {{#if currentPage}}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                        href="/hightolowcatpagenation?data={{categoryFind}}&page={{currentPage}}&previous=1">Previous</a>
+                                </li>
+                                {{/if}}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                        href="/hightolowcatpagenation?data={{categoryFind}}&page={{currentPage}}&next=2">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    {{/if}}
+                    {{#if displayProduct}}
+                    <div class="pagenation">
+                        <nav aria-label="...">
+                            <ul class="pagination">
+                                <div class="showing col col-xs-12 mr-10">
+                                    <span>SHOWING {{countCurrent}} OF {{countLimit}} </span>
+                                </div>
+
+                                {{#if currentPage}}
+                                <li class="page-item">
                                     <a class="page-link"
                                         href="/categorypagenation?previouscat={{categoryFind}}&page={{currentPage}}">Previous</a>
                                 </li>
                                 {{/if}}
-
-                                {{!-- <li class="page-item"><a class="page-link" href="/pagenation"> {{previous}}</a>
-                                </li> --}}
-                                {{!-- <li class="page-item active">
-                                    <span class="page-link">
-                                        {{nextValue}}
-                                        <span class="sr-only">(current)</span>
-                                    </span>
-                                </li> --}}
-                                {{!-- <li class="page-item"><a class="page-link"
-                                        href="/pagenation?next={{nextValue}}">{{nextValue}}</a></li> --}}
                                 <li class="page-item">
                                     <a class="page-link"
                                         href="/categorypagenation?nextcat={{categoryFind}}&page={{currentPage}}">Next</a>
@@ -212,9 +221,9 @@
                             </ul>
                         </nav>
                     </div>
+                    {{/if}}
                     {{else}}
-
-
+                    {{#if lowtohigh}}
                     <div class="pagenation">
                         <nav aria-label="...">
                             <ul class="pagination">
@@ -224,21 +233,53 @@
 
                                 {{#if currentPage}}
                                 <li class="page-item">
-                                    {{!-- <span class="page-link">Previous</span> --}}
+                                    <a class="page-link"
+                                        href="/lowtohighpagenation?previous=2&page={{currentPage}}">Previous</a>
+                                </li>
+                                {{/if}}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                        href="/lowtohighpagenation?next=1&page={{currentPage}}">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    {{/if}}
+                    {{#if hightolow}}
+                    <div class="pagenation">
+                        <nav aria-label="...">
+                            <ul class="pagination">
+                                <div class="showing col col-xs-12 mr-10">
+                                    <span>SHOWING {{countCurrent}} OF {{countLimit}} </span>
+                                </div>
+
+                                {{#if currentPage}}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                        href="/hightolowpagenation?previous=2&page={{currentPage}}">Previous</a>
+                                </li>
+                                {{/if}}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                        href="/hightolowpagenation?next=1&page={{currentPage}}">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    {{/if}}
+                    {{#if allcollection}}
+                    <div class="pagenation">
+                        <nav aria-label="...">
+                            <ul class="pagination">
+                                <div class="showing col col-xs-12 mr-10">
+                                    <span>SHOWING {{countCurrent}} OF {{countLimit}} </span>
+                                </div>
+
+                                {{#if currentPage}}
+                                <li class="page-item">
                                     <a class="page-link" href="/pagenation?previous=2&page={{currentPage}}">Previous</a>
                                 </li>
                                 {{/if}}
-
-                                {{!-- <li class="page-item"><a class="page-link" href="/pagenation"> {{previous}}</a>
-                                </li> --}}
-                                {{!-- <li class="page-item active">
-                                    <span class="page-link">
-                                        {{nextValue}}
-                                        <span class="sr-only">(current)</span>
-                                    </span>
-                                </li> --}}
-                                {{!-- <li class="page-item"><a class="page-link"
-                                        href="/pagenation?next={{nextValue}}">{{nextValue}}</a></li> --}}
                                 <li class="page-item">
                                     <a class="page-link" href="/pagenation?next=1&page={{currentPage}}">Next</a>
                                 </li>
@@ -246,8 +287,7 @@
                         </nav>
                     </div>
                     {{/if}}
-
-                    {{!-- {{/each}} --}}
+                    {{/if}}
                 </div>
                 <!-- End Nav Card -->
             </div>

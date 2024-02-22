@@ -7,10 +7,6 @@
     <title>SOLE MATES</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{!--
-    <link rel="manifest" href="site.webmanifest"> --}}
-    {{!--
-    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico"> --}}
 
     <!-- CSS here -->
     <link rel="stylesheet" href="/assets_user/css/bootstrap.min.css">
@@ -102,39 +98,19 @@
                             <tr>
                                 <th>Image</th>
                                 <th>Product Name</th>
-
                                 <th>Price</th>
-                                {{!-- <th>Quantity</th> --}}
                                 <th>Add to Cart</th>
                                 <th>Remove</th>
                             </tr>
                         </thead>
                         {{#each displayCart}}
                         <tbody>
-
-
-
                             <tr>
-                                {{!-- <td><img src="{{this.imagepath.[0]}} alt=" product image" class=" w-50 h-50""></td> --}}
                                 <td><img src=" {{this.imagepath}}" alt="Image Alt Text" class=" w-25 h-25"></td>
                                 <td>{{this.productname}}</td>
-                                {{!-- <td class="align-top">This cell is </td> --}}
 
                                 <td>{{this.price}}</td>
-                                {{!-- <td>
-                                    <div class="product_count_area">
-                                        <p>Quantity</p>
-                                        <div class="product_count d-inline-block">
-                                            <span class="product_count_item inumber-decrement"> <i
-                                                    class="ti-minus"></i></span>
-                                            <input class="product_count_item input-number" type="text" value="1" min="0"
-                                                max="10">
-                                            <span class="product_count_item number-increment"> <i
-                                                    class="ti-plus"></i></span>
-                                        </div>
-
-                                    </div>
-                                </td> --}}
+                               
                                 <td>
                                     <button type="button" class="btn btn-outline-primary"><a
                                             href="/addtocart/{{this.productname}}">Add to Cart
@@ -144,37 +120,21 @@
 
                             </tr>
 
-
-
                         </tbody>
                         {{/each}}
                     </table>
                 </div>
                  <br>
                <a class="btn btn-danger ml-5" style="width: 250px;" href="/home">Continue</a>
-
-
-
-
             </div>
         </div>
 
 
-
+<br>
+<br>
+<br>
+<br>
         <!--================End Single Product Area =================-->
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         <!-- subscribe part here -->

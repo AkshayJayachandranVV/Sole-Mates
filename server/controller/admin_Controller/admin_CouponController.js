@@ -13,8 +13,23 @@ const displayCouponPage=async(req,res)=>{
        console.log(req.query.lessamount)
        let already=req.query.alreadycoupon
        let lessPrice=req.query.lessamount
-        const coupon=await couponData.find({})
-        res.render("adminCoupon",{coupon,already,lessPrice})
+
+
+      let currentValue=req.query.page || 0
+
+      if(req.query.next){
+          currentValue++
+
+      }
+
+      if(req.query.previous){
+          currentValue--
+
+      }
+
+      const coupon=await couponData.find({}).skip(currentValue*6).limit(6).sort({_id:-1})
+
+        res.render("adminCoupon",{coupon,already,lessPrice,currentValue})
 
     }catch(e){
         console.log("problem withe displayCouponPage"+e)
@@ -109,6 +124,10 @@ const editcoupon=async(req,res)=>{
         console.log("problem with the editCoupon"+e)
     }
 }
+
+
+
+
 
 
 module.exports={displayCouponPage,addCoupon,deleteCoupon,editcoupon}

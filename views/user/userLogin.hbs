@@ -64,12 +64,14 @@
                                     <div class="col-md-12 form-group p_star" >
                                         <input type="text" class="form-control" id="email" name="email" value="" required
                                             placeholder="email" >
+                                             <span id="emailErr"></span>
                                     </div>
                                     <span style="color:red" id="email-error">{{validate}}</span>
 
                                     <div class="col-md-12 form-group p_star">
                                         <input type="password" class="form-control" id="password" name="password" value="" required
-                                            placeholder="Password">
+                                            placeholder="Password" >
+                                              <span id="passwordErr"></span>
                                     </div>
                                      <span style="color:red" id="email-pass">{{Passwordvalidate}}</span>
                                     <div class="col-md-12 form-group">
@@ -82,8 +84,7 @@
                                         <button type="submit" value="submit" class="btn_3" >
                                             log in
                                         </button>
-                                        
-                                         {{!-- <p id="error-message" style="color: red;">{{message}}</p>     --}}
+
 
                                         <a class="lost_pass" href="/forgetpassword">forget password?</a>
                                     </div>
@@ -132,6 +133,9 @@
 
     },3000)
    </script>
+
+
+  
   
         
     

@@ -71,7 +71,8 @@ const displayPanel = async (req, res) => {
     try {
 
         if(req.session.auth){
-            res.redirect("/admin/dashboard")
+            res.render("adminPanel")
+            // res.redirect("/admin/dashboard")
 
         }
 

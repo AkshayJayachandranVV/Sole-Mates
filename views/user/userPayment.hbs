@@ -7,10 +7,6 @@
     <title>SOLE MATES</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{!--
-    <link rel="manifest" href="site.webmanifest"> --}}
-    {{!--
-    <link rel="shortcut icon" type="image/x-icon" href="public/assets_user/img/favicon.ico"> --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- CSS here -->
@@ -234,15 +230,9 @@
                                 id="applyWallets">Apply</button>
                             <button onclick="removeWallet()" class="btn btn-warning removeCoupon"
                                 id="removeWallets">Remove</button>
-                            {{!-- <input type="text" aria-label="Last name" class="form-control"> --}}
-                                      
                         </div>
                     </div>
-                    {{!-- <input type="text" aria-label="Last name" class="form-control"> --}}
                 </div>
-
-
-
 
             </div>
             <h4 style="color: green;">Wallet:<p style="" id="wallet-amount" >{{walletAmount}}</p></h4>
@@ -274,12 +264,10 @@
 
             <div class="mt-3">
                 <h4 style="color: green;" id="couponInform"></h4>
-                {{!-- <h4>Total: $ {{formatCurrency (reduce items 'price' 0)}}</h4> --}}
                 <h4 style="margin-left: 70%;">Total : Rs. <p style="font-size: 28px;" id="total-price">
                         {{totalValue}}</p>
                 </h4>
                 <p style="margin-left: 780px;"><del style="font-size: 26px;" id="orginal-price"></del></p>
-                {{!-- <input type="hidden" value="{{totalValue}}" id="input-price"> --}}
 
                 </h4>
                 <hr>
@@ -293,8 +281,6 @@
                 </div>
 
             </div>
-
-                      
             </div>
 
             </div>
@@ -522,6 +508,7 @@
                         remove.classList.add('removeCoupon')
                         console.log(apply)
                         apply.classList.remove('removeCoupon')
+                         document.getElementById("couponmsg").innerHTML = `${data.msg}`;
                         document.getElementById("total-price").innerHTML = `${data.removeTotal}`;
                         document.getElementById("orginal-price").style.display = "none";
                     } else {
@@ -572,6 +559,9 @@
                 })
                 .then(data => {
                     if (data.success) {
+
+                          pop.classList.add("popupOpen")
+                          
                         const apply = document.getElementById('applyCoupons');
                         const remove = document.getElementById('removeCoupons');
                        remove.classList.remove('removeCoupon');
@@ -579,6 +569,11 @@
                         document.getElementById("orginal-price").style.display = "inline";
                         document.getElementById("total-price").innerHTML = `${data.cost}`;
                         document.getElementById("couponInform").innerHTML = `${data.inform}`;
+
+
+                        document.getElementById("couponmsg").innerHTML = `${data.msg}`;
+
+
                         document.getElementById("orginal-price").innerHTML = `${data.totalAmount}`;
                     } else {
                         // Handle error case if needed

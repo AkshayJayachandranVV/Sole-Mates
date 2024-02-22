@@ -6,8 +6,6 @@
     <title>SOLE MATES</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="shortcut icon" type="image/x-icon" href="public/assets_user/img/favicon.ico">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- CSS here -->
         <link rel="stylesheet" href="/assets_user/css/bootstrap.min.css">
@@ -62,32 +60,28 @@
                                 <h3>Create Account <br>
                                     Please Sign up now</h3>         
                                 <form class="row contact_form"  method="post" novalidate="novalidate">
-                                     <span id="username-error" style="color:red">{{unameValidate}}</span>
                                     <div class="col-md-12 form-group p_star">
                                         <input type="text" class="form-control" id="name" name="username" value="{{username}}"
-                                            placeholder="Username" >
+                                            placeholder="Username" onkeyup="validatUsername()" >
+                                            <span id="usernameErr"></span>
                                     </div>
                                    
                                      <div class="col-md-12 form-group p_star">
-                                        <input type="text" class="form-control" id="name" name="email" value="{{email}}"
-                                            placeholder="Email">
-                                            {{!-- <span id="email-error" style="color:red">{{alreadyAcc}}</span>
-                                              <span id="invalid-email" style="color:red">{{invalidEmail}}</span> --}}
+                                        <input type="text" class="form-control" id="email" name="email" value="{{email}}"
+                                            placeholder="Email" onkeyup="validatEmail()">
+                                            <span id="emailErr"></span>
                                     </div>
                                     
                                     <div class="col-md-12 form-group p_star">
-                                        <input type="text" class="form-control" id="name" name="phonenumber" value="{{phonenumber}}"
-                                            placeholder="Phonenumber">
-                                           {{!-- <span id="invalid-number" style="color:red">{{invalidPhone}}</span> --}}
+                                        <input type="text" class="form-control" id="phone" name="phonenumber" value="{{phonenumber}}"
+                                            placeholder="Phonenumber" onkeyup="validatPhone()">
+                                            <span id="phoneErr"></span>
                                     </div>
                                     <div class="col-md-12 form-group p_star">
                                         <input type="password" class="form-control" id="password" name="password" value="{{password}}"
-                                            placeholder="Password">
+                                            placeholder="Password" onkeyup="validatPassword()">
+                                            <span id="passwordErr"></span>
                                     </div>
-                                    {{!-- <div class="col-md-12 form-group p_star">
-                                        <input type="password" class="form-control" id="password" name="confirmpassword" value=""
-                                            placeholder="Confirm Password">
-                                    </div> --}}
                                     <div class="col-md-12 form-group">
                                         <div class="creat_account d-flex align-items-center">
                                             <input type="checkbox" id="f-option" name="selector">
@@ -128,6 +122,119 @@
         },5000)
 
         
+    </script>
+
+
+
+
+    <script>
+
+        const nameError = document.getElementById('usernameErr')
+        const phoneError = document.getElementById('phoneErr')
+        const emailError = document.getElementById('emailErr')
+        const passError = document.getElementById('passwordErr')
+        const conpassError = document.getElementById('conpasswordErr')
+
+
+        function validatUsername(){
+            console.log("hyyyyy")
+
+            name=document.getElementById("name").value
+            console.log(name)
+            if(name.length==0){
+                console.log("hyyyyy22222222222222222")
+                nameError.textContent="Enter the Username"
+                nameError.style.color="red"
+                return false
+
+            }
+
+            if(!name.match(/^[a-zA-Z0-9_]{3,20}/)){
+                nameError.innerHTML="Minimum 3 Characters"
+                   nameError.style.color="red"
+                return false
+            }
+              nameError.innerHTML = ''
+            return true
+
+        }
+
+
+
+
+          function validatEmail(){
+            console.log("hyyyyy email")
+
+            email=document.getElementById("email").value
+            console.log(email)
+            if(email.length==0){
+                emailError.textContent="Enter the Email"
+                emailError.style.color="red"
+                return false
+
+            }
+
+            if(!email.match(/^[A-Za-z\._\-[0-9]+@[A-Za-z]+\.[a-z]{2,}$/)){
+                emailError.innerHTML="Incorrect User Email"
+                   emailError.style.color="red"
+                return false
+            }
+              emailError.innerHTML = ''
+            return true
+
+        }
+
+
+
+
+          function validatPhone(){
+            console.log("hyyyyy phone")
+
+            phone=document.getElementById("phone").value
+            console.log(phone)
+            if(phone.length==0){
+                phoneError.textContent="Enter the PhoneNumber"
+                phoneError.style.color="red"
+                return false
+
+            }
+
+            if(!(phone.length == 10 || phone.length == 12)){
+                phoneError.innerHTML="Incorrect User Phone Number"
+                   phoneError.style.color="red"
+                return false
+            }
+              phoneError.innerHTML = ''
+            return true
+
+        }
+
+
+
+        
+
+          function validatPassword(){
+            console.log("hyyyyy password")
+
+            password=document.getElementById("password").value
+            console.log(password)
+            if(password.length==0){
+                passError.textContent="Enter the Password"
+                passError.style.color="red"
+                return false
+
+            }
+
+            if(!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/)){
+                passError.innerHTML="Password Must be Strong"
+                   passError.style.color="red"
+                return false
+            }
+              passError.innerHTML = ''
+            return true
+
+        }
+
     </script>
 
 

@@ -18,13 +18,6 @@
 <body>
   <div class="container-scroller">
 
-
-
-    {{!-- {{> admin_Sidebar}} --}}
-
-
-
-
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
       <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
         <a class="sidebar-brand brand-logo" href="index.html"><img src="/assets_admin/images/logo.svg" alt="logo" /></a>
@@ -58,26 +51,6 @@
             <span class="menu-title">Products</span>
           </a>
         </li>
-        {{!-- <li class="nav-item">
-          <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-            <span class="menu-title">Basic UI Elements</span>
-            <i class="menu-arrow"></i>
-          </a>
-          <div class="collapse" id="ui-basic">
-            <ul class="nav flex-column sub-menu">
-              <li class="nav-item">
-                <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
-              </li>
-            </ul>
-          </div>
-        </li> --}}
         <li class="nav-item">
           <a class="nav-link" href="/admin/users">
             <i class="mdi mdi-contacts menu-icon"></i>
@@ -103,27 +76,10 @@
           </a>
         </li>
         {{!-- <li class="nav-item">
-          <span class="nav-link" href="#">
-            <span class="menu-title">Docs</span>
-          </span>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="https://www.bootstrapdash.com/demo/breeze-free/documentation/documentation.html">
-            <i class="mdi mdi-file-document-box menu-icon"></i>
-            <span class="menu-title">Documentation</span>
+          <a class="nav-link" href="/admin/offer">
+            <i class="mdi mdi-table-large menu-icon"></i>
+            <span class="menu-title">Offers</span>
           </a>
-        </li>
-        <li class="nav-item sidebar-actions">
-          <div class="nav-link">
-            <div class="mt-4">
-              <div class="border-none">
-                <p class="text-black">Notification</p>
-              </div>
-              <ul class="mt-4 pl-0">
-                <li>Sign Out</li>
-              </ul>
-            </div>
-          </div>
         </li> --}}
       </ul>
     </nav>
@@ -144,65 +100,47 @@
         </div>
       </div>
 
-
-
-
       {{> admin_Header}}
+
       <div class="main-panel">
-
-
         <nav class="navbar navbar-light bg-light justify-content-between">
-
           <form class="form-inline" method="post">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" name="filter"
               value="{{filterProduct}}" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
         </nav>
-
         <div class="content-wrapper pb-0">
-
           <button type="button" class="btn btn-outline-primary mb-5"><a href="/admin/addproducts">Add
               Products</a></button>
-
           <table class="table">
             <thead class="thead-dark">
               <tr>
                 <th scope="col">Product Name</th>
                 <th scope="col">Category</th>
                 <th scope="col">Price</th>
-
+                 <th scope="col">Offer Price</th>
                 <th scope="col">Waranty</th>
                 <th scope="col">Display</th>
                 <th scope="col">Edit</th>
                 <th scope="col">Image</th>
-
               </tr>
             </thead>
-
-
             <tbody>
               {{#each productList}}
-
               <tr>
                 <td>{{this.productname}}</td>
                 <td>{{this.category}}</td>
                 <td>{{this.price}}</td>
-
+                <td>{{this.offerprice}}</td>
                 <td>{{this.waranty}}</td>
-                {{!-- <td><button class="btn btn-danger"><a
-                      href="/admin/productdelete/{{this.productname}}">Delete</a></button></td> --}}
                 <td><a href="/admin/productdelete/{{this.productname}}">
-
                     {{#if this.display}}
                     <button class="btn btn-danger">List</button>
-
                     {{else}}
                     <button class="btn btn-success">Un List</button>
-
                     {{/if}}
                      </a>
-
         </div>
         </td>
         <td>
@@ -210,9 +148,7 @@
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{@key}}">
             Edit
           </button>
-
           <!-- Modal -->
-
           <form action="/admin/editproducts/{{this.productname}}" method="post" enctype="multipart/form-data">
             <div class="modal fade" id="exampleModal{{@key}}" tabindex="-1" role="dialog"
               aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -231,15 +167,8 @@
                         value="{{this.productname}}">
                       <input type="hidden" name="oldproductname" value="{{this.productname}}">
                     </div>
-                    {{!-- <div class="form-group">
-                      <label class="form-control-label">Category</label>
-                      <input type="text" name="category" placeholder="Category" class="form-control"
-                        value="{{editData.category}}">
-                    </div> --}}
                     <div class="form-group">
                       <label class="form-control-label">Category</label>
-                      {{!-- <input type="text" name="category" placeholder="Category" class="form-control"> --}}
-                      {{!-- <label for="dog-names">Choose a dog name:</label> --}}
                       <select name="category" id="category-names">
                         <option value="Casuals">Casuals</option>
                         <option value="Formals">Formals</option>
@@ -248,8 +177,17 @@
                     </div>
                     <div class="form-group">
                       <label class="form-control-label">Price</label>
-                      <input type="number" name="price" min="1" placeholder="Price" class="form-control" value="{{this.price}}">
+                      <input type="number" id="price" name="price" min="1" placeholder="Price" class="form-control"
+                        value="{{this.price}}" >
                     </div>
+                       <div class="form-group">
+                      <label class="form-control-label">Mininmum Purchase Offer</label>
+                      <input type="number" id="offer" name="offer-percentage" placeholder="Offer " min="1" max="99" class="form-control" value="{{this.offer}}"   >
+                      </div>
+                      {{!-- <div class="form-group">
+                      <label class="form-control-label">Offer Price</label>
+                      <input type="number" id="offer-price" name="offer-price" placeholder="Product Price"  class="form-control" value="{{this.offerprice}}"  required>
+                      </div> --}}
                     <div class="form-group">
                       <label class="form-control-label">Description</label>
                       <input type="text" name="description" placeholder="Description" class="form-control"
@@ -266,7 +204,8 @@
                     </div>
                     <div class="form-group">
                       <label class="form-control-label">Stock</label>
-                      <input type="text" name="stock" min="1" placeholder="Stock" class="form-control" value="{{this.stock}}">
+                      <input type="text" name="stock" min="1" placeholder="Stock" class="form-control"
+                        value="{{this.stock}}">
                     </div>
                     <div>
                       <img src="{{this.imagepath.[0]}}" alt="product-Image-1">
@@ -284,19 +223,6 @@
                       <img src="{{this.imagepath.[3]}}" alt="product-Image-4">
                       <input type="file" accept='image/*' name="avatar" />
                     </div>
-
-
-
-
-                    {{!-- <div>
-
-                      <input type="file" name="avatar" />
-
-                    </div> --}}
-
-                    {{!-- <div class="form-group">
-                      <input type="submit" value="Edit" class="btn btn-primary">
-                    </div> --}}
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -307,77 +233,45 @@
             </div>
           </form>
         </td>
-        {{!-- <td><img src="{{this.imagepath[0]}}" alt="Product image" class=" w-25 h-25"></td> --}}
         <td><img src="{{this.imagepath.[0]}}" alt="Image Alt Text" style="width:auto; height:100px"></td>
-
         </tr>
         {{/each}}
         </tbody>
-
-
-
         </table>
-
-
-
-
-
       </div>
       <!-- main-panel ends -->
+      <div class="pagenation">
+        <nav aria-label="...">
+          <ul class="pagination">
+            <div class="showing col col-xs-12 mr-10">
+              <span>SHOWING OF </span>
+            </div>
 
-
-
-
-
-           <div class="pagenation">
-                     <nav aria-label="...">
-                            <ul class="pagination">
-                                  <div class="showing col col-xs-12 mr-10">
-                                    <span>SHOWING        OF     </span>
-                                    </div>
-
-                                {{#if currentValue}}
-                                <li class="page-item">
-                                    {{!-- <span class="page-link">Previous</span> --}}
-                                    <a class="page-link" href="/admin/productpagenation?previous=1&page={{currentValue}}">Previous</a>
-                                </li>
-                                {{/if}}
-
-                                {{!-- <li class="page-item"><a class="page-link" href="/pagenation"> {{previous}}</a>
-                                </li> --}}
-                                {{!-- <li class="page-item active">
-                                    <span class="page-link">
-                                        {{nextValue}}
-                                        <span class="sr-only">(current)</span>
-                                    </span>
-                                </li> --}}
-                                {{!-- <li class="page-item"><a class="page-link"
-                                        href="/pagenation?next={{nextValue}}">{{nextValue}}</a></li> --}}
-                                <li class="page-item">
-                                    <a class="page-link" href="/admin/productpagenation?next=2&page={{currentValue}}">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-
-
-
-
-
+            {{#if currentValue}}
+            <li class="page-item">
+              {{!-- <span class="page-link">Previous</span> --}}
+              <a class="page-link" href="/admin/productpagenation?previous=1&page={{currentValue}}">Previous</a>
+            </li>
+            {{/if}}
+            <li class="page-item">
+              <a class="page-link" href="/admin/productpagenation?next=2&page={{currentValue}}">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
       {{> admin_Footer}}
     </div>
     <!-- page-body-wrapper ends -->
 
   </div>
 
-
-
-
   {{!-- Display the image --}}
   <td><img src="{{this.imagepath}}" alt="Image Alt Text"></td>
 
   <!-- container-scroller -->
   <!-- plugins:js -->
+
+
   <script src="/assets_admin/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->

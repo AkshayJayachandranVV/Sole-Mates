@@ -12,6 +12,7 @@ const adminOrder=require("../controller/admin_Controller/admin_OrderController")
 const middleware=require("../middleware/middleware")
 const dashboard=require("../controller/admin_Controller/admin_DashboardController")
 const adminCoupon=require("../controller/admin_Controller/admin_CouponController")
+const adminOffer=require("../controller/admin_Controller/admin_OfferController")
 const authAdmin=require("../../server/middleware/middleware")
 
 route.use(session({
@@ -39,116 +40,6 @@ route.use(function (req, res, next) {
 
 
 
-
-
-
-// const {initializeApp}=require("firebase/app")
-// const {getStorage,ref,getDownloadURL,uploadBytesResumable}=require("firebase/storage")
-// // const config=require("../config/firebase.config")
-
-// // Import the functions you need from the SDKs you need
-// // import { initializeApp } from "firebase/app";
-// // import { getAnalytics } from "firebase/analytics";
-// // const initializeApp=require("firebase/app")
-// const getAnalytics=require("firebase/analytics")
-// const dotenv=require("dotenv")
-
-// // TODO: Add SDKs for Firebase products that you want to use
-// // https://firebase.google.com/docs/web/setup#available-libraries
-
-// // Your web app's Firebase configuration
-// // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-// const firebaseConfig = {
-//   apiKey: "AIzaSyD6b0WTzlPSZvcFLc4NHSeloN4FtxJ7HkY",
-//   authDomain: "project-1-f9a22.firebaseapp.com",
-//   projectId: "project-1-f9a22",
-//   storageBucket: "project-1-f9a22.appspot.com",
-//   messagingSenderId: "613691081303",
-//   appId: "1:613691081303:web:567ff8c71341e0dad49912",
-//   measurementId: "G-CH2YW791DY"
-// };
-
-// // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-
-
-
-// // initializeApp(config.firebaseConfig)
-
-// const storage=getStorage();
-
-
-// const upload=multer({storage:multer.memoryStorage()  });
-
-// route.post("/upload",upload.single("avatar"),async(req,res)=>{
-
-//     try{
-
-//         const dateTime=Date.now();
-
-//         const storageRef=ref(storage, `files/${req.file.originalname  + " " + dateTime} `)
-
-//         const metaData={
-//             contentType:req.file.mimetype,
-
-//         };
-//             //upload the file in the bucket storage
-//             const snapshot=await uploadBytesResumable(storageRef,req.file.buffer,metaData)
-
-              
-//             //grab the public url
-//             const downloadURL=await getDownloadURL(snapshot.ref)
-
-//             userData.productDetails(downloadURL,req.body)
-
-//             console.log("File Uploaded Successfully")
-
-//              res.redirect("/admin/addproducts?success=uploaded successfully !!!!!!!")
-
-//             // return res.send({
-
-//             //     message:'file uploaded to firbase storage  ',
-//             //     name:req.file.originalname,
-//             //     type:req.file.mimetype,
-//             //     downloadURL:downloadURL
-//             // })
-        
-
-//     }
-//     catch(e)
-//     {
-//         console.log(e)
-//     }
-
-
-
-// })
-
-
-// function adminAuthorizeCheck(req, res,next){
-//     try {
-
-//         const val = req.query.pass
-//         const name = req.query.name
-
-//         console.log("admin entered")
-//         console.log(req.session.auth)
-
-//         if (req.session.auth) {
-//             console.log("req.session entered")
-//             next();
-//         }
-//         else {
-//             res.render("adminLogin", { val, name })
-//         }
-
-//     }
-//     catch (e) {
-
-//         console.log("problem with the adminAuthorizeCheck" + e)
-
-//     }
-// }
 
 
 route.get("/",userData.displayPanel)
@@ -286,7 +177,13 @@ route.get("/returnreject",adminOrder.returnReject)
 //COUPON
 route.get("/coupon",adminCoupon.displayCouponPage)
 
-route.post("/coupon",adminCoupon.addCoupon)
+route.post("/addcoupon",adminCoupon.addCoupon)
+
+// route.post("/addoffer",adminOffer.addOffer)
+
+route.post("/applyoffer",adminOffer.addOffer)
+
+route.get("/offer",adminOffer.displayOfferPage)
 
 route.get("/deletecoupon",adminCoupon.deleteCoupon)
 
@@ -294,6 +191,9 @@ route.post("/editcoupon/:id",adminCoupon.editcoupon)
 
 
 route.get("/orderpagenation",adminOrder.displayOrder)
+
+
+route.get("/couponpagenation",adminCoupon.displayCouponPage)
 
 
 module.exports=route     

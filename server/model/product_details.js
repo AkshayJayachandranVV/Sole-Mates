@@ -47,6 +47,20 @@ const productData=mongoose.Schema({
     display:{
         type:Number,
         require:true
+    },
+    offer:{
+        type:Number,
+        require:true
+    
+    },
+    status:{
+        type:String,
+        require:true
+    },
+    offerprice:{
+        type:Number,
+        require:true
+    
     }
 
 

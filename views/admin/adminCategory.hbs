@@ -19,12 +19,6 @@
   <div class="container-scroller">
 
 
-
-    {{!-- {{> admin_Sidebar}} --}}
-
-
-
-
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
       <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
         <a class="sidebar-brand brand-logo" href="index.html"><img src="/assets_admin/images/logo.svg" alt="logo" /></a>
@@ -82,6 +76,12 @@
             <span class="menu-title">Coupon</span>
           </a>
         </li>
+         {{!-- <li class="nav-item">
+          <a class="nav-link" href="/admin/offer">
+            <i class="mdi mdi-table-large menu-icon"></i>
+            <span class="menu-title">Offers</span>
+          </a>
+        </li> --}}
       </ul>
     </nav>
     <div class="container-fluid page-body-wrapper">
@@ -111,17 +111,13 @@
 
           <p style="color: :green;" id="Success">{{success}}</p>
           <h4 id="category-preseneted" style="color: red;">{{categoryPresented}}</h4>
-          {{!-- <button type="button" class="btn btn-outline-primary mb-5"><a href="/admin/editcategory">Add
-              Category</a></button> --}}
           <div class="container">
-
-
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
               Add Category
             </button>
 
             <!-- Modal -->
-            <form method="post">
+            <form action="/admin/addcoupon" method="post">
               <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -137,20 +133,11 @@
                         <label class="form-control-label">Name of Category</label>
                         <input type="text" name="categoryname" placeholder="Category Name" class="form-control"
                           value="{{this.category}}">
-
                       </div>
-
-
-
-                      {{!-- <div>
-
-                        <input type="file" name="avatar" />
-
-                      </div> --}}
-
-                      {{!-- <div class="form-group">
-                        <input type="submit" value="Add" class="btn btn-primary">
-                      </div> --}}
+                       <div class="form-group">
+                      <label class="form-control-label">Purchase Offer</label>
+                      <input type="number" id="offer" name="offer-percentage" placeholder="Offer" min="1" max="99" class="form-control" value=""  >
+                      </div>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -169,7 +156,6 @@
           <table class="table">
             <thead class="thead-dark">
               <tr>
-                {{!-- <th scope="col">#</th> --}}
                 <th scope="col">Category</th>
                 <th scope="col">Status</th>
                 <th scope="col">Edit</th>
@@ -182,8 +168,6 @@
 
               <tr>
                 <td>{{this.category}}</td>
-                {{!-- <td>{{this.description}}</td> --}}
-                {{!-- <td>{{this.list}}</td> --}}
                 <td><a href="/admin/list/{{this.category}}">
 
                     {{#if this.list}}
@@ -197,8 +181,6 @@
 
         </div>
         </td>
-        {{!-- <td> <button class="btn btn-danger"><a href="/admin/categorydel/{{this.category}}">Delete</a></button>
-        </td> --}}
         <td>
           <!-- Button trigger modal -->
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{@key}}">
@@ -225,23 +207,10 @@
                         value="{{this.category}}">
                       <input type="hidden" name="oldcategoryname" value="{{this.category}}">
                     </div>
-                    {{!-- <div class="form-group">
-                      <label class="form-control-label">Category</label>
-                      <input type="text" name="category" placeholder="Category" class="form-control"
-                        value="{{editData.category}}">
-                    </div> --}}
-
-
-
-                    {{!-- <div>
-
-                      <input type="file" name="avatar" />
-
-                    </div> --}}
-
-                    {{!-- <div class="form-group">
-                      <input type="submit" value="Edit" class="btn btn-primary">
-                    </div> --}}
+                       <div class="form-group">
+                      <label class="form-control-label">Purchase Offer</label>
+                      <input type="number" id="offer" name="offer-percentage" placeholder="Offer" min="1" max="99" class="form-control" value="{{this.offer}}"  >
+                      </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -259,12 +228,6 @@
 
         {{/each}}
         </table>
-
-
-
-
-
-
       </div>
       <!-- main-panel ends -->
       {{> admin_Footer}}

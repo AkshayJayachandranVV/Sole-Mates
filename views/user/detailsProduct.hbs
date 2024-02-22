@@ -7,10 +7,7 @@
     <title>SOLE MATES</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{!--
-    <link rel="manifest" href="site.webmanifest"> --}}
-    {{!--
-    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico"> --}}
+
 
     <!-- CSS here -->
     <link rel="stylesheet" href="/assets_user/css/bootstrap.min.css">
@@ -24,6 +21,20 @@
     <link rel="stylesheet" href="/assets_user/css/slick.css">
     <link rel="stylesheet" href="/assets_user/css/nice-select.css">
     <link rel="stylesheet" href="/assets_user/css/style.css">
+
+    <style>
+        #image {
+            width: 100%;
+            /* Set the image width to fill the container */
+            transition: transform 0.3s ease;
+            /* Add transition for smooth zoom effect */
+        }
+
+        #image.zoomed {
+            transform: scale(2);
+            /* Zoom the image when it's hovered */
+        }
+    </style>
 
 </head>
 
@@ -49,33 +60,33 @@
         </div>
         <!-- Hero Area End-->
 
-
-
-
-
-
-
-
         <!--================Single Product Area =================-->
 
 
         <div class="product_image_area  ">
             <div class="container">
 
+
+
+
+
+
+
+
                 <div class="row ">
                     <div class="col-lg-12 d-flex align-items-center justify-content-center ">
 
                         <div class="product_img_slide owl-carousel h-50 w-50">
                             <div class="single_product_img">
-                                <img src="{{productD.imagepath.[0]}}" alt="#" class="img-fluid w-7">
+                                <img src="{{productD.imagepath.[0]}}" alt="#" id="image" class="img-fluid w-7">
 
                             </div>
                             <div class="single_product_img">
-                                <img src="{{productD.imagepath.[1]}}" alt="#" class="img-fluid">
+                                <img src="{{productD.imagepath.[1]}}" alt="#" id="image" class="img-fluid">
 
                             </div>
                             <div class="single_product_img">
-                                <img src="{{productD.imagepath.[2]}}" alt="#" class="img-fluid">
+                                <img src="{{productD.imagepath.[2]}}" alt="#" id="image" class="img-fluid">
 
                             </div>
 
@@ -98,7 +109,14 @@
 
                                 {{productD.description}}
                             </p>
-                            
+
+                            	{{#if productD.offerprice}}
+								<span class="price">Rs.{{productD.offerprice}}</span>
+								<span style="margin-left: 15px;"><del style="font-size: 26px;" id="orginal-price">{{productD.price}}</del></span>
+								{{else}}
+									<span class="price">Rs.{{productD.price}}</span>
+                                {{/if}}
+
                             <div class="card_area">
                                 <div class="product_count_area">
                                     <p>Quantity</p>
@@ -125,20 +143,6 @@
 
 
         <!--================End Single Product Area =================-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         <!-- subscribe part here -->
         <section class="subscribe_part section_padding">
@@ -178,6 +182,23 @@
     <!-- Search model end -->
 
     <!-- JS here -->
+
+    <script>
+        const image = document.getElementById('image');
+
+        // Add mouseover event listener to zoom in
+        image.addEventListener('mouseover', () => {
+            image.classList.add('zoomed');
+        });
+
+        // Add mouseout event listener to zoom out
+        image.addEventListener('mouseout', () => {
+            image.classList.remove('zoomed');
+        });
+
+    </script>
+
+
 
     <script src="/assets_user/js/vendor/modernizr-3.5.0.min.js"></script>
     <!-- Jquery, Popper, Bootstrap -->

@@ -428,6 +428,9 @@ const cashOnDelivery = async (req, res) => {
         })
         await newOrder.save();
 
+        const updateStock=await productData.updateOne({productname:cartProduct[i].productname},{$inc:{stock:-cartProduct[i].quantity}})
+        console.log(updateStock)
+
       }
       req.session.razorpay = null
       console.log(req.session.razorpay + "after razorpay online payment")
@@ -466,6 +469,9 @@ const cashOnDelivery = async (req, res) => {
           totalAmount: amount
         })
         await newOrder.save();
+
+        const updateStock=await productData.updateOne({productname:cartProduct[i].productname},{$inc:{stock:-cartProduct[i].quantity}})
+        console.log(updateStock)
 
       }
     }
@@ -725,7 +731,7 @@ const createOrder = async (req, res) => {
       console.log('coupon applied for this products')
       couponAmount = req.body.price - checkCoupon.amount
       console.log(couponAmount)
-      amount = couponAmount * 100
+      amount = couponAmount 
       console.log(amount + "cehck")
 
 
@@ -733,10 +739,44 @@ const createOrder = async (req, res) => {
       console.log('coupon not applied for this product')
       couponAmount = req.body.price
       console.log(couponAmount)
-      amount = couponAmount * 100
+      amount = couponAmount
       console.log(amount + "cehck")
 
     }
+
+
+    
+    console.log(req.session.walletOrder)
+
+    if (req.session.walletOrder) {
+      const ogwallet = await user.findOne({ email: req.session.email })
+      ///////////////////////////////////////////////////////////code for the wallet update
+      let wallet = ogwallet.wallet - amount;
+      if (wallet < 0) {
+        wallet = 0;
+      }
+      console.log(wallet + " wallet amount of the order")
+      await user.updateOne({ username: req.session.username }, { $set: { wallet: wallet} });
+      /////////////////////////////////////////////////////////////////////////
+      console.log("wallet presented =====")
+     
+      console.log(ogwallet.wallet)
+      amount = amount - ogwallet.wallet
+          if (amount < 1) {
+            amount = 1
+          }
+
+    } else {
+      console.log("wallet  NOTTTTTT  presented =====")
+      amount = amount
+
+    }
+// i removed *100 check og code------------------------------
+amount = amount*100
+
+    console.log(amount + " amount after applying wallet")
+
+   
 
     const options = {
       amount: amount,
@@ -812,6 +852,9 @@ const fetchAdress = async (req, res) => {
 
 }
 
+
+
+
 const couponVerify = async (req, res) => {
   try {
 
@@ -873,8 +916,9 @@ const couponVerify = async (req, res) => {
               let totalAmount = totalprice[0].total
               cost = 1
               let inform = "Coupon has Applied: 1"
+              let msg="Coupon has Successfully Applied"
               req.session.couponId = req.body.couponId
-              return res.json({ success: true, cost, inform, totalAmount })
+              return res.json({ success: true, cost,msg, inform, totalAmount })
 
             } else {
               console.log(cost)
@@ -885,7 +929,8 @@ const couponVerify = async (req, res) => {
               console.log("about the discount cost" + cost)
               console.log("about the total cost" + totalAmount)
               req.session.couponId = req.body.couponId
-              return res.json({ success: true, cost, inform, totalAmount })
+              let msg="Coupon has Successfully Applied"
+              return res.json({ success: true, cost,msg, inform, totalAmount })
             }
           }
 
@@ -917,21 +962,6 @@ const couponVerify = async (req, res) => {
 }
 
 
-// const onlinePayment=async(req,res)=>{
-//   try{
-
-
-//     let razorpay=razorpayPayment.razorpayOnlinePayment
-
-//     console.log(razorpay)
-
-
-//   }
-//   catch(e){
-//     console.log("Problem with the onmlinePayment "+e)
-
-//   }
-// }
 
 
 
@@ -958,13 +988,158 @@ const removeCoupon = async (req, res) => {
     console.log(removeTotal)
     req.session.couponId = null
     let msg = "Removed Coupon from Total Amount"
-    return res.json({ success: true, removeTotal })
+    return res.json({ success: true,msg, removeTotal })
 
   } catch (e) {
     console.log("problem withe the removeCoupon" + e)
     res.redirect("/error")
   }
 }
+
+
+
+
+
+
+
+
+// const couponVerify = async (req, res) => {
+//   try {
+
+
+//     console.log(req.body.couponId)
+//     console.log(req.body.price)
+//     let totalAmount = req.body.price
+//     const checkCoupon = await CouponData.findOne({ couponId: req.body.couponId })
+//     console.log(checkCoupon)
+//     const couponArrayCheck = await user.findOne({ $and: [{ email: req.session.email }, { couponArray: { $in: [req.body.couponId] } }] })
+//     console.log("checking the elemet in present in the coupon array" + couponArrayCheck)
+
+
+//     const totalprice = await cartData.aggregate([
+//       {
+//         $match: { username: req.session.username }
+//       },
+//       {
+//         $group: { _id: "$productname", price: { $sum: "$price" }, quantity: { $sum: "$quantity" } }
+//       },
+//       {
+//         $project: { _id: 0, amount: { $multiply: ["$price", "$quantity"] } }
+//       },
+//       {
+//         $group: { _id: "null", total: { $sum: "$amount" } }
+//       }
+//     ])
+
+
+//     console.log(totalprice)
+
+//     if (checkCoupon) {
+//       if (totalAmount >= checkCoupon.minAmount) {
+//         let date = Date.now()
+//         console.log(date)
+
+//         const date1 = new Date(Number(date))
+//         console.log(date1)
+//         console.log(checkCoupon.endDate)
+
+//         const dateFirst = new Date(date1);
+//         const dateSecond = new Date(checkCoupon.endDate);
+
+
+//         if (dateFirst.getTime() < dateSecond.getTime()) {
+
+//           if (couponArrayCheck) {
+//             let totalValue = totalprice[0].total - checkCoupon.amount
+//             let total = totalprice[0].total
+//             console.log("Entered into the couponArrayCheck")
+//             let msg = "Coupon Already Applied"
+//             return res.json({ success: false, msg, totalValue, total })
+
+//           } else {
+//             let cost = totalAmount - checkCoupon.amount
+//             if (cost < 1) {
+//               console.log("price is negative")
+//               // let msg ="You cant Purchase "
+//               let totalAmount = totalprice[0].total
+//               cost = 1
+//               let inform = "Coupon has Applied: 1"
+//               req.session.couponId = req.body.couponId
+//               return res.json({ success: true, cost, inform, totalAmount })
+
+//             } else {
+//               console.log(cost)
+//               console.log(req.session.email)
+//               const pushcoupon = await user.updateOne({ email: req.session.email }, { $push: { couponArray: req.body.couponId } })
+//               console.log(pushcoupon)
+//               let inform = `Coupon Applied :${checkCoupon.amount}`
+//               console.log("about the discount cost" + cost)
+//               console.log("about the total cost" + totalAmount)
+//               req.session.couponId = req.body.couponId
+//               return res.json({ success: true, cost, inform, totalAmount })
+//             }
+//           }
+
+//         } else {
+
+//           console.log("no the checkcoupom")
+//           let msg = "Coupon Date has Expired"
+//           return res.json({ success: false, msg })
+//         }
+
+//       } else {
+//         console.log("no the amount")
+//         let msg = `Minimum Amount to Apply Coupon:${checkCoupon.minAmount}`
+//         return res.json({ success: false, msg })
+
+//       }
+
+
+//     } else {
+//       console.log("no the checkcoupom")
+//       let msg = "Enter Valid Coupon Id"
+//       return res.json({ success: false, msg })
+//     }
+
+//   } catch (e) {
+//     console.log("Problem with the couponVerify" + e)
+//     return res.json({ success: false, msg: "Internal Server Error" })
+//   }
+// }
+
+
+
+
+// const removeCoupon = async (req, res) => {
+//   try {
+//     console.log("entered into remove coupon")
+//     console.log(req.session.couponId)
+//     const checkCoupon = await CouponData.findOne({ couponId: req.session.couponId })
+//     console.log(checkCoupon)
+//     console.log(req.session.email)
+//     try {
+//       const pullcoupon = await user.updateOne({ email: req.session.email }, { $pull: { couponArray: req.session.couponId } });
+//       console.log('Coupon removed successfully:', pullcoupon);
+//       // Send a success response or perform additional actions if needed
+//     } catch (error) {
+//       console.error('Error removing coupon:', error);
+//       // Handle the error, send an appropriate response, or retry the operation
+//     }
+
+//     // const pullcoupon = await user.updateOne({ email:req.session.email }, { $pull: { couponArray: req.body.couponId } })
+//     // console.log(pullcoupon)
+//     console.log(checkCoupon.amount)
+//     let removeTotal = req.body.price
+//     console.log(removeTotal)
+//     req.session.couponId = null
+//     let msg = "Removed Coupon from Total Amount"
+//     return res.json({ success: true, removeTotal })
+
+//   } catch (e) {
+//     console.log("problem withe the removeCoupon" + e)
+//     res.redirect("/error")
+//   }
+// }
 
 
 const returnOrder = async (req, res) => {

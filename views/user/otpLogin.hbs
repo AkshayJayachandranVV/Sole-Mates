@@ -86,20 +86,6 @@
                                             <a href="/resendotpexpire"> Resend</a>
                                         </button>
 
-                                        {{!-- <a class="btn btn-primary"   id="resend-button" href="/resendotpexpire"> Resend</a> --}}
-                                          
-                                     
-                                        
-                                         {{!-- <button id="resend-button" style="display: none;" type="submit" value="submit" class="btn_3"><a href="/resendotpexpire"> Resend</a>
-
-                                         
-                                         
-                                        </button> --}}
-
-                                        {{!-- <a id="resend-button" style="display: none;" type="submit" href="/resendotpexpire"> Resend</a> --}}
-
-                                        {{!-- <a id="resend-button" class="btn btn-primary" style="display:none;" href="/resendotpexpire">Submit</a> --}}
-                                        {{!-- <a class="lost_pass" href="#">forget password?</a> --}}
                                     </div>
                                 </form>
                             </div>
@@ -137,7 +123,6 @@
             const intervalId = setInterval(function() {
                 console.log(`Seconds: ${seconds}`);
               document.getElementById("otp-seconds").innerHTML=`OTP will Expire on ${seconds} seconds`
-            // Your code here: Perform actions you want to repeat every second
 
             seconds--;
 
@@ -147,8 +132,6 @@
 
               document.getElementById("otp-seconds").innerHTML=`OTP has Expired`
 
-           // let data=document.getElementById("otp-seconds")
-           // data.style.display="none"
       }
     }, 1000); // Run every 1000 milliseconds (1 second)
 

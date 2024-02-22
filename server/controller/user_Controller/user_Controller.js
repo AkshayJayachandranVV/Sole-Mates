@@ -20,26 +20,7 @@ let checkEmail;
 
 
 
-//RENDER THE HOME PAGE 
 
-const renderHome=async(req,res)=>{
-  
-    try{
-
-      let enter=req.session.authenticated
-      const images = await productData.find({})
-    
-
-        res.render("userHome",{enter,images})
-
-    }
-    catch(e)
-    {
-        console.log(e)
-        res.redirect("/error")
-    }
-
-}
 
 // const AuthorizeCheck=async(req,res,next)=>{
 
@@ -333,4 +314,4 @@ const renderHome=async(req,res)=>{
 
 
 //   module.exports = { sendEmail,otpValidation };  
-module.exports = {renderHome}
+// module.exports = {renderHome}

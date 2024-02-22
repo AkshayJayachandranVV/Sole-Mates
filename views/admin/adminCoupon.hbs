@@ -20,9 +20,6 @@
 
 
 
-    {{!-- {{> admin_Sidebar}} --}}
-
-
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
       <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
         <a class="sidebar-brand brand-logo" href="index.html"><img src="/assets_admin/images/logo.svg" alt="logo" /></a>
@@ -56,26 +53,6 @@
             <span class="menu-title">Products</span>
           </a>
         </li>
-        {{!-- <li class="nav-item">
-          <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-            <span class="menu-title">Basic UI Elements</span>
-            <i class="menu-arrow"></i>
-          </a>
-          <div class="collapse" id="ui-basic">
-            <ul class="nav flex-column sub-menu">
-              <li class="nav-item">
-                <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
-              </li>
-            </ul>
-          </div>
-        </li> --}}
         <li class="nav-item">
           <a class="nav-link" href="/admin/users">
             <i class="mdi mdi-contacts menu-icon"></i>
@@ -101,27 +78,10 @@
           </a>
         </li>
         {{!-- <li class="nav-item">
-          <span class="nav-link" href="#">
-            <span class="menu-title">Docs</span>
-          </span>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="https://www.bootstrapdash.com/demo/breeze-free/documentation/documentation.html">
-            <i class="mdi mdi-file-document-box menu-icon"></i>
-            <span class="menu-title">Documentation</span>
+          <a class="nav-link" href="/admin/offer">
+            <i class="mdi mdi-table-large menu-icon"></i>
+            <span class="menu-title">Offers</span>
           </a>
-        </li>
-        <li class="nav-item sidebar-actions">
-          <div class="nav-link">
-            <div class="mt-4">
-              <div class="border-none">
-                <p class="text-black">Notification</p>
-              </div>
-              <ul class="mt-4 pl-0">
-                <li>Sign Out</li>
-              </ul>
-            </div>
-          </div>
         </li> --}}
       </ul>
     </nav>
@@ -143,30 +103,20 @@
       </div>
 
 
-
-
-
-
-
       {{> admin_Header}}
-
-
-
-
-
 
 
       <div class="main-panel">
         <div class="content-wrapper pb-0">
 
-     <h4 id="category-preseneted" style="color: red;">{{already}}</h4>
-     <h4 id="less-preseneted" style="color: red;">{{lessPrice}}</h4>
+          <h4 id="category-preseneted" style="color: red;">{{already}}</h4>
+          <h4 id="less-preseneted" style="color: red;">{{lessPrice}}</h4>
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
             Add Coupon
           </button>
 
           <!-- Modal -->
-          <form  method="post">
+          <form method="post">
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
               aria-hidden="true">
               <div class="modal-dialog" role="document">
@@ -190,12 +140,14 @@
                     </div>
                     <div class="form-group">
                       <label class="form-control-label">Amount</label>
-                      <input type="number" name="category" placeholder="Offer Amount" class="form-control" value="" min="1">
+                      <input type="number" name="category" placeholder="Offer Amount" class="form-control" value=""
+                        min="1">
 
                     </div>
                     <div class="form-group">
                       <label class="form-control-label">Mininmum Purchase Amount</label>
-                      <input type="number" name="minamount" placeholder="Minimum Purchase Amount" class="form-control" value="" min="1">
+                      <input type="number" name="minamount" placeholder="Minimum Purchase Amount" class="form-control"
+                        value="" min="1">
 
                     </div>
                     <div class="form-group">
@@ -225,7 +177,6 @@
           <table class="table">
             <thead class="thead-dark">
               <tr>
-                {{!-- <th scope="col">#</th> --}}
                 <th scope="col">CouponName</th>
                 <th scope="col">Coupon Id</th>
                 <th scope="col">Start Date</th>
@@ -234,7 +185,6 @@
                 <th scope="col">Minimum Amount</th>
                 <th scope="col">Edit</th>
                 <th scope="col">Delete</th>
-                {{!-- <th scope="col">Block/Unblock</th> --}}
               </tr>
             </thead>
 
@@ -249,7 +199,7 @@
                 <td>{{this.amount}}</td>
                 <td>{{this.minAmount}}</td>
                 <td>
-    
+
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{@key}}">
                     Edit Coupon
                   </button>
@@ -267,43 +217,50 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                    <div class="form-group">
-                      <label class="form-control-label">Name of Coupon</label>
-                      <input type="text" name="category" placeholder="Category Name" class="form-control" value="{{this.coupon}}">
+                            <div class="form-group">
+                              <label class="form-control-label">Name of Coupon</label>
+                              <input type="text" name="category" placeholder="Category Name" class="form-control"
+                                value="{{this.coupon}}">
 
-                    </div>
-                    <div class="form-group">
-                      <label class="form-control-label">Coupon Code</label>
-                      <input type="text" name="couponId" placeholder="Coupon Name" class="form-control" value="{{this.couponId}}">
-                      <input type="hidden" name="oldcouponId" placeholder="Category Name" class="form-control" value="{{this.couponId}}">
+                            </div>
+                            <div class="form-group">
+                              <label class="form-control-label">Coupon Code</label>
+                              <input type="text" name="couponId" placeholder="Coupon Name" class="form-control"
+                                value="{{this.couponId}}">
+                              <input type="hidden" name="oldcouponId" placeholder="Category Name" class="form-control"
+                                value="{{this.couponId}}">
 
-                    </div>
-                    <div class="form-group">
-                      <label class="form-control-label">Amount</label>
-                      <input type="number" name="category" placeholder="Coupon Code" class="form-control" value="{{this.amount}}">
+                            </div>
+                            <div class="form-group">
+                              <label class="form-control-label">Amount</label>
+                              <input type="number" name="category" placeholder="Coupon Code" class="form-control"
+                                value="{{this.amount}}">
 
-                    </div>
-                    <div class="form-group">
-                      <label class="form-control-label">Mininmum Purchase Amount</label>
-                      <input type="number" name="minamount" placeholder="Minimum Amount" class="form-control" value="{{this.minAmount}}">
+                            </div>
+                            <div class="form-group">
+                              <label class="form-control-label">Mininmum Purchase Amount</label>
+                              <input type="number" name="minamount" placeholder="Minimum Amount" class="form-control"
+                                value="{{this.minAmount}}">
 
-                    </div>
-                    <div class="form-group">
-                      <label class="form-control-label">Startdate</label>
-                      <input type="date" name="startDate" placeholder="Category Name" class="form-control" value="{{this.startDate}}">
+                            </div>
+                            <div class="form-group">
+                              <label class="form-control-label">Startdate</label>
+                              <input type="date" name="startDate" placeholder="Category Name" class="form-control"
+                                value="{{this.startDate}}">
 
-                    </div>
-                    <div class="form-group">
-                      <label class="form-control-label">end</label>
-                      <input type="date" name="endDate" placeholder="Category Name" class="form-control" value="{{this.endDate}}">
+                            </div>
+                            <div class="form-group">
+                              <label class="form-control-label">end</label>
+                              <input type="date" name="endDate" placeholder="Category Name" class="form-control"
+                                value="{{this.endDate}}">
 
-                    </div>
-                     <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
-                  </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
 
-                     </div>
+                          </div>
                         </div>
                       </div>
                   </form>
@@ -317,54 +274,74 @@
           </table>
 
 
-
-
-
+          <div class="pagenation">
+            <nav aria-label="...">
+              <ul class="pagination">
+                <div class="showing col col-xs-12 mr-10">
+                  <span>SHOWING OF </span>
+                </div>
+                {{#if currentValue}}
+                <li class="page-item">
+                  <a class="page-link" href="/admin/couponpagenation?previous=1&page={{currentValue}}">Previous</a>
+                </li>
+                {{/if}}
+                <li class="page-item">
+                  <a class="page-link" href="/admin/couponpagenation?next=2&page={{currentValue}}">Next</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
 
         </div>
-        <!-- main-panel ends -->
-        {{> admin_Footer}}
+
+
+
+
+
       </div>
-      <!-- page-body-wrapper ends -->
-
+      <!-- main-panel ends -->
+      {{> admin_Footer}}
     </div>
+    <!-- page-body-wrapper ends -->
 
-        <script>
-      setTimeout(() => {
-        const data = document.getElementById("category-preseneted")
-        data.style.display = "none"
-      }, 4000)
-    </script>
-        <script>
-      setTimeout(() => {
-        const data = document.getElementById("less-preseneted")
-        data.style.display = "none"
-      }, 4000)
-    </script>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-    <script src="/assets_admin/vendors/js/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="/assets_admin/vendors/chart.js/Chart.min.js"></script>
-    <script src="/assets_admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-    <script src="/assets_admin/vendors/flot/jquery.flot.js"></script>
-    <script src="/assets_admin/vendors/flot/jquery.flot.resize.js"></script>
-    <script src="/assets_admin/vendors/flot/jquery.flot.categories.js"></script>
-    <script src="/assets_admin/vendors/flot/jquery.flot.fillbetween.js"></script>
-    <script src="/assets_admin/vendors/flot/jquery.flot.stack.js"></script>
-    <script src="/assets_admin/vendors/flot/jquery.flot.pie.js"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="/assets_admin/js/off-canvas.js"></script>
-    <script src="/assets_admin/js/hoverable-collapse.js"></script>
-    <script src="/assets_admin/js/misc.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page -->
-    <script src="/assets_admin/js/dashboard.js"></script>
-    <!-- End custom js for this page -->
+  <script>
+    setTimeout(() => {
+      const data = document.getElementById("category-preseneted")
+      data.style.display = "none"
+    }, 4000)
+  </script>
+  <script>
+    setTimeout(() => {
+      const data = document.getElementById("less-preseneted")
+      data.style.display = "none"
+    }, 4000)
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="/assets_admin/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="/assets_admin/vendors/chart.js/Chart.min.js"></script>
+  <script src="/assets_admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <script src="/assets_admin/vendors/flot/jquery.flot.js"></script>
+  <script src="/assets_admin/vendors/flot/jquery.flot.resize.js"></script>
+  <script src="/assets_admin/vendors/flot/jquery.flot.categories.js"></script>
+  <script src="/assets_admin/vendors/flot/jquery.flot.fillbetween.js"></script>
+  <script src="/assets_admin/vendors/flot/jquery.flot.stack.js"></script>
+  <script src="/assets_admin/vendors/flot/jquery.flot.pie.js"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="/assets_admin/js/off-canvas.js"></script>
+  <script src="/assets_admin/js/hoverable-collapse.js"></script>
+  <script src="/assets_admin/js/misc.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page -->
+  <script src="/assets_admin/js/dashboard.js"></script>
+  <!-- End custom js for this page -->
 </body>
 
 </html>

@@ -4,6 +4,39 @@ const productData = require("../../model/product_details")
 const cartData = require("../../model/user_cart")
 const categoryData = require("../../model/category_Model")
 
+
+
+
+
+//RENDER THE HOME PAGE 
+
+const renderHome=async(req,res)=>{
+  
+    try{
+
+      let enter=req.session.authenticated
+      const images = await productData.find({})
+    
+
+        res.render("userHome",{enter,images})
+
+    }
+    catch(e)
+    {
+        console.log(e)
+        res.redirect("/error")
+    }
+
+}
+
+
+
+
+
+
+
+
+
 const HomeImages = async (req, res) => {
 
     try {
@@ -84,6 +117,7 @@ const allCollectionDisplay = async (req, res) => {
         const category = await categoryData.find({ list: 0 })
         let currentPage = req.query.page || 0
         console.log(currentPage)
+        let allcollection="allcollection"
 
         if (req.query.next) {
             console.log("next entred")
@@ -105,7 +139,7 @@ const allCollectionDisplay = async (req, res) => {
         let countCurrent = currentPage + 1
         const product = await productData.find({ list: 0 }).skip(currentPage * 6).limit(6)
 
-        res.render("formalStore", { product, data: "All Collection", category, cat: "All Collection", currentPage, countLimit, countCurrent })
+        res.render("formalStore", { product, data: "All Collection", category, cat: "All Collection",allcollection, currentPage, countLimit, countCurrent })
 
 
 
@@ -139,6 +173,18 @@ const displayProduct = async (req, res) => {
         console.log(req.params.id)
         let pagenationcat = cat
         let categoryFind = cat || req.query.nextcat || req.query.previouscat
+        let displayProduct="displayProduct"
+
+        if(categoryFind){
+            pagenationcat = categoryFind
+        }
+
+
+        console.log("checking the pagenation cart vlue-----------------------------"+pagenationcat)
+
+      
+
+    
 
         console.log("for pagenation " + req.query.nextcat + " " + req.query.previouscat)
 
@@ -161,7 +207,7 @@ const displayProduct = async (req, res) => {
         const product = await productData.find({ list: 0, category: categoryFind }).skip(currentPage*6).limit(6)
         console.log(product)
 
-        res.render("formalStore", { product, category, categoryFind, pagenationcat,currentPage})
+        res.render("formalStore", { product, category, categoryFind, pagenationcat,currentPage,displayProduct})
 
     }
     catch (e) {
@@ -191,7 +237,7 @@ const userSearchProduct = async (req, res) => {
 
         } else {
             res.redirect("/allcollection")
-            res.redirect("/error")
+            // res.redirect("/error")
 
         }
 
@@ -199,6 +245,7 @@ const userSearchProduct = async (req, res) => {
     }
     catch (e) {
         console.log()
+        res.redirect("/error")
     }
 
 
@@ -207,17 +254,20 @@ const userSearchProduct = async (req, res) => {
 
 const lowToHigh=async(req,res)=>{
     try{
-        console.log("entered in to the allcollection display")
+        console.log("entered in to the low to high display")
         console.log(req.query.data)
         // const product = await productData.find({ list:0 })
         const category = await categoryData.find({ list: 0 })
         let currentPage = req.query.page || 0
         console.log(currentPage)
+        let pagenationcat=req.query.data
+        let sort="success"
+        let lowtohigh
+        let lowtohighcat
 
         if (req.query.next) {
             console.log("next entred")
             currentPage++
-
         }
 
         if (req.query.previous) {
@@ -242,13 +292,15 @@ const lowToHigh=async(req,res)=>{
            product = await productData.find({ list: 0 }).skip(currentPage* 6).limit(6).sort({price:1})
            console.log(product.length+ " length of cominhg product")
            cat="All Collection"
+           lowtohigh="lowToHigh"
         }else{
             console.log("enteredd into the else")
            product = await productData.find({category:req.query.data, list: 0 }).skip(currentPage * 6).limit(6).sort({price:1})
            categoryFind=req.query.data
+           lowtohighcat="lowtohigh"
         }
 
-        res.render("formalStore", { product, data: "All Collection", category, cat: "All Collection", currentPage, countLimit, countCurrent,categoryFind })
+        res.render("formalStore", { product, data: "All Collection", category, cat: "All Collection", currentPage,pagenationcat, countLimit,lowtohigh,lowtohighcat, countCurrent,categoryFind })
 
     }catch(e){
         console.log("problem with the lowToHigh"+e)
@@ -261,16 +313,19 @@ const lowToHigh=async(req,res)=>{
 
 const HightoLow=async(req,res)=>{
     try{
-        console.log("entered in to the allcollection display")
+        console.log("entered in to the high  h display")
 
         console.log(req.query.data)
 
+        let sort="success"
+        let hightolow
+        let pagenationcat=req.query.data
        
-
         // const product = await productData.find({ list:0 })
         const category = await categoryData.find({ list: 0 })
         let currentPage = req.query.page || 0
         console.log(currentPage)
+        let  hightolowcat
 
         if (req.query.next) {
             console.log("next entred")
@@ -297,13 +352,16 @@ const HightoLow=async(req,res)=>{
         if(!req.query.data){
              product = await productData.find({ list: 0 }).skip(currentPage * 6).limit(6).sort({price:-1})
              cat="All Collection"
+             hightolow="hightolow"
         }else{
              product = await productData.find({category:req.query.data, list: 0 }).skip(currentPage * 6).limit(6).sort({price:-1})
              categoryFind=req.query.data
+             hightolowcat="hightolow"
         }
-        
 
-        res.render("formalStore", { product, data: "All Collection", category, cat: "All Collection", currentPage, countLimit, countCurrent,categoryFind })
+        
+        
+        res.render("formalStore", { product, data: "All Collection", category, cat: "All Collection", currentPage,pagenationcat, countLimit,hightolow,hightolowcat, countCurrent,categoryFind })
 
     }catch(e){
         console.log("problem with the lowToHigh"+e)
@@ -313,6 +371,99 @@ const HightoLow=async(req,res)=>{
 
 
 
+const displayCatHightoLow = async (req, res) => {
+
+    try {
+
+        console.log("entered into the displayCatHightoLow")
+        let cat = req.params.id
+        console.log(req.params.id)
+        let pagenationcat = cat
+        let categoryFind = cat || req.query.nextcat || req.query.previouscat
+        let hightolowcat="hightolow"
+        
+
+        console.log("for pagenation " + req.query.nextcat + " " + req.query.previouscat)
+
+        let currentPage=req.query.page || 0
 
 
-module.exports = { productDetailPage, allCollectionDisplay, HomeImages, displayProduct, userSearchProduct,lowToHigh,HightoLow }
+        if(req.query.nextcat){
+            currentPage++;
+
+        }
+
+        if(req.query.previouscat){
+            currentPage--;
+
+        }
+
+       
+
+        const category = await categoryData.find({ list: 0 })
+        const product = await productData.find({ list: 0, category: categoryFind }).skip(currentPage*6).limit(6).sort({price:-1})
+        console.log(product)
+
+        res.render("formalStore", { product, category, categoryFind, pagenationcat,currentPage,hightolowcat})
+
+    }
+    catch (e) {
+        console.log(" error withe displayProduct" + e)
+        res.redirect("/error")
+    }
+
+
+}
+
+
+
+
+const displayCatLowtoHigh = async (req, res) => {
+
+    try {
+
+        console.log("entered into the displayproduct")
+        let cat = req.params.id
+        console.log(req.params.id)
+        let pagenationcat = cat
+        let categoryFind = cat || req.query.nextcat || req.query.previouscat
+        let lowtohighcat="lowtohigh"
+        
+        console.log("for pagenation " + req.query.nextcat + " " + req.query.previouscat)
+
+        let currentPage=req.query.page || 0
+
+
+        if(req.query.nextcat){
+            currentPage++;
+
+        }
+
+        if(req.query.previouscat){
+            currentPage--;
+
+        }
+
+       
+
+        const category = await categoryData.find({ list: 0 })
+        const product = await productData.find({ list: 0, category: categoryFind }).skip(currentPage*6).limit(6).sort({price:1})
+        console.log(product)
+
+        res.render("formalStore", { product, category, categoryFind, pagenationcat,currentPage,lowtohighcat})
+
+    }
+    catch (e) {
+        console.log(" error withe displayProduct" + e)
+        res.redirect("/error")
+    }
+
+
+}
+
+
+
+
+
+
+module.exports = { productDetailPage, allCollectionDisplay, HomeImages, displayProduct, userSearchProduct,lowToHigh,HightoLow,renderHome,displayCatHightoLow ,displayCatLowtoHigh}

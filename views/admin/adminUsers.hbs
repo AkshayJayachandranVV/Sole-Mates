@@ -17,14 +17,6 @@
 
 <body>
     <div class="container-scroller">
-
-
-
-        {{!-- {{> admin_Sidebar}} --}}
-
-
-
-
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
                 <a class="sidebar-brand brand-logo" href="index.html"><img src="/assets_admin/images/logo.svg"
@@ -38,11 +30,9 @@
                         <div class="nav-profile-image">
                             <img src="/assets_admin/images/faces/face1.jpg" alt="profile" />
                             <span class="login-status online"></span>
-                            <!--change to offline or busy as needed-->
                         </div>
                         <div class="nav-profile-text d-flex flex-column pr-3">
                             <span class="font-weight-medium mb-2">Admin</span>
-                            {{!-- <span class="font-weight-normal">$8,753.00</span> --}}
                         </div>
                         <span class="badge badge-danger text-white ml-3 rounded">3</span>
                     </a>
@@ -59,27 +49,6 @@
                         <span class="menu-title">Products</span>
                     </a>
                 </li>
-                {{!-- <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
-                        aria-controls="ui-basic">
-                        <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-                        <span class="menu-title">Basic UI Elements</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="ui-basic">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item">
-                                <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/users">
                         <i class="mdi mdi-contacts menu-icon"></i>
@@ -104,6 +73,12 @@
                         <span class="menu-title">Coupon</span>
                     </a>
                 </li>
+                {{!-- <li class="nav-item">
+                    <a class="nav-link" href="/admin/offer">
+                        <i class="mdi mdi-table-large menu-icon"></i>
+                        <span class="menu-title">Offers</span>
+                    </a>
+                </li> --}}
 
             </ul>
         </nav>
@@ -124,38 +99,27 @@
                 </div>
             </div>
 
-
-
             {{> admin_Header}}
 
-
-
-
             <div class="main-panel">
+                <nav class="navbar navbar-light bg-light justify-content-between">
 
-
-                 <nav class="navbar navbar-light bg-light justify-content-between">
-                          
-                            <form class="form-inline" method="post">
-                                <input class="form-control mr-sm-2" type="search" placeholder="Search" name="filter" value="{{filterUser}}"
-                                    aria-label="Search">
-                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                            </form>
-                        </nav>
+                    <form class="form-inline" method="post">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" name="filter"
+                            value="{{filterUser}}" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </nav>
                 <div class="content-wrapper pb-0">
-
-      
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
-                                {{!-- <th scope="col">#</th> --}}
                                 <th scope="col">UserName</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Phone</th>
                                 <th scope="col">Block/Unblock</th>
                             </tr>
                         </thead>
-
                         {{#each userList}}
                         <tbody>
 
@@ -173,47 +137,31 @@
 
                                         {{/if}}
                                          </a>
+                </div>
+                </td>
+                </tr>
+                </tbody>
 
-                                </div>
-                                </td>
-                                </tr>
-                                </tbody>
-
-                                {{/each}}
-                    </table>
-               
-
-
+                {{/each}}
+                </table>
                 <div class="pagenation">
-                     <nav aria-label="...">
-                            <ul class="pagination">
-                                  <div class="showing col col-xs-12 mr-10">
-                                    <span>SHOWING        OF     </span>
-                                    </div>
-
-                                {{#if currentValue}}
-                                <li class="page-item">
-                                    {{!-- <span class="page-link">Previous</span> --}}
-                                    <a class="page-link" href="/admin/userpagenation?previous=1&page={{currentValue}}">Previous</a>
-                                </li>
-                                {{/if}}
-
-                                {{!-- <li class="page-item"><a class="page-link" href="/pagenation"> {{previous}}</a>
-                                </li> --}}
-                                {{!-- <li class="page-item active">
-                                    <span class="page-link">
-                                        {{nextValue}}
-                                        <span class="sr-only">(current)</span>
-                                    </span>
-                                </li> --}}
-                                {{!-- <li class="page-item"><a class="page-link"
-                                        href="/pagenation?next={{nextValue}}">{{nextValue}}</a></li> --}}
-                                <li class="page-item">
-                                    <a class="page-link" href="/admin/userpagenation?next=2&page={{currentValue}}">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+                    <nav aria-label="...">
+                        <ul class="pagination">
+                            <div class="showing col col-xs-12 mr-10">
+                                <span>SHOWING OF </span>
+                            </div>
+                            {{#if currentValue}}
+                            <li class="page-item">
+                                <a class="page-link"
+                                    href="/admin/userpagenation?previous=1&page={{currentValue}}">Previous</a>
+                            </li>
+                            {{/if}}
+                            <li class="page-item">
+                                <a class="page-link" href="/admin/userpagenation?next=2&page={{currentValue}}">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
 
 
 

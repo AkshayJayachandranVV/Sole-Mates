@@ -314,7 +314,9 @@ const otpValidationChangePass = async (req, res) => {
 
 const displayChangePassword=async(req,res)=>{
   try{
-    res.render("resetPassword")
+    console.log(req.query.invalid)
+    let incorrect=req.query.invalid
+    res.render("resetPassword",{incorrect})
 
   }catch(e){
     console.log("problem withe displayChangePassword"+e)
@@ -330,10 +332,16 @@ const newPasswordProfile = async (req, res) => {
     console.log("new password entered")
     console.log(req.body.password)
     console.log(req.body.confirmpassword)
+    console.log(req.body.oldpassword)
     // console.log(checkEmail)
     // const email=req.body.email;
     console.log(req.session.user)
     const forgotEmail = req.session.email
+    
+    const oldPasswordCheck= await user.findOne({ email: forgotEmail })
+    const checkPass = await bcrypt.compare(req.body.oldpassword, oldPasswordCheck.password)
+    console.log(oldPasswordCheck)
+    if(checkPass){
     if (req.body.password == req.body.confirmpassword) {
       console.log("check confirm password ")
       const emailExist = await user.findOne({ email: forgotEmail })
@@ -351,7 +359,14 @@ const newPasswordProfile = async (req, res) => {
     }
     else {
       res.render("forgetPassword")
+      // res.redirect("/profileresetpass?invalid=Password are not sam")
     }
+
+  }else{
+    // res.render("forgetPassword")
+    res.redirect("/profileresetpass?invalid=Incorrect Old Password")
+
+  }
 
   }
   catch (e) {

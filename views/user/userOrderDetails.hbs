@@ -7,10 +7,7 @@
     <title>SOLE MATES</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{!--
-    <link rel="manifest" href="site.webmanifest"> --}}
-    {{!--
-    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico"> --}}
+   
 
     <!-- CSS here -->
     <link rel="stylesheet" href="/assets_user/css/bootstrap.min.css">
@@ -164,10 +161,6 @@
 
                 <h2>Order Details</h2>
 
-                {{!-- <p>{{productOrder}}</p> --}}
-
-                {{!-- {{#each productOrder}} --}}
-
                 <div class="row">
 
                     {{#each productOrder}}
@@ -189,12 +182,8 @@
                                     <li class="list-group-item">Product:<p id="getproductname">{{this.productname}}</p>
                                     </li>
                                     <li class="list-group-item">Quantity:{{this.quantity }} </li>
-                                    {{!-- <li class="list-group-item">Product: Smartphone | Quantity: 1 | Price:
-                                        $800</li> --}}
                                     <!-- Add more items as needed -->
                                 </ul>
-
-                                <!-- Total Price -->
                                 <h5 class="mt-4">Total Price: {{this.price}}</h5>
                             </div>
                             <div>
@@ -233,7 +222,7 @@
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">Return</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -251,7 +240,7 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -285,16 +274,6 @@
 
 
 
-
-                        {{!-- <div class="card mt-4">
-                            <div class="card-body">
-                                <h5 class="card-title">Shipping Address</h5>
-                                <p class="card-text">Jane Doe</p>
-                                <p class="card-text">456 Second St</p>
-                                <p class="card-text">City: Othertown</p>
-                                <p class="card-text">Country: USA</p>
-                            </div>
-                        </div> --}}
                     </div>
                       
                 </div>

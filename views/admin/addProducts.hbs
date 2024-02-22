@@ -14,15 +14,7 @@
     <link rel="shortcut icon" href="/assets_admin/images/favicon.png" />
   </head>
   <body>
-    <div class="container-scroller">
-      
-
-
- {{!-- {{> admin_Sidebar}} --}}
-
-
-
-   
+    <div class="container-scroller">  
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
           <a class="sidebar-brand brand-logo" href="index.html"><img src="/assets_admin/images/logo.svg" alt="logo" /></a>
@@ -38,7 +30,6 @@
               </div>
               <div class="nav-profile-text d-flex flex-column pr-3">
                 <span class="font-weight-medium mb-2">Admin</span>
-                {{!-- <span class="font-weight-normal">$8,753.00</span> --}}
               </div>
               <span class="badge badge-danger text-white ml-3 rounded">3</span>
             </a>
@@ -80,29 +71,6 @@
               <span class="menu-title">Coupon</span>
             </a>
           </li>
-          {{!-- <li class="nav-item">
-            <span class="nav-link" href="#">
-              <span class="menu-title">Docs</span>
-            </span>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://www.bootstrapdash.com/demo/breeze-free/documentation/documentation.html">
-              <i class="mdi mdi-file-document-box menu-icon"></i>
-              <span class="menu-title">Documentation</span>
-            </a>
-          </li>
-          <li class="nav-item sidebar-actions">
-            <div class="nav-link">
-              <div class="mt-4">
-                <div class="border-none">
-                  <p class="text-black">Notification</p>
-                </div>
-                <ul class="mt-4 pl-0">
-                  <li>Sign Out</li>
-                </ul>
-              </div>
-            </div>
-          </li> --}}
         </ul>
       </nav>
       <div class="container-fluid page-body-wrapper">
@@ -121,9 +89,6 @@
             <div class="tiles dark"></div>
           </div>
         </div>
-
-
-
 
          {{> admin_Header}}
 
@@ -147,18 +112,23 @@
                       <div class="form-group">       
                         <label class="form-control-label">Category</label>
                         <br>
-                        {{!-- <input type="text" name="category" placeholder="Category" class="form-control"> --}}
-                        {{!-- <label for="dog-names">Choose a dog name:</label>  --}}
                         <select class="btn btn-danger" name="category" id="category-names"> 
                           {{#each categorydata}}
                             <option value="{{this.category}}" >{{this.category}}</option> 
-                            {{!-- <option value="formals">formals</option>  --}}
                            {{/each}}
                         </select>
                       </div>
                         <div class="form-group">       
                         <label class="form-control-label">Price</label>
-                        <input type="number" name="price" placeholder="Price" class="form-control" min="1" oninput="validateInput(this)">
+                        <input type="number" id="price" name="price" placeholder="Price" class="form-control" min="1" oninput="validateInput(this)">
+                      </div>
+                      <div class="form-group">
+                      <label class="form-control-label">Mininmum Purchase Offer</label>
+                      <input type="number" id="offer" name="offer-percentage" placeholder="Offer" class="form-control" min="1" max="99" value=""   onkeyup="offerPrice()">
+                      </div>
+                      <div class="form-group">
+                      <label class="form-control-label">Offer Price</label>
+                      <input type="number" id="offer-price" name="offer-price" placeholder="Product Price" class="form-control"  required>
                       </div>
                         <div class="form-group">       
                         <label class="form-control-label">Description</label>
@@ -176,15 +146,9 @@
                         <label class="form-control-label">Stock</label>
                         <input type="number" name="stock" placeholder="Stock" min="1" class="form-control">
                       </div>
-                      <div>
-                     
-                        <input type="file" multiple  accept='image/*' name="avatar" />
-                        {{!-- <span class='hint'>Supported files: jpg, jpeg, png.</span> --}}
-                  
+                      <div>                 
+                        <input type="file" multiple  accept='image/*' name="avatar" />            
                       </div>
-
-            
-                  
                       <div class="form-group">       
                         <input type="submit" value="ADD" class="btn btn-primary">    
                       </div>
@@ -196,6 +160,25 @@
         </div>
       </div>
            
+
+   <script>
+     function offerPrice(){
+        let offer=parseFloat(document.getElementById("offer").value)
+        let orginalPrice=parseFloat(document.getElementById("price").value)
+        console.log(offer)
+        console.log(orginalPrice)
+        let OfferPrice =Math.floor(orginalPrice - (orginalPrice * (offer/ 100))) 
+        console.log(OfferPrice)
+        document.getElementById("offer-price").value=OfferPrice 
+
+
+      }
+
+    </script>
+
+
+
+
         
 <script>
     setTimeout(()=>{
@@ -217,6 +200,9 @@
             }
         }
     </script>
+
+
+ 
 
      
 

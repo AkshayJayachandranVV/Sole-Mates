@@ -13,6 +13,10 @@ const categoryData=mongoose.Schema({
     list:{
         type:Number,
         require:true
+    },
+    offer:{
+        type:Number,
+        require:true
     }
 })  
 

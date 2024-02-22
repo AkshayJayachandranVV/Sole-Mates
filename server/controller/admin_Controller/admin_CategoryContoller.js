@@ -87,10 +87,18 @@ const storeCategory = async (req, res) => {
         const newCategory = new catData({
 
             category: req.body.categoryname,
+            offer:req.body['offer-percentage'],
             list: 0
 
         })
 
+      const product=await productData.find()
+        for(let i=0;i<product.length;i++){
+            let OfferPrice =Math.floor(product[i].price - (product[i].price * (product[i].offer/ 100))) 
+            console.log(OfferPrice)
+            await productData.updateOne({productname:product[i]},{$set:{offerprice:OfferPrice}})
+        }
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         await newCategory.save()
         console.log(newCategory)
 
@@ -158,13 +166,13 @@ const editCategory=async(req,res)=>{
   
           const changecat=await catData.findOne({category:req.params.catid})
           console.log(changecat)
-          if(changecat)
-          {
-               res.redirect("/admin/category?alreadycat=Category Already Present")
-          }else{
-               await catData.updateMany({category:req.params.catid},{$set:{category:req.body.categoryname}})
+        //   if(changecat)
+        //   {
+            //    res.redirect("/admin/category?alreadycat=Category Already Present")
+        //   }else{
+               await catData.updateMany({category:req.params.catid},{$set:{category:req.body.categoryname, offer:req.body['offer-percentage']}})
 
-          }
+        //   }
          
   
           // const changepro=await productData.updateMany({category:req.params.catid},{$set:{category:req.body.categoryname}})

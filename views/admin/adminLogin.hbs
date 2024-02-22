@@ -50,12 +50,14 @@
 
                   <form method="post" class="form-validate">
                     <div class="form-group">
-                      <input id="login-username" type="text" name="username" required data-msg="Please enter your username" class="input-material">
+                      <input id="name"  type="text" name="username" required data-msg="Please enter your username" class="input-material" onkeyup="validatUsername()">
                       <label for="login-username" class="label-material">User Name</label>
+                       <span id="usernameErr"></span>
                     </div>
                     <div class="form-group">
-                      <input id="login-password" type="password" name="password" required data-msg="Please enter your password" class="input-material">
+                      <input id="password" type="password" name="password" required data-msg="Please enter your password" class="input-material" >
                       <label for="login-password" class="label-material">Password</label>
+                         <span id="passwordErr"></span>
                     </div> <button class="btn btn-primary" type="submit">Login</button>
                     <!-- This should be submit button but I replaced it with <a> for demo purposes-->
                   {{!-- </form><a href="#" class="forgot-pass">Forgot Password?</a><br><small>Do not have an account? </small><a href="#" class="signup">Signup</a> --}}
@@ -90,6 +92,72 @@
 
       },4000)
     </script>
+
+
+
+    
+
+   <script>
+
+         const nameError = document.getElementById('usernameErr')
+        const passError = document.getElementById('passwordErr')
+  
+
+    
+
+      function validatUsername(){
+            console.log("hyyyyy")
+
+            name=document.getElementById("name").value
+            console.log(name)
+            if(name.length==0){
+                console.log("hyyyyy22222222222222222")
+                nameError.textContent="Enter the Username"
+                nameError.style.color="red"
+                return false
+
+            }
+
+            if(!name.match(/^[a-zA-Z0-9_]{3,20}/)){
+                nameError.innerHTML="Minimum 3 Characters"
+                   nameError.style.color="red"
+                return false
+            }
+              nameError.innerHTML = ''
+            return true
+
+        }
+
+
+   
+
+
+          function validatPassword(){
+            console.log("hyyyyy password")
+
+            password=document.getElementById("password").value
+            console.log(password)
+            if(password.length==0){
+                passError.textContent="Enter the Password"
+                passError.style.color="red"
+                return false
+
+            }
+
+            if(!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/)){
+                passError.innerHTML="Password Must be Strong"
+                   passError.style.color="red"
+                return false
+            }
+              passError.innerHTML = ''
+            return true
+
+        }
+
+
+   </script>
+  
+       
     <!-- JavaScript files-->
     <script src="/assets_AdminLogin/vendor/jquery/jquery.min.js"></script>
     <script src="/assets_AdminLogin/vendor/popper.js/popper.min.js"> </script>
