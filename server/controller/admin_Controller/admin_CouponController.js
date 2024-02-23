@@ -33,6 +33,7 @@ const displayCouponPage=async(req,res)=>{
 
     }catch(e){
         console.log("problem withe displayCouponPage"+e)
+        res.redirect("/admin/error")
     }
 }
 
@@ -71,6 +72,7 @@ const addCoupon=async(req,res)=>{
 
     }catch(e){
         console.log("Problem with the addCoupon"+e)
+        res.redirect("/admin/error")
     }
 }
 
@@ -84,6 +86,7 @@ const deleteCoupon=async(req,res)=>{
 
     }catch(e){
         console.log("problem with the deleteCoupon "+e)
+        res.redirect("/admin/error")
     }
 }
 
@@ -122,6 +125,7 @@ const editcoupon=async(req,res)=>{
             }
     }catch(e){
         console.log("problem with the editCoupon"+e)
+        res.redirect("/admin/error")
     }
 }
 

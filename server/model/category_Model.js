@@ -17,6 +17,10 @@ const categoryData=mongoose.Schema({
     offer:{
         type:Number,
         require:true
+    },
+    applied:{
+        type:Number,
+        require:true
     }
 })  
 

@@ -43,6 +43,7 @@ const displayOrder=async(req,res)=>{
     catch(e)
     {
         console.log("problem withe the displayOrder")
+        res.redirect("/admin/error")
     }
 
 }
@@ -74,6 +75,7 @@ const updateOrderStatus=async(req,res)=>{
     }
     catch(e){
         console.log("Problem withe the updateOrderStatus"+e)
+        res.redirect("/admin/error")
     }
 
 }
@@ -94,6 +96,7 @@ console.log(req.params.orderId)
   catch(e){
 
     console.log("problem withe the deleteOrder"+e)
+    res.redirect("/admin/error")
   }
 
 }
@@ -125,6 +128,7 @@ const displayOderDetails=async(req,res)=>{
     }
     catch(e){
         console.log("problem withe thedisplayOrderDEtail "+e)
+        res.redirect("/admin/error")
     }
 
 
@@ -149,6 +153,7 @@ const returnAccept=async(req,res)=>{
   
     }catch(e){
       console.log("Problem with the returnAccept"+e)
+      res.redirect("/admin/error")
     }
   }
   
@@ -163,6 +168,7 @@ const returnAccept=async(req,res)=>{
   
     }catch(e){
       console.log("Problem with the returnAccept"+e)
+      res.redirect("/admin/error")
     }
   }
   

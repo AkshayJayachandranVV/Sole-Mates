@@ -155,6 +155,12 @@ route.get("/categorydel/:catId",adminCategory.categoryDelete)
 route.post("/editcategory/:catid",adminCategory.editCategory)
 
 
+
+route.get("/categoryoffer/:category",adminCategory.applyCategoryOffer)
+
+
+
+
 //ORDERSUPDATE
 route.get("/orders",adminOrder.displayOrder)
 
@@ -194,6 +200,10 @@ route.get("/orderpagenation",adminOrder.displayOrder)
 
 
 route.get("/couponpagenation",adminCoupon.displayCouponPage)
+
+route.get("/error",(req,res)=>{
+    res.render("adminError")
+})
 
 
 module.exports=route     

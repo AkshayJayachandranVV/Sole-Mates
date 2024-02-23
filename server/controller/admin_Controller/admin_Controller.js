@@ -46,6 +46,7 @@ const Login = async (req, res) => {
     }
     catch (e) {
         console.log(e)
+        res.redirect("/admin/error")
     }
 
 }
@@ -82,6 +83,7 @@ const displayPanel = async (req, res) => {
     catch (e) {
 
         console.log(e)
+        res.redirect("/admin/error")
 
     }
 }

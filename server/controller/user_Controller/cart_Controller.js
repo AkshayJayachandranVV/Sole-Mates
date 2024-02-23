@@ -74,7 +74,7 @@ const addToCart = async (req, res) => {
 
                 imagepath: addCart.imagepath[0],
                 productname: addCart.productname,
-                price: addCart.price,
+                price: addCart.offerprice,
                 removevalue: 0,
                 username: req.session.username,
                 quantity: 1,

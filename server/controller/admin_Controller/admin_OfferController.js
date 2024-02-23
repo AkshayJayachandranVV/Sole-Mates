@@ -16,6 +16,7 @@ const displayOfferPage=async(req,res)=>{
 
     }catch(e){
         console.log("Problem with the displayOfferPage"+e)
+        res.redirect("/admin/error")
     }
 }
 
@@ -33,6 +34,7 @@ const addOffer=async(req,res)=>{
 
     }catch(e){
         console.log("problem withe the addOffer"+e)
+        res.redirect("/admin/error")
     }
 }
 

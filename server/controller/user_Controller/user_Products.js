@@ -69,6 +69,8 @@ const productDetailPage = async (req, res) => {
     try {
         console.log("product details data : " + req.params.id)
         const value = req.params.id
+
+
         if (req.params.id) {
             console.log("insdie product detail")
             const productD = await productData.findOne({ productname: req.params.id })

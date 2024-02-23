@@ -36,8 +36,8 @@ const showUser = async (req, res) => {
 
     }
     catch (e) {
-
         console.log(e)
+        res.redirect("/admin/error")
 
     }
 }
@@ -69,6 +69,7 @@ const searchUser = async (req, res) => {
     }
     catch (e) {
         console.log(e)
+        res.redirect("/admin/error")
     }
 }
 
@@ -102,6 +103,7 @@ const blockUser = async (req, res) => {
     catch (e) {
 
         console.log(e)
+        res.redirect("/admin/error")
 
     }
 }

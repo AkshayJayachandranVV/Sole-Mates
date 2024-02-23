@@ -20,6 +20,7 @@ const categoryDelete = async (req, res) => {
     }
     catch (e) {
         console.log("this is the mistake of the categort delete" + e)
+        res.redirect("/admin/error")
     }
 }
 
@@ -58,6 +59,7 @@ const categoryDetails = async (req, res) => {
     }
     catch (e) {
         console.log(e)
+        res.redirect("/admin/error")
     }
 
 }
@@ -91,16 +93,12 @@ const storeCategory = async (req, res) => {
             list: 0
 
         })
-
-      const product=await productData.find()
-        for(let i=0;i<product.length;i++){
-            let OfferPrice =Math.floor(product[i].price - (product[i].price * (product[i].offer/ 100))) 
-            console.log(OfferPrice)
-            await productData.updateOne({productname:product[i]},{$set:{offerprice:OfferPrice}})
-        }
-// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         await newCategory.save()
         console.log(newCategory)
+
+ 
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    
 
         res.redirect("/admin/category")
     }
@@ -109,6 +107,7 @@ const storeCategory = async (req, res) => {
     catch {
 
         console.log("The prblem with category to database")
+        res.redirect("/admin/error")
     }
 }
 
@@ -146,6 +145,7 @@ const list = async (req, res) => {
     }
     catch (e) {
         console.log(e)
+        res.redirect("/admin/error")
     }
 
 
@@ -158,39 +158,158 @@ const editCategory=async(req,res)=>{
     try{
       console.log("editr category")
       console.log(req.params.catid)
+
+      await catData.updateMany({category:req.params.catid},{$set:{category:req.body.categoryname, offer:req.body['offer-percentage']}})
   
       if(req.params.catid)
       { 
-          console.log(req.body.categoryname)
+          console.log(req.params.catid)
+
+//-------------------------------------------------------------------
+          console.log("entered into the aplly category")
+        //   console.log(req.params.category)
+                
+          const categoryOffer=await catData.findOne({category:req.params.catid})
+          console.log(categoryOffer.applied + "33333333333")
+  
+          if(!categoryOffer.applied){
+              console.log("enreed into the if of the categoryOffer")
+            //   const product=await productData.find({category:req.params.catid})
+            //   console.log(product)
+            //   for(let i=0;i<product.length;i++){
+            //   await productData.updateOne({productname:product[i].productname},{$set:{offerprice:product[i].price}})
+            //   }
+            //   await catData.updateOne({category:req.params.catid},{$set:{applied:0}})
+            // await catData.updateMany({category:req.params.catid},{$set:{category:req.body.categoryname, offer:req.body['offer-percentage']}})
+
+  
+              res.redirect("/admin/category?edit=Successfully Edited")
+          }else{
+              console.log("enreed into the else of the categoryOffer")
+          const product=await productData.find({category:req.params.catid})
+          console.log(product)
+            for(let i=0;i<product.length;i++){
+                let offer
+                if(product[i].offer>=categoryOffer.offer){
+                    offer=product[i].offer
+                }else{
+                    offer=categoryOffer.offer 
+                }
+                console.log(product[i].offer   + "  product    oferererererererere")
+                console.log(categoryOffer.offer    + " category   oferererererererere")
+                console.log(offer   + "   oferererererererere")
+                let OfferPrice =Math.floor(product[i].price - (product[i].price * (offer/ 100))) 
+                console.log(product[i].price + " og price")
+                console.log(OfferPrice)
+                await productData.updateOne({productname:product[i].productname},{$set:{offerprice:OfferPrice}})
+               
+            }
+            // await catData.updateOne({category:req.params.category},{$set:{applied:1}})
+
+            // await catData.updateMany({category:req.params.catid},{$set:{category:req.body.categoryname, offer:req.body['offer-percentage']}})
+
+            
+            res.redirect("/admin/category?edit=Successfully Applied")
+         
+          }
+
+
+
+//-------------------------------------------------------------------
+          
          
   
-          const changecat=await catData.findOne({category:req.params.catid})
-          console.log(changecat)
+        //   const changecat=await catData.findOne({category:req.params.catid})
+        //   console.log(changecat)
         //   if(changecat)
         //   {
             //    res.redirect("/admin/category?alreadycat=Category Already Present")
         //   }else{
-               await catData.updateMany({category:req.params.catid},{$set:{category:req.body.categoryname, offer:req.body['offer-percentage']}})
+            //    await catData.updateMany({category:req.params.catid},{$set:{category:req.body.categoryname, offer:req.body['offer-percentage']}})
 
         //   }
          
   
           // const changepro=await productData.updateMany({category:req.params.catid},{$set:{category:req.body.categoryname}})
   
-          console.log(changecat)
-          // console.log(changepro)
-  
-          res.redirect("/admin/category?edit=Successfully Edited")
+        //   console.log(changecat+ "7777777777777777" )
+          
+
+
+        //   res.redirect("/admin/category?edit=Successfully Edited")
       }
   
     }
     catch(e)
     {
       console.log("This is editCategory error "+e)
+      res.redirect("/admin/error")
     }
   
   
   }
+
+
+  const applyCategoryOffer=async(req,res)=>{
+    try{
+
+        console.log("entered into the aplly category")
+        console.log(req.params.category)
+              
+        const categoryOffer=await catData.findOne({category:req.params.category})
+        console.log(categoryOffer.applied + "33333333333")
+
+        if(categoryOffer.applied){
+            console.log("enreed into the if of the categoryOffer")
+            const product=await productData.find({category:req.params.category})
+            console.log(product)
+            for(let i=0;i<product.length;i++){
+                 let offer
+                if(product[i].offer){
+                    let OfferPrice =Math.floor(product[i].price - (product[i].price * (product[i].offer/ 100))) 
+                    console.log(product[i].price + " og price")
+                    console.log(OfferPrice)
+                    offer=OfferPrice
+                }else{
+                    offer=product[i].price
+                }
+            await productData.updateOne({productname:product[i].productname},{$set:{offerprice:offer}})
+            }
+            await catData.updateOne({category:req.params.category},{$set:{applied:0}})
+
+            res.redirect("/admin/category?edit=Successfully Removed")
+        }else{
+            console.log("enreed into the else of the categoryOffer")
+        const product=await productData.find({category:req.params.category})
+        console.log(product)
+          for(let i=0;i<product.length;i++){
+              let offer
+              if(product[i].offer>=categoryOffer.offer){
+                  offer=product[i].offer
+              }else{
+                  offer=categoryOffer.offer 
+              }
+              let OfferPrice =Math.floor(product[i].price - (product[i].price * (offer/ 100))) 
+              console.log(OfferPrice)
+              await productData.updateOne({productname:product[i].productname},{$set:{offerprice:OfferPrice}})
+             
+          }
+          await catData.updateOne({category:req.params.category},{$set:{applied:1}})
+          
+          res.redirect("/admin/category?edit=Successfully Applied")
+       
+        }
+
+          
+
+    }catch(e){
+        console.log("problem with the applyCategoryOffer"+e)
+        res.redirect("/admin/error")
+    }
+  }
+
+
+
 
 
   module.exports={
@@ -198,6 +317,8 @@ const editCategory=async(req,res)=>{
     categoryDetails,
     storeCategory,
     list,
-    editCategory
+    editCategory,
+    applyCategoryOffer,
+    
 
   }

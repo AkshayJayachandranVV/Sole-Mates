@@ -56,6 +56,8 @@ const dashboardData = async (req, res) => {
   }
   catch (e) {
     console.log("problem withe the dashboardDisplay" + e)
+
+    res.redirect("/admin/error")
   }
 }
 
@@ -103,6 +105,9 @@ const dashboardDisplay = async (req, res) => {
 
   }
   catch (e) {
+
+    console.log("problem wieth the dashboardDisplay"+e)
+    res.redirect("/admin/error")
 
   }
 

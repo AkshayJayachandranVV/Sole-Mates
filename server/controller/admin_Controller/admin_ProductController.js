@@ -37,6 +37,12 @@ const productDisplay = async (req, res) => {
         //  console.log(productList)
 
         console.log("enterd if")
+       let categorydata 
+       categorydata = await catData.find({})
+        // const categorydata=await catData.find([{}])
+
+        console.log(categorydata+"loooking the catr data")
+        console.log(categorydata.category)
 
         if (productList) {
 
@@ -47,7 +53,7 @@ const productDisplay = async (req, res) => {
             //     console.log("enterd if")
             //     res.render("adminProducts", { productList, success })
             // }
-            res.render("adminProducts", { productList, success, currentValue })
+            res.render("adminProducts", { productList, success, currentValue,categorydata })
 
         }
 
@@ -55,6 +61,7 @@ const productDisplay = async (req, res) => {
     }
     catch (e) {
         console.log(e)
+        res.redirect("/admin/error")
     }
 }
 
@@ -130,6 +137,38 @@ const productDetails = async (req, res) => {
             }
 
 
+            let checkOffer=req.body['offer-percentage'] 
+            let OfferPrice 
+            //----------------------------------------------
+            const categoryOffer=await catData.findOne({category:data.category})
+            let offer
+            if(req.body['offer-percentage']>=categoryOffer.offer){
+                offer=req.body['offer-percentage']
+            }else{
+                offer=categoryOffer.offer 
+            }
+
+            //----------------------------------------------
+            if(checkOffer){
+                OfferPrice = Math.floor(req.body.price - (req.body.price * (offer / 100)));
+                console.log("Offer Price:", OfferPrice);
+            }else{
+                OfferPrice = req.body.price 
+            }
+
+
+            // let offer
+            // if(product[i].offer>=categoryOffer.offer){
+            //     offer=product[i].offer
+            // }else{
+            //     offer=categoryOffer.offer 
+            // }
+            // let OfferPrice =Math.floor(product[i].price - (product[i].price * (offer/ 100))) 
+            // console.log(OfferPrice)
+
+
+
+
             const newProduct = new productData({
 
                 productname: data.productname,
@@ -143,7 +182,7 @@ const productDetails = async (req, res) => {
                 display: 0,
                 stock: data.stock,
                 offer: data['offer-percentage'],
-                offerprice: data['offer-price']
+                offerprice: OfferPrice
 
             })
 
@@ -155,6 +194,7 @@ const productDetails = async (req, res) => {
 
     catch (e) {
         console.log("problem with the productdetails" + e)
+        res.redirect("/admin/error")
     }
 
 
@@ -192,6 +232,7 @@ const searchProduct = async (req, res) => {
     }
     catch (e) {
         console.log(e)
+        res.redirect("/admin/error")
     }
 }
 
@@ -208,6 +249,7 @@ const addProductDisplay = async (req, res) => {
     }
     catch (e) {
         console.log(e)
+        res.redirect("/admin/error")
     }
 }
 
@@ -241,6 +283,7 @@ const deleteProduct = async (req, res) => {
     }
     catch (e) {
         console.log(e)
+        res.redirect("/admin/error")
     }
 
 }
@@ -265,6 +308,7 @@ const editProduct = async (req, res) => {
     }
     catch (e) {
         console.log(e)
+        res.redirect("/admin/error")
     }
 
 }
@@ -331,8 +375,38 @@ const updateProduct = async (req, res) => {
             imagePath[i] = uploadedImages[i].path.replace(/\\/g, "/").replace('public/', '/')
         }
 
-        let OfferPrice = Math.floor(req.body.price - (req.body.price * (req.body['offer-percentage'] / 100)));
-        console.log("Offer Price:", OfferPrice);
+        // let checkOffer=req.body['offer-percentage'] 
+        // let OfferPrice 
+        // if(checkOffer){
+        //     OfferPrice = Math.floor(req.body.price - (req.body.price * (req.body['offer-percentage'] / 100)));
+        //     console.log("Offer Price:", OfferPrice);
+        // }else{
+        //     OfferPrice =req.body.price 
+        // }
+
+
+
+        
+        let checkOffer=req.body['offer-percentage'] 
+        let OfferPrice 
+        //----------------------------------------------
+        const categoryOffer=await catData.findOne({category:req.body.category})
+        let offer
+        if(req.body['offer-percentage']>=categoryOffer.offer){
+            offer=req.body['offer-percentage']
+        }else{
+            offer=categoryOffer.offer 
+        }
+
+        //----------------------------------------------
+        if(checkOffer){
+            OfferPrice = Math.floor(req.body.price - (req.body.price * (offer / 100)));
+            console.log("Offer Price:", OfferPrice);
+        }else{
+            OfferPrice = req.body.price 
+        }
+
+
 
 
         console.log(req.body)
@@ -367,6 +441,7 @@ const updateProduct = async (req, res) => {
     }
     catch (e) {
         console.log(e)
+        res.redirect("/admin/error")
     }
 
 
@@ -392,6 +467,7 @@ const productPagenation = async (req, res) => {
 
     } catch (e) {
         console.log("problem withe the productPagenation" + e)
+        res.redirect("/admin/error")
     }
 }
 

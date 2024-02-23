@@ -89,6 +89,10 @@
                                 <img src="{{productD.imagepath.[2]}}" alt="#" id="image" class="img-fluid">
 
                             </div>
+                            <div class="single_product_img">
+                                <img src="{{productD.imagepath.[3]}}" alt="#" id="image" class="img-fluid">
+
+                            </div>
 
 
                         </div>
@@ -110,12 +114,14 @@
                                 {{productD.description}}
                             </p>
 
-                            	{{#if productD.offerprice}}
-								<span class="price">Rs.{{productD.offerprice}}</span>
-								<span style="margin-left: 15px;"><del style="font-size: 26px;" id="orginal-price">{{productD.price}}</del></span>
-								{{else}}
-									<span class="price">Rs.{{productD.price}}</span>
-                                {{/if}}
+                            {{#ifEquals this.offerprice this.price}}
+                            <span style="font-size: 26px;" class="price">Rs.{{this.price}}</span>
+                            {{else}}
+                            <span style="font-size: 26px;" class="price">Rs.{{this.offerprice}}</span>
+                            <span style="margin-left: 15px;"><del style="font-size: 20px;"
+                                    id="orginal-price">{{this.price}}</del></span>
+
+                            {{/ifEquals}}
 
                             <div class="card_area">
                                 <div class="product_count_area">
