@@ -25,7 +25,7 @@ const adminAuthorizeCheck = async (req, res,next) => {
         const val = req.query.pass
         const name = req.query.name
 
-        console.log("admin entered")
+        console.log("admin entered ---------------------------------------------")
         console.log(req.session.auth)
 
         if (req.session.auth) {

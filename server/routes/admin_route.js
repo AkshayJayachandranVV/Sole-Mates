@@ -31,40 +31,6 @@ route.use(session({
 
 
 
-route.use(function (req, res, next) {
-    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-    res.header('Expires', '-1');
-    res.header('Pragma', 'no-cache');
-    next()
-});
-
-
-
-
-
-route.get("/",userData.displayPanel)
-
-
-route.post("/",userData.Login)
-
-route.get("/signout",userData.signout)
-
-route.use(authAdmin.adminAuthorizeCheck)
-
-//SIGNOUT ADMIN
-
-
-
-
-route.get("/dashboard",dashboard.dashboardData)
-
-route.get('/sales',dashboard.dashboardDisplay)
-
-
-
-
-route.post('/salesReport',dashboard.salesReport)
-
 
 //MULTER IMAGE UPLOAD
 const storage=multer.diskStorage({
@@ -83,9 +49,49 @@ const upload=multer({storage:storage})
 
 
 
+
+
+
+route.use(function (req, res, next) {
+    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    res.header('Expires', '-1');
+    res.header('Pragma', 'no-cache');
+    next()
+});
+
+
+
+
+
+route.get("/",userData.displayPanel)
+
+
+route.post("/",userData.Login)
+
+route.get("/signout",userData.signout)
+
+route.post("/editproducts/:id",[upload.array("avatar",4),adminProduct.updateProduct])
+
+route.use(authAdmin.adminAuthorizeCheck)
+
+//SIGNOUT ADMIN
+
+
+
+
+route.get("/dashboard",dashboard.dashboardData)
+
+route.get('/sales',dashboard.dashboardDisplay)
+
+
+
+
+route.post('/salesReport',dashboard.salesReport)
+
+
 route.post("/upload",[ upload.array("avatar",4),adminProduct.productDetails])
 
-route.post("/editproducts/:id", [upload.array("avatar",4),adminProduct.updateProduct])
+
 
 
 

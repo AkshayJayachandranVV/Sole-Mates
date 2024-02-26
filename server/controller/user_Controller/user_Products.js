@@ -15,7 +15,7 @@ const renderHome=async(req,res)=>{
     try{
 
       let enter=req.session.authenticated
-      const images = await productData.find({})
+      const images = await productData.find({}).limit(12)
     
 
         res.render("userHome",{enter,images})
@@ -61,6 +61,20 @@ const HomeImages = async (req, res) => {
     }
 
 }
+
+
+
+// const categoryDisplay=async(req,res)=>{
+//     try{
+
+//         console.log(req.query.category)
+
+
+//     }catch(e){
+//         console.log("problem with the categoryDisplay"+e)
+//         res.redirect("/error")
+//     }
+// }
 
 
 
@@ -166,8 +180,8 @@ const allCollectionDisplay = async (req, res) => {
 }
 
 
-const displayProduct = async (req, res) => {
 
+const displayProduct = async (req, res) => {
     try {
 
         console.log("entered into the displayproduct")
@@ -184,9 +198,6 @@ const displayProduct = async (req, res) => {
 
         console.log("checking the pagenation cart vlue-----------------------------"+pagenationcat)
 
-      
-
-    
 
         console.log("for pagenation " + req.query.nextcat + " " + req.query.previouscat)
 
@@ -203,12 +214,9 @@ const displayProduct = async (req, res) => {
 
         }
 
-       
-
         const category = await categoryData.find({ list: 0 })
         const product = await productData.find({ list: 0, category: categoryFind }).skip(currentPage*6).limit(6)
         console.log(product)
-
         res.render("formalStore", { product, category, categoryFind, pagenationcat,currentPage,displayProduct})
 
     }

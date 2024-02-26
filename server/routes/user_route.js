@@ -1,6 +1,5 @@
 const express = require("express")
 const route = express.Router();
-const User = require("../controller/user_Controller/user_Controller")
 const  userRegister = require("../controller/user_Controller/userRegistration")
 const userProduct=require("../controller/user_Controller/user_Products")
 const addCart=require("../controller/user_Controller/cart_Controller")

@@ -148,6 +148,14 @@ const productDetails = async (req, res) => {
                 offer=categoryOffer.offer 
             }
 
+            if(!offer){
+                offer=req.body['offer-percentage']
+            }else{
+                offer=0
+            }
+
+
+
             //----------------------------------------------
             if(checkOffer){
                 OfferPrice = Math.floor(req.body.price - (req.body.price * (offer / 100)));
@@ -316,15 +324,13 @@ const editProduct = async (req, res) => {
 
 
 const updateProduct = async (req, res) => {
-
     try {
 
         console.log('enter updateProduct!!!')
-        console.log(req.body.productname)
+        console.log(req.body)
         console.log('after req.body')
         console.log(req.files)
         console.log('req.files')
-
 
 
 
@@ -391,21 +397,39 @@ const updateProduct = async (req, res) => {
         let OfferPrice 
         //----------------------------------------------
         const categoryOffer=await catData.findOne({category:req.body.category})
+        console.log(categoryOffer + " database")
+        console.log(categoryOffer.offer + "  checking the category iffer")
         let offer
         if(req.body['offer-percentage']>=categoryOffer.offer){
+            console.log(" greater if   check")
+            offer=Number(req.body['offer-percentage'])
+        }else{
+            console.log(" greater else   check")
+            offer=Number(categoryOffer.offer )
+            console.log(offer)
+        }
+        if(!offer){
             offer=req.body['offer-percentage']
         }else{
-            offer=categoryOffer.offer 
+            offer=0
         }
 
         //----------------------------------------------
         if(checkOffer){
-            OfferPrice = Math.floor(req.body.price - (req.body.price * (offer / 100)));
+            console.log( "ifffffff")
+            console.log(req.body.price)
+            console.log(offer)
+            console.log(typeof(offer))
+            OfferPrice = Math.floor(req.body.price - (req.body.price * (Number(offer) / 100)));
             console.log("Offer Price:", OfferPrice);
         }else{
             OfferPrice = req.body.price 
+            console.log( "else ....."+OfferPrice    )
+
         }
 
+
+        console.log(OfferPrice + " offerr price checking chercking fjbdknkmdkmdmlml")
 
 
 
