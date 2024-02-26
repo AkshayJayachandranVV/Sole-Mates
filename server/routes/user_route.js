@@ -180,6 +180,7 @@ route.post("/applywallet",Order.walletApply)
 route.post("/removewallet",Order.walletRemove)
 route.post("/fetch-address",Order.fetchAdress)
 route.post("/remove-coupon",Order.removeCoupon)
+route.get("/invoice",Order.invoice)
 
 
 

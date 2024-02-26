@@ -226,8 +226,13 @@
                             <span class="input-group-text">Apply For Wallet</span>
                             <input type="text" aria-label="First name" class="form-control" name="coupon" value="{{walletAmount}}"
                                 id="walletCode" readonly>
-                            <button onclick="checkWallet()" class="btn btn-warning applyCoupon"
+                                {{#if walletAmount}}
+                                  <button onclick="checkWallet()" class="btn btn-warning applyCoupon"
                                 id="applyWallets">Apply</button>
+                                {{else}}
+                                <button onclick="checkWallet()" class="btn btn-warning applyCoupon" id="applyWallets" disabled>Apply</button>
+                                {{/if}}
+                          
                             <button onclick="removeWallet()" class="btn btn-warning removeCoupon"
                                 id="removeWallets">Remove</button>
                         </div>
