@@ -5,6 +5,10 @@ const addressData = require("../../model/user_address")
 const cartData = require("../../model/user_cart")
 const orderData = require("../../model/user_Orders")
 const CouponData = require("../../model/coupon_Model")
+const fs = require("fs");
+const os = require("os");
+const path = require("path");
+const puppeteer = require("puppeteer");
 
 const mongoose = require("mongoose")
 
@@ -1234,8 +1238,31 @@ const walletRemove = async (req, res) => {
 
 const invoice=async (req,res)=>{
   //data
-  console.log(req.query.orderId)
 const orders=await orderData.find({orderId:req.query.orderId})
+console.log(orders)
+// const procheck=await orderData.find()
+// console.log(procheck + "=present")
+// const productDetail = await orderData.aggregate([{$match:{orderId:req.query.orderId}},
+//   {
+//     $lookup: {
+//       from: "productData", // Name of the foreign collection
+//       localField: "productname", // Field in the orderData collection
+//       foreignField: "productname", // Field in the productData collection
+//       as: "product" // Output array field name
+//     }
+//   }
+// ]);
+
+// console.log(JSON.stringify(productDetail) + " 99999999999999999");
+
+// let productLookUp=JSON.stringify(productDetail)
+// console.log(productDetail[0].username)
+let payment
+if(orders.cod==0){
+    payment="Online Payment"
+}else{
+  payment="Cash On Delivery"
+}
   //data
 
 
@@ -1262,14 +1289,14 @@ const htmlContent = `
               </div>
               
               <div class="w-60 pl-4 pb-6">
-                  <h3 class="font-bold">Frutable</h3>
+                  <h3 class="font-bold">Sole Mates</h3>
                   <p>HSR Layout</p>
                   <p>Banglore 560102</p>
               </div>
               
               <div class="pl-4 pb-20">
                   <p class="text-gray-500">Bill To:</p>
-                  <h3 class="font-bold">${orders[0].name}</h3>
+                  <h3 class="font-bold">${orders[0].username}</h3>
               </div>
               
           </div>
@@ -1288,10 +1315,10 @@ const htmlContent = `
                       <p class="font-bold text-xl py-1 pb-2 ">TOTAL:</p>
                   </div>
                   <div class="flex flex-col items-end w-[12rem] text-right">
-                      <p class="py-1">${orders[0].orderDate}</p>
-                      <p class="py-1 pl-10">${orders[0].payment}</p>
+                      <p class="py-1">${orders[0].orderdate}</p>
+                      <p class="py-1 pl-10">${payment}</p>
                       <div class="pb-2 py-1">
-                          <p class="font-bold text-xl">₹${orders[0].totalPrice}</p>
+                          <p class="font-bold text-xl">₹${orders[0].totalAmount}</p>
                       </div>
                   </div>
               </div>
@@ -1316,7 +1343,7 @@ const htmlContent = `
       
       <!--Total Amount-->
       <div class=" pt-20 pr-10 text-right">
-          <p class="text-gray-400">Total: <span class="pl-24 text-black">₹${orders[0].totalPrice}</span></p>
+          <p class="text-gray-400">Total: <span class="pl-24 text-black">₹${orders[0].totalAmount}</span></p>
       </div>
 
       <!--Notes and Other info-->
@@ -1342,7 +1369,7 @@ function getDeliveryItemsHTML(orders){
   for(let order of orders){
       data += `
   <div class="table-row">
-      <div class=" table-cell w-6/12 text-left font-bold py-1 px-4">${order.product}</div>
+      <div class=" table-cell w-6/12 text-left font-bold py-1 px-4">${order.productname}</div>
       <div class=" table-cell w-[10%] text-center">${order.quantity}</div>
       <div class=" table-cell w-2/12 text-center">₹${order.price}</div>
       <div class=" table-cell w-2/12 text-center">₹${order.price*order.quantity}</div>
