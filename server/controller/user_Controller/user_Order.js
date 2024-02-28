@@ -19,9 +19,16 @@ const displayCheckout = async (req, res) => {
     console.log("displayCkeout")
 
     // let userAddressData=req.session.userAddress
-    const userAdd = await addressData.find({ email: req.session.email })
+    const userAdd = await addressData.find({ email: req.session.email }).limit(3)
     console.log(userAdd)
-    res.render("checkout", { userAdd })
+    console.log(userAdd.length)
+    let Limit
+    if(userAdd.length>2){
+      console.log("entered limit if")
+        Limit="true"
+    }
+    // console.log(userAdd)
+    res.render("checkout", { userAdd,Limit })
 
   }
   catch (e) {
@@ -31,6 +38,34 @@ const displayCheckout = async (req, res) => {
 
 
 }
+
+
+//MORE ADDRESS
+
+
+const moreAddress = async (req, res) => {
+
+
+  try {
+    console.log("more address Cheout")
+
+    // let userAddressData=req.session.userAddress
+    let Less="true"
+    const userAdd = await addressData.find({ email: req.session.email })
+    console.log(userAdd)
+    res.render("checkout", { userAdd,Less })
+
+  }
+  catch (e) {
+    console.log("Error with the moreAddress" + e)
+    res.redirect("/error")
+  }
+
+
+}
+
+
+
 
 
 const displayOrder = async (req, res) => {
@@ -1406,4 +1441,4 @@ res.status(200).end(pdfBuffer);
 
 
 
-module.exports = { displayCheckout, displayOrder, cashOnDelivery, cancelOrder, createOrder, fetchAdress, couponVerify, removeCoupon, returnOrder, walletApply, walletRemove,invoice }
+module.exports = { displayCheckout, displayOrder, cashOnDelivery, cancelOrder, createOrder, fetchAdress, couponVerify, removeCoupon, returnOrder, walletApply, walletRemove,invoice,moreAddress }

@@ -49,44 +49,51 @@
 
 
 
-<div class="container-fluid">
-        <div class="container py-5">
-            <div class="row g-4">
-                <div class="col-lg-12">
-                    <div class="row g-4">
-                        <h1 class="mb-4">Billing details</h1>
-                        {{#each userAdd}}
-                        <div class="col-md-6 col-lg-4 col-xl-3 mx-3">
-                            <div class="col-md-12 ">
-                                <div class="form-check">
-                                    <input class="form-check-input" name="addressCheck" type="radio" value=""
-                                        id="defaultCheck1" onchange="fetchAddress('{{this._id}}')" <label
-                                        class="form-check-label" for="defaultCheck1">
-                                    <div class="card" style="width: 18rem;">
-                                        <div class="card-header">
-                                            Address
-                                        </div>
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item">{{this.fullname}}</li>
-                                            <li class="list-group-item">{{this.address.housename}}</li>
-                                            <li class="list-group-item">{{this.address.city}}</li>
-                                            <li class="list-group-item">{{this.address.state}}</li>
-                                            <li class="list-group-item">{{this.address.pincode}}</li>
-                                            <li class="list-group-item">{{this.address.country}}</li>
-                                        </ul>
-                                    </div>
+                <div class="container-fluid">
+                    <div class="container py-5">
+                        <div class="row g-4">
+                            <div class="col-lg-12">
+                                <div class="row g-4">
+                                    <h1 class="mb-4">Billing details</h1>
+                                    {{#each userAdd}}
+                                    <div class="col-md-6 col-lg-4 col-xl-3 mx-3">
+                                        <div class="col-md-12 ">
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="addressCheck" type="radio"
+                                                    value="" id="defaultCheck1" onchange="fetchAddress('{{this._id}}')"
+                                                    <label class="form-check-label" for="defaultCheck1">
+                                                <div class="card" style="width: 18rem;">
+                                                    <div class="card-header">
+                                                        Address
+                                                    </div>
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item">{{this.fullname}}</li>
+                                                        <li class="list-group-item">{{this.address.housename}}</li>
+                                                        <li class="list-group-item">{{this.address.city}}</li>
+                                                        <li class="list-group-item">{{this.address.state}}</li>
+                                                        <li class="list-group-item">{{this.address.pincode}}</li>
+                                                        <li class="list-group-item">{{this.address.country}}</li>
+                                                    </ul>
+                                                </div>
 
-                                    </label>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{/each}}
+
                                 </div>
                             </div>
                         </div>
-                        {{/each}}
-
                     </div>
+                    {{#if Limit}}
+                    <a class="btn btn-primary" href="/moreaddress">More</a>
+                    {{/if}}
+                    {{#if Less}}
+                    <a class="btn btn-primary" href="/checkout">Less</a>
+                    {{/if}}
                 </div>
-            </div>
-        </div>
-    </div>
+
 
 
                 {{!-- code for Add Address --}}
@@ -204,46 +211,46 @@
 
     <script src="./assets_user/js/vendor/modernizr-3.5.0.min.js"></script>
     <!-- Jquery, Popper, Bootstrap -->
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-         // Use fetch to update the quantity in the database
-       function fetchAddress(Id) {
-      fetch('/fetch-address', {
-         method: 'POST',
-         headers: {
-            'Content-Type': 'application/json',
-         },
-         body: JSON.stringify({
-            addressId: Id,
-           
-         }),
-      })
-        .then(response => {
-         if (!response.ok) {
-            throw new Error('Network response was not ok');
-         }
-         return response.json();
-      })
-      .then(data => {
-        console.log(data)          
-         document.getElementById("fullname").value = data.fullname;
-        document.getElementById("phonenumber").value = data.phonenumber;
-       document.getElementById("country").value = data.country 
-        document.getElementById("state").value = data.state;
-       document.getElementById("district").value = data.district;
-       document.getElementById("city").value= data.city;
-       document.getElementById("housename").value = data.housename;
-        document.getElementById("state").value = data.state;
-         document.getElementById("pincode").value = data.pincode;
-       console.log(data) 
-      })    
-      .catch(error => {
-         console.error('Error updating quantity:', error);
-      });
-    
-       }
-        
+        // Use fetch to update the quantity in the database
+        function fetchAddress(Id) {
+            fetch('/fetch-address', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    addressId: Id,
+
+                }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data)
+                    document.getElementById("fullname").value = data.fullname;
+                    document.getElementById("phonenumber").value = data.phonenumber;
+                    document.getElementById("country").value = data.country
+                    document.getElementById("state").value = data.state;
+                    document.getElementById("district").value = data.district;
+                    document.getElementById("city").value = data.city;
+                    document.getElementById("housename").value = data.housename;
+                    document.getElementById("state").value = data.state;
+                    document.getElementById("pincode").value = data.pincode;
+                    console.log(data)
+                })
+                .catch(error => {
+                    console.error('Error updating quantity:', error);
+                });
+
+        }
+
     </script>
     <script src="./assets_user/js/vendor/jquery-1.12.4.min.js"></script>
     <script src="./assets_user/js/popper.min.js"></script>

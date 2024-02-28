@@ -85,27 +85,27 @@
 										
 									</ul>
 								</li>
-								<li class="cart"> <div class="dropdown ">
-								
-									<a class=" dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										<i class="icon-user"></i>
-										Account
-									</a>
-									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-										{{#if enter}}
-										<a class="dropdown-item" href="/profile"><i class="icon-cog"></i>&ensp;Profile</a>
-										<a class="dropdown-item" href="/cart"><i class="icon-shopping-cart"></i>&ensp;Cart</a>
-										<a class="dropdown-item" href="/wishlist"><i class="icon-heart"></i>&ensp;Wishlist</a>
-										<a class="dropdown-item" href="/userorders"><i class="icon-heart"></i>&ensp;Your Orders</a>
-										<a class="dropdown-item" href="/signout"><i class="icon-log-out"></i>&ensp;SignOut</a>
-										
-										{{else}}
-										<a class="dropdown-item" href="/signup"><i class="icon-user"></i>&ensp;Create Account</a>
-										<a class="dropdown-item" href="/userLogin"><i class="icon-log-in"></i>&ensp;Login</a>
-										
-										{{/if}}
-									</div>
-								</div></li>
+								<li class="cart"> 
+    <div class="dropdown">
+        <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="icon-user"></i>
+            Account
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: #808080;">
+            {{#if enter}}
+            <a class="dropdown-item" href="/profile"><i class="icon-cog"></i>&ensp;Profile</a>
+            <a class="dropdown-item" href="/cart"><i class="icon-shopping-cart"></i>&ensp;Cart</a>
+            <a class="dropdown-item" href="/wishlist"><i class="icon-heart"></i>&ensp;Wishlist</a>
+            <a class="dropdown-item" href="/userorders"><i class="icon-heart"></i>&ensp;Your Orders</a>
+            <a class="dropdown-item" href="/signout"><i class="icon-log-out"></i>&ensp;SignOut</a>
+            {{else}}
+            <a class="dropdown-item" href="/signup"><i class="icon-user"></i>&ensp;Create Account</a>
+            <a class="dropdown-item" href="/userLogin"><i class="icon-log-in"></i>&ensp;Login</a>
+            {{/if}}
+        </div>
+    </div>
+</li>
+
 										
 							</ul>
 							

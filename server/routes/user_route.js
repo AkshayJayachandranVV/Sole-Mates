@@ -172,6 +172,7 @@ route.post('/createOrder',middleware.userAuthorizeCheck, Order.createOrder);
 route.post("/checkcoupon",Order.couponVerify)
 route.post("/returnorder",Order.returnOrder)
  route.get("/checkout",middleware.userAuthorizeCheck,Order.displayCheckout)
+ route.get("/moreaddress",middleware.userAuthorizeCheck,Order.moreAddress)
 route.post("/orderplaced",middleware.userAuthorizeCheck,Order.displayOrder)
 route.get("/orderplaced",middleware.userAuthorizeCheck,Order.displayOrder)
 route.get("/cod",middleware.userAuthorizeCheck,Order.cashOnDelivery)

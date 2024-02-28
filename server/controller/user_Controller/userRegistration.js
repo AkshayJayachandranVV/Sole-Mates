@@ -368,7 +368,7 @@ const sendEmail = expressAsyncHandler(async (req, res, next) => {
                console.log(otp.timestamp)
 
             var mailOptions = {
-                from: process.env.SMTP_MAIL,
+                from:"SoleMates.shop <process.env.SMTP_MAIL>",
                 to: email,
                 subject: "OTP for Email Verfication",
                 text: `Your OTP is: ${otp.OTP}`,
@@ -560,12 +560,10 @@ const otpValidation = async (req, res) => {
 
 
 let transporterresend = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    secure: false,
+    service:"gmail",
     auth: {
-      user: process.env.SMTP_MAIL,
-      pass: process.env.SMTP_PASSWORD,
+        user: process.env.SMTP_MAIL,
+        pass: process.env.SMTP_PASSWORD,
     },
   });
   
