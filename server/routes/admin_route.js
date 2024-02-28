@@ -12,7 +12,6 @@ const adminOrder=require("../controller/admin_Controller/admin_OrderController")
 const middleware=require("../middleware/middleware")
 const dashboard=require("../controller/admin_Controller/admin_DashboardController")
 const adminCoupon=require("../controller/admin_Controller/admin_CouponController")
-const adminOffer=require("../controller/admin_Controller/admin_OfferController")
 const authAdmin=require("../../server/middleware/middleware")
 
 route.use(session({
@@ -193,9 +192,7 @@ route.post("/addcoupon",adminCoupon.addCoupon)
 
 // route.post("/addoffer",adminOffer.addOffer)
 
-route.post("/applyoffer",adminOffer.addOffer)
 
-route.get("/offer",adminOffer.displayOfferPage)
 
 route.get("/deletecoupon",adminCoupon.deleteCoupon)
 
