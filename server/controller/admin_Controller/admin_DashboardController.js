@@ -265,7 +265,9 @@ const salesReport =async (req,res)=> {
               </html>
           `;
   
-      const browser = await puppeteer.launch();
+      const browser = await puppeteer.launch({
+        executablePath: '/usr/bin/chromium-browser'
+      });
       const page = await browser.newPage();
       await page.setContent(htmlContent);
   
