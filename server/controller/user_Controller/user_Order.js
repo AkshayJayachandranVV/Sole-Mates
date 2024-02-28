@@ -1414,7 +1414,9 @@ function getDeliveryItemsHTML(orders){
   return data
 }
 
-const browser = await puppeteer.launch();
+const browser = await puppeteer.launch({
+  executablePath: '/usr/bin/chromium-browser'
+});
 const page = await browser.newPage();
 await page.setContent(htmlContent);
 
@@ -1423,11 +1425,11 @@ const pdfBuffer = await page.pdf();
 
 await browser.close();
 
-const downloadsPath = path.join(os.homedir(), "Downloads");
-const pdfFilePath = path.join(downloadsPath, "invoice.pdf");
+// const downloadsPath = path.join(os.homedir(), "Downloads");
+// const pdfFilePath = path.join(downloadsPath, "invoice.pdf");
 
 
-fs.writeFileSync(pdfFilePath, pdfBuffer);
+// fs.writeFileSync(pdfFilePath, pdfBuffer);
 
 res.setHeader("Content-Length", pdfBuffer.length);
 res.setHeader("Content-Type", "application/pdf");
