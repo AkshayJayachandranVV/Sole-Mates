@@ -274,11 +274,11 @@ const salesReport =async (req,res)=> {
   
       await browser.close();
   
-      const downloadsPath = path.join(os.homedir(), "Downloads");
-      const pdfFilePath = path.join(downloadsPath, "sales.pdf");
+      // const downloadsPath = path.join(os.homedir(), "Downloads");
+      // const pdfFilePath = path.join(downloadsPath, "sales.pdf");
   
      
-      fs.writeFileSync(pdfFilePath, pdfBuffer);
+      // fs.writeFileSync(pdfFilePath, pdfBuffer);
   
       res.setHeader("Content-Length", pdfBuffer.length);
       res.setHeader("Content-Type", "application/pdf");
