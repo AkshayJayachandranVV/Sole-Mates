@@ -105,13 +105,34 @@ const editcoupon=async(req,res)=>{
 
         const Alreadycoupon=await couponData.find({couponId:{$regex:regex}})
         console.log(Alreadycoupon)
-        console.log(coupon.category[1])
+        console.log(req.body.category[1])
+        let couponValue=req.body.category[1]
         console.log(coupon.minamount)
         if(Number(coupon.category[1])<=coupon.minamount){
                 if(Alreadycoupon.length<1 || (req.body.couponId==req.body.oldcouponId)){
                     console.log("enterereddghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
                 
-                    const couponedit=await couponData.updateOne({coupon:req.body.category[0],couponId:req.body.couponId,amount:req.body.category[1],minAmount:req.body.minamount,startDate:req.body.startDate,endDate:req.body.endDate})
+                  
+                    const couponedit = await couponData.updateOne(
+                        // Filter condition: Update the document where the 'coupon' field matches the category value from the request body
+                        { couponId: req.body.oldcouponId },
+                        // Update fields:
+                        {
+                          // Set the 'coupon' field to the value from the request body
+                          $set: { 
+                            coupon: req.body.category[0],
+                            // Set other fields based on request body data
+                            couponId: req.body.couponId,
+                            amount: couponValue,
+                            minAmount: req.body.minamount,
+                            startDate: req.body.startDate,
+                            endDate: req.body.endDate
+                          }
+                        }
+                      );
+                      
+                      console.log(couponedit);
+                      
                     //  res.render("adminCoupon",{couponedit})
                     res.redirect("/admin/coupon")
 
