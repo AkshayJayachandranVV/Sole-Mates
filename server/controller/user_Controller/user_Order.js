@@ -1441,6 +1441,14 @@ res.status(200).end(pdfBuffer);
 
 
 
+const paymentFailed=async(req,res)=>{
+  try{
+    console.log("problem with the paymentFailed")
+    res.render("orderFailed")
 
+  }catch(e){
+    console.log("Problem with the paymentFailed ")
+  }
+}
 
-module.exports = { displayCheckout, displayOrder, cashOnDelivery, cancelOrder, createOrder, fetchAdress, couponVerify, removeCoupon, returnOrder, walletApply, walletRemove,invoice,moreAddress }
+module.exports = { displayCheckout, displayOrder, cashOnDelivery, cancelOrder, createOrder, fetchAdress, couponVerify, removeCoupon, returnOrder, walletApply, walletRemove,invoice,moreAddress,paymentFailed }

@@ -131,10 +131,12 @@ const userRegister = async (req, res) => {
 
 //REBDER THE OTPGENERATION PAGE
 const renderOtpGeneration=async(req,res)=>{
- 
     try{
+        console.log("entered re")
+        console.log(req.query.Invalid)
+        let emailErr=req.query.Invalid
 
-        res.render("otpGeneration")
+        res.render("otpGeneration",{emailErr})
 
     }
     catch(e)
@@ -150,12 +152,12 @@ const renderOtpGeneration=async(req,res)=>{
 
 
 const forgotpasspost = async (req, res) => {
-
     try {
 
         console.log("forgot passpost entered")
         const email = req.body.email;
         req.session.emailpass=email
+        req.session.emailotp=req.body.email
         const emailExist = await user.findOne({ email: email })
 
         if (emailExist) {
@@ -164,11 +166,10 @@ const forgotpasspost = async (req, res) => {
             //  return next();
         }
         else{
-            res.redirect("/forgetpassword")
+            res.redirect("/forgetpassword?Invalid=Please Enter Valid Email")
 
         }
         
-
     }
     catch (error) {
         console.log(error)
@@ -188,7 +189,11 @@ const otpLogin=async (req,res)=>{
  
     try{
 
-        res.render("otpLogin")
+        console.log(req.query.Incorrect)
+        let Incorrect=req.query.Incorrect
+        res.render("otpLogin",{Incorrect})
+
+        // res.render("otpLogin")
 
     }
     catch(e)
@@ -202,9 +207,10 @@ const otpLogin=async (req,res)=>{
 
 //RENDER THE FORGET PASSWORD PAGE
 const renderforgetPassword=async(req,res)=>{
- 
     try{
-        res.render("forgetPassword")
+        console.log(req.query.Incorrect)
+        let Incorrect=req.query.Incorrect
+        res.render("forgetPassword",{Incorrect})
 
     }
     catch(e)
@@ -219,8 +225,6 @@ const renderforgetPassword=async(req,res)=>{
 
 const newPassword = async (req, res) => {
     try{
-
-    
 
     console.log("new password entered")
     console.log(req.body.password)
@@ -244,7 +248,8 @@ const newPassword = async (req, res) => {
         }
     }
     else {
-        res.render("forgetPassword")
+        res.redirect("/resetPassword?Incorrect=Enter Correct Password")
+        // res.render("forgetPassword")
     }
    }catch(e){
     console.log("problem with the newPassword"+e)
@@ -258,8 +263,9 @@ const newPassword = async (req, res) => {
 const renderotpLogin=async(req,res)=>{
  
     try{
-
-        res.render("otpLogin")
+        console.log(req.query.Incorrect)
+        let Incorrect=req.query.Incorrect
+        res.render("otpLogin",{Incorrect})
 
     }
     catch(e)
@@ -398,13 +404,86 @@ const sendEmail = expressAsyncHandler(async (req, res, next) => {
 });
 
 
+
+
+
+let forgetPasstransporter = nodemailer.createTransport({
+    service:"gmail",
+    auth: {
+        user: process.env.SMTP_MAIL,
+        pass: process.env.SMTP_PASSWORD,
+    },
+});
+
+const forgetPasssendEmail = expressAsyncHandler(async (req, res, next) => {
+    try {
+
+        if (req.body.email !== undefined) {
+                 const emailExist = await user.findOne({ email: req.body.email })
+
+                if(emailExist){
+
+                    const phone = req.body.phonenumber
+                    console.log("sendemail entered")
+                    console.log(req.body.email)
+                    const email = req.body.email;
+                    console.log("email entered")
+                    const emailString = email.toString();
+                    console.log(emailString);
+
+                    otp = generateOTP();
+
+                    console.log(otp)
+                    console.log(otp.OTP)
+                    console.log(otp.timestamp)
+
+                    var mailOptions = {
+                        from:"SoleMates.shop <process.env.SMTP_MAIL>",
+                        to: email,
+                        subject: "OTP for Email Verfication",
+                        text: `Your OTP is: ${otp.OTP}`,
+                    };
+
+                    forgetPasstransporter.sendMail(mailOptions, function (error, info) {
+                        if (error) {
+                            console.log(error);
+                            res.status(500).send('Error sending email');
+                        } else {
+                            console.log("Email sent successfully!");
+                            // res.redirect("/otplogin") 
+                            return next();
+
+
+                        }
+                    });
+                }else{
+                    res.redirect("/forgetpassword?Invalid=Please Enter Valid Email")
+
+                }
+          }else{
+            res.redirect("/forgetpassword?Invalid=Please Enter Valid Email")
+          }
+    }
+
+
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Error sending email');
+
+    }
+});
+
+
+
+
+
+
+
 //OTP verification password reset
 
 const resetValidationOtp = async (req, res) => {
-
     try{
 
-    
     console.log("Entered in tooooooo the resetvalidationotp to forget password")
     console.log(req.body.otp)
 
@@ -442,8 +521,8 @@ const resetValidationOtp = async (req, res) => {
 
         } else {
 
-            console.log("invalid otp")
-            res.redirect("/otplogin")
+            console.log("invalid otp Timing")
+            res.redirect("/forgototplog?Incorrect=Otp has Expired")
         }
 
 
@@ -451,7 +530,7 @@ const resetValidationOtp = async (req, res) => {
     else {
 
         console.log("invalid otp")
-        res.redirect("/otplogin")
+        res.redirect("/forgototplog?Incorrect=Incorrect Otp Entered")
         // res.render("otpLogin")
     }
 }
@@ -482,6 +561,8 @@ const otpValidation = async (req, res) => {
 
 
     console.log("hdhddd")
+    console.log(otp.OTP )
+    
 
     if (otp.OTP == req.body.otp) {
         console.log("both otp are same")
@@ -574,6 +655,7 @@ let transporterresend = nodemailer.createTransport({
   
       console.log(req.session.emailotp)
       let email =req.session.emailotp
+      if(req.session.emailotp!==undefined){
       // const phone = req.body.phonenumber
       // console.log("sendemail entered")
       // console.log(req.body.email)
@@ -608,6 +690,9 @@ let transporterresend = nodemailer.createTransport({
   
         }
       });
+    }else{
+        res.redirect("/forgetpassword?Invalid=Please Enter Valid Email")
+    }
   
     }
   
@@ -629,7 +714,7 @@ let transporterresend = nodemailer.createTransport({
 const otpValidationResendOtp = async (req, res) => {
     console.log("user entered otp")
     console.log(req.body.otp)
-  
+    console.log(otp.OTP)
   
     // let otpvalue=sendEmailChange();
     // console.log(otpvalue)
@@ -663,36 +748,36 @@ const otpValidationResendOtp = async (req, res) => {
         console.log(userValue)
 
 
-        const hashedpassword = await bcrypt.hash(userValue.password, 10)
-        console.log("after password")
+        // const hashedpassword = await bcrypt.hash(userValue.password, 10)
+        console.log(" entered to time stamp after password")
 
 
-        const newUser = new user({
+        // const newUser = new user({
 
-            username: userValue.username,
-            email: userValue.email,
-            phonenumber: userValue.phonenumber,
-            password: hashedpassword,
-            isAdmin: 0,
-            status: 1,
-            wallet:0
-            // confirmpassword:req.body.confirmpassword
+        //     username: userValue.username,
+        //     email: userValue.email,
+        //     phonenumber: userValue.phonenumber,
+        //     password: hashedpassword,
+        //     isAdmin: 0,
+        //     status: 1,
+        //     wallet:0
+        //     // confirmpassword:req.body.confirmpassword
 
-        })
+        // })
 
         console.log("beforre saving the file int db")
 
-        req.session.user = newUser
-        await newUser.save();
+        // req.session.user = newUser
+        // await newUser.save();
         // const emailCheck=req.body.email;
         // console.log(emailCheck)
 
-        console.log(req.session.signup)
+        // console.log(req.session.signup)
 
         
 
-        console.log("Signup session entered")
-           res.redirect("/userLogin")
+        // console.log("Signup session entered")
+           res.redirect("/resetPassword")
       }
     }
     else {
@@ -705,7 +790,7 @@ const otpValidationResendOtp = async (req, res) => {
   }
   
 
-module.exports = {sendEmail,resetValidationOtp,otpValidation,CheckUserIn,renderotpLogin,newPassword,renderforgetPassword,otpLogin,forgotpasspost,renderOtpGeneration,userRegister,renderSignup,userLogin,sendEmailChangeresend,otpValidationResendOtp}
+module.exports = {sendEmail,resetValidationOtp,otpValidation,CheckUserIn,renderotpLogin,newPassword,renderforgetPassword,otpLogin,forgotpasspost,renderOtpGeneration,userRegister,renderSignup,userLogin,sendEmailChangeresend,otpValidationResendOtp,forgetPasssendEmail}
 
 
 

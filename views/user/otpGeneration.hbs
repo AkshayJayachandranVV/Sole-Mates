@@ -32,7 +32,7 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="hero-cap text-center">
-                                <h2>OTP RESENDING</h2>
+                                <h2>OTP SENDING</h2>
                             </div>
                         </div>
                     </div>
@@ -61,16 +61,18 @@
                                     Please Enter Your Email</h3>
                                 <form class="row contact_form"  method="post" novalidate="novalidate">
                                     <div class="col-md-12 form-group p_star">
-                                        <input type="text" class="form-control" id="name" name="email" value=""
-                                            placeholder="email">
+                                        <input type="text" class="form-control" id="email" name="email" value=""
+                                            placeholder="email" onkeyup="validatEmail()">
+                                        <span id="emailProb"></span>
                                     </div>
+                                    <span style="color: red;" id="emailErr">{{emailErr}}</span>
                                     <div class="col-md-12 form-group">
                                         <div class="creat_account d-flex align-items-center">
                                             <input type="checkbox" id="f-option" name="selector">
                                             <label for="f-option">Remember me</label>
                                         </div>
                                         <button type="submit" value="submit"  class="btn_3">
-                                            log in
+                                            Submit
                                         </button>
                                         <a class="lost_pass" href="#">forget password?</a>
                                     </div>
@@ -96,6 +98,45 @@
     <!-- Search model end -->
     
     <!-- JS here -->
+
+    <script>
+     const emailError = document.getElementById('emailProb')
+
+
+          function validatEmail(){
+            console.log("hyyyyy email")
+            email=document.getElementById("email").value
+            console.log(email)
+            if(email.length==0){
+                emailError.textContent="Enter the Email"
+                emailError.style.color="red"
+                return false
+            }
+
+            if(!email.match(/^[A-Za-z\._\-[0-9]+@[A-Za-z]+\.[a-z]{2,}$/)){
+                console.log("error email")
+                emailError.innerHTML="Incorrect User Email"
+                   emailError.style.color="red"
+                return false
+            }
+              emailError.innerHTML = ''
+            return true
+
+        }
+
+
+
+
+    </script>
+
+     <script>
+        setTimeout(() => {
+
+            const emailerr = document.getElementById("emailErr")
+            emailerr.style.display = "none"
+
+        }, 5000)
+    </script>
 
     <script src="./assets_user/js/vendor/modernizr-3.5.0.min.js"></script>
     <!-- Jquery, Popper, Bootstrap -->

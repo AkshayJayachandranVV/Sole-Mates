@@ -15,7 +15,7 @@ const renderHome=async(req,res)=>{
     try{
 
       let enter=req.session.authenticated
-      const images = await productData.find({}).limit(12)
+      const images = await productData.find({list:0}).limit(12)
     
 
         res.render("userHome",{enter,images})
@@ -44,7 +44,7 @@ const HomeImages = async (req, res) => {
         let enter = req.session.authenticated
         if(req.session.authenticated){
 
-            const images = await productData.find({})
+            const images = await productData.find({ list: 0 })
             console.log(images)
     
             res.render("userHome", { images, enter })

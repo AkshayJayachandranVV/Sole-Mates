@@ -38,15 +38,27 @@ route.use(session({
 //USER REGISTRATION
 route.get("/otplogin", userRegister.renderotpLogin)
 route.post("/otplogin",userRegister.otpValidation)
+
+
+
 route.get("/userLogin", userRegister.userLogin)
 route.post("/userLogin", userRegister.CheckUserIn)
 route.get("/signup", userRegister.renderSignup);    
 route.post('/signup', userRegister.sendEmail,userRegister.userRegister);
+
 route.get("/forgetpassword", userRegister.renderOtpGeneration)
-route.post("/forgetpassword", [userRegister.sendEmail, userRegister.forgotpasspost])
+route.post("/forgetpassword", [userRegister.forgetPasssendEmail, userRegister.forgotpasspost])
+
+
+
 route.get("/forgototplog", userRegister.otpLogin)
 route.post("/forgototplog",userRegister.resetValidationOtp )
+
+
 route.get("/resetPassword", userRegister.renderforgetPassword)
+
+
+
 route.post("/resetPassword", userRegister.newPassword)
 route.get("/resendotpexpire",userRegister.sendEmailChangeresend)
 route.post("/resendotpexpire",userRegister.otpValidationResendOtp)
@@ -169,6 +181,7 @@ route.get("/delwishlist/:wishId",middleware.userAuthorizeCheck,wishList.deleteWi
 
 
 route.post('/createOrder',middleware.userAuthorizeCheck, Order.createOrder);
+// route.get("/paymentfailure",Order.paymentFailed)
 route.post("/checkcoupon",Order.couponVerify)
 route.post("/returnorder",Order.returnOrder)
  route.get("/checkout",middleware.userAuthorizeCheck,Order.displayCheckout)

@@ -70,6 +70,7 @@
                                     </div>
                                     <div class="col-md-12 form-group p_star">
                                         <p style="color: red;font: size 15px;" id="otp-seconds"></p>
+                                         <span style="color: red;" id="otpErr">{{Incorrect}}</span>
                                         <input type="password" class="form-control" id="password" name="otp" value=""
                                             placeholder="OTP">
                                     </div>
@@ -79,12 +80,16 @@
                                             <label for="f-option">Remember me</label>
                                         </div>
                                         <button id="submit-button" type="submit" value="submit" class="btn_3">
-                                            log in
+                                            Submit
                                         </button>
 
-                                           <button id="resend-button" style="display: none;" id="submit-button"  value="submit" class="btn_3">
+                                           {{!-- <button id="resend-button" style="display: none;" id="submit-button" type="submit" value="submit" class="btn_3">
                                             <a href="/resendotpexpire"> Resend</a>
-                                        </button>
+                                        </button> --}}
+                                        <button id="resend-button" style="display: none; background-color: blue; border: 1px solid blue;" type="submit" class="btn_3">
+                                        <a href="/resendotpexpire" style="color: white; text-decoration: none;">Resend</a>
+                                    </button>
+
 
                                     </div>
                                 </form>
@@ -112,7 +117,14 @@
 
     <script src="./assets_user/js/vendor/modernizr-3.5.0.min.js"></script>
 
+     <script>
+        setTimeout(()=>{
+            const value=document.getElementById("otpErr");
+            value.style.display="none"
+        },5000)
 
+        
+    </script>
 
 
 
