@@ -7,7 +7,7 @@
     <title>SOLE MATES</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   
+
 
     <!-- CSS here -->
     <link rel="stylesheet" href="/assets_user/css/bootstrap.min.css">
@@ -159,36 +159,39 @@
 
 
 
-                <h2>Order Details</h2>
+                    <h2>Order Details</h2>
 
-                <div class="row">
+                    <div class="row">
 
-                    {{#each productOrder}}
+                        {{#each productOrder}}
 
-                    <div class="col-md-8">
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <img src="{{this.image}}" alt="Product Image" style="height:500px">
-                                <br>
-                                <br>
-                                <h4 class="card-title">Order ID:<p id="getorderid">{{this.orderId}}</p>
-                                </h4>
-                                <p class="card-text">Order Date: {{formatDate this.orderdate}}</p>
-                                <h6 class="card-title">Status: {{this.status}} </h6>
+                        <div class="col-md-8">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <img src="{{this.image}}" alt="Product Image" style="height:500px">
+                                    <br>
+                                    <br>
+                                    <h4 class="card-title">Order ID:<p id="getorderid">{{this.orderId}}</p>
+                                    </h4>
+                                    <p class="card-text">Order Date: {{formatDate this.orderdate}}</p>
+                                    <h6 class="card-title">Status: {{this.status}} </h6>
 
-                                <!-- Product List -->
-                                <h5 class="mt-4 mb-3">Products</h5>
-                                <ul class="list-group">
-                                    <li class="list-group-item">Product:<p id="getproductname">{{this.productname}}</p>
-                                    </li>
-                                    <li class="list-group-item">Quantity:{{this.quantity }} </li>
-                                    <!-- Add more items as needed -->
-                                </ul>
-                                <h5 class="mt-4">Total Price: {{this.price}}</h5>
-                            </div>
-                            <div>
-
-                                {{#ifNotEquals this.status "DELVERED"}} 
+                                    <!-- Product List -->
+                                    <h5 class="mt-4 mb-3">Products</h5>
+                                    <ul class="list-group">
+                                        <li class="list-group-item">Product:<p id="getproductname">{{this.productname}}
+                                            </p>
+                                        </li>
+                                        <li class="list-group-item">Quantity:{{this.quantity }} </li>
+                                        <!-- Add more items as needed -->
+                                    </ul>
+                                    <h5 class="mt-4">Total Price: {{this.price}}</h5>
+                                </div>
+                                <div>
+                                    {{#ifEquals this.status "Payment Failure"}}
+                                    <h4 class="cancel-p" style="color: red;">Payment Failure</h4>
+                                    {{else}}
+                                    {{#ifNotEquals this.status "DELVERED"}}
                                     {{#ifEquals this.status "CANCELLED"}}
                                     <h4 class="cancel-p" style="color: red;">Order Cancelled</h4>
                                     {{else}}
@@ -196,92 +199,94 @@
                                             href="/cancelorder?orderId={{this.orderId}}&proId={{this.productname}}"
                                             onclick="return confirm('Are you sure you want to Cancel')">Cancel</a></button>
                                     {{/ifEquals }}
-                                {{/ifNotEquals }}
-                                
-                                {{#ifEquals this.status "REQUEST TO RETURN"}}
-                                <h4 class="return-p" style="color: red;">REQUEST TO RETURN</h4>
-                                {{else}}
-                                
-                                {{#ifEquals this.status "RETURN ACCEPTED"}}
-                                <h4 class="cancel-p" style="color:green;margin-left:340px;margin-top:-40px">RETURN ACCEPTED</h4>
-                                {{else ifEquals this.status "RETURN REJECTED"}}
-                                 <h4 class="return-p" style="color: red;">RETURN REJECTED</h4>
-                                {{!-- <button o class="btn btn-primary ml-40">Return Order</button> --}}
-                                {{else}}
-                                {{#ifEquals this.status "DELVERED"}}
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#exampleModal{{@key}}">
-                                    Return Order
-                                </button>
+                                    {{/ifNotEquals }}
 
-                                <!-- Modal -->
+                                    {{#ifEquals this.status "REQUEST TO RETURN"}}
+                                    <h4 class="return-p" style="color: red;">REQUEST TO RETURN</h4>
+                                    {{else}}
 
-                                <form action="/returnorder?orderId={{this.orderId}}&proId={{this.productname}}" method="post">
-                                    <div class="modal fade" id="exampleModal{{@key}}" tabindex="-1" role="dialog"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Return</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="form-group">
-                                                        <label class="form-control-label">Reason For Return</label>
-                                                        <input type="text" name="reason"
-                                                            placeholder="Return Reason" class="form-control"
-                                                            value="">
+                                    {{#ifEquals this.status "RETURN ACCEPTED"}}
+                                    <h4 class="cancel-p" style="color:green;margin-left:340px;margin-top:-40px">RETURN
+                                        ACCEPTED</h4>
+                                    {{else ifEquals this.status "RETURN REJECTED"}}
+                                    <h4 class="return-p" style="color: red;">RETURN REJECTED</h4>
+                                    {{!-- <button o class="btn btn-primary ml-40">Return Order</button> --}}
+                                    {{else}}
+                                    {{#ifEquals this.status "DELVERED"}}
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#exampleModal{{@key}}">
+                                        Return Order
+                                    </button>
+
+                                    <!-- Modal -->
+
+                                    <form action="/returnorder?orderId={{this.orderId}}&proId={{this.productname}}"
+                                        method="post">
+                                        <div class="modal fade" id="exampleModal{{@key}}" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Return</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
                                                     </div>
-                                                 
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label class="form-control-label">Reason For Return</label>
+                                                            <input type="text" name="reason" placeholder="Return Reason"
+                                                                class="form-control" value="">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </form>
-                                {{/ifEquals}}
-                               {{/ifEquals }}
-                                {{/ifEquals }}
-                            </div>
-                        </div>
-                    </div>
-
-
-                    {{/each}}
-
-
-                    <div class="col-md-4 ">
-                        <div class="card mb-200">
-                            <div class="card-body">
-                                <h5 class="card-title">Shipping Address</h5>
-                                <p class="card-text">Name:{{productOrder.[0].username}}</p>
-                                <p class="card-text">State:{{productOrder.[0].address.state}}</p>
-                                <p class="card-text">City: {{productOrder.[0].address.city}}</p>
-                                <p class="card-text">Housename: {{productOrder.[0].address.housename}}</p>
+                                    </form>
+                                    {{/ifEquals}}
+                                    {{/ifEquals }}
+                                    {{/ifEquals }}
+                                    {{/ifEquals }}
+                                </div>
                             </div>
                         </div>
 
 
-
-                        <!-- Additional Information (Billing/Shipping Address, etc.) -->
-
+                        {{/each}}
 
 
+                        <div class="col-md-4 ">
+                            <div class="card mb-200">
+                                <div class="card-body">
+                                    <h5 class="card-title">Shipping Address</h5>
+                                    <p class="card-text">Name:{{productOrder.[0].username}}</p>
+                                    <p class="card-text">State:{{productOrder.[0].address.state}}</p>
+                                    <p class="card-text">City: {{productOrder.[0].address.city}}</p>
+                                    <p class="card-text">Housename: {{productOrder.[0].address.housename}}</p>
+                                </div>
+                            </div>
+
+
+
+                            <!-- Additional Information (Billing/Shipping Address, etc.) -->
+
+
+
+                        </div>
+                          
                     </div>
-                      
+                    {{!-- {{/each}} --}}
                 </div>
-                {{!-- {{/each}} --}}
+
+
             </div>
-
-
-        </div>
         </div>
 
 

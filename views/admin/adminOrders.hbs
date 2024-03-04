@@ -150,7 +150,9 @@
                   <td>
                     <div class="form-group">
                       <br>
-                       {{#ifEquals this.status "CANCELLED"}}
+                       {{#ifEquals this.status "Payment Failure"}}
+                      <h5 style="color: RED;margin-left: 20px;">Payment Failed</h5>
+                       {{else ifEquals this.status "CANCELLED"}}
                       <P style="color: RED;">CANCELLED</P>
                        {{else ifEquals this.status "RETURN REJECTED"}}
                       <P style="color: RED;">RETURN REJECTED</P>

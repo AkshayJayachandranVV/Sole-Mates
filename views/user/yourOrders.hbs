@@ -97,6 +97,7 @@
                                 <th>Price</th>
                                 <th>Date</th>
                                 <th>Quantity</th>
+                                 <th>Status</th>
                                 <th>Order Details</th>
                                  <th>Downloads </th>
 
@@ -117,6 +118,13 @@
                                     {{formatDate this.date}}
                                 </td>
                                  <td>{{this.quantity}}</td>
+                                 <td>
+                                    {{#ifEquals this.status "Payment Failure"}}
+                                    <p style="color: red; font-size: 20px;">Payment Failed</p>
+                                    {{else}}
+                                     <p style="color:green; font-size: 20px;">Order Placed</p>
+                                    {{/ifEquals }}
+                                 </td>
                                 <td>
                                     <a class="btn btn-info"
                                         href="/userorderdetails?orderId={{this.orderId}}">Order

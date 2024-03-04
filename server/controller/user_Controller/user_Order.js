@@ -13,8 +13,6 @@ const puppeteer = require("puppeteer");
 const mongoose = require("mongoose")
 
 const displayCheckout = async (req, res) => {
-
-
   try {
     console.log("displayCkeout")
 
@@ -23,12 +21,14 @@ const displayCheckout = async (req, res) => {
     console.log(userAdd)
     console.log(userAdd.length)
     let Limit
-    if(userAdd.length>2){
+    if (userAdd.length > 2) {
       console.log("entered limit if")
-        Limit="true"
+      Limit = "true"
     }
+    req.session.payCheck=null
+
     // console.log(userAdd)
-    res.render("checkout", { userAdd,Limit })
+    res.render("checkout", { userAdd, Limit })
 
   }
   catch (e) {
@@ -50,10 +50,10 @@ const moreAddress = async (req, res) => {
     console.log("more address Cheout")
 
     // let userAddressData=req.session.userAddress
-    let Less="true"
+    let Less = "true"
     const userAdd = await addressData.find({ email: req.session.email })
     console.log(userAdd)
-    res.render("checkout", { userAdd,Less })
+    res.render("checkout", { userAdd, Less })
 
   }
   catch (e) {
@@ -142,8 +142,8 @@ const displayOrder = async (req, res) => {
 
     const wallet = await user.findOne({ username: User })
     let walletAmount = wallet.wallet
-    if(!walletAmount){
-      walletAmount=0
+    if (!walletAmount) {
+      walletAmount = 0
     }
 
     res.render("userPayment", { cart, totalValue, User, address, msg, walletAmount })
@@ -291,114 +291,406 @@ const orderId = () => {
 // }
 
 
+//START payment failure code order333333333###################################################################33
 
+
+
+
+
+
+const paymentFailure = async (req, res) => {
+  try {
+
+    console.log("entered to the payment failure")
+    console.log(req.session.checked + "failure amount")
+    let otpValue = orderId()
+    console.log(otpValue)
+    let otp = otpValue.OTP
+    let couponAmount
+    let amount
+    req.session.orderId = otpValue.OTP
+    console.log(req.session.orderId)
+    let date = otpValue.timestamp
+    cartProduct = await cartData.find({ username: req.session.username });
+    console.log("cashOnDelivery")
+
+    if (!req.session.checked) {
+
+      //const userData=await user.find({email:req.session.email});
+      //  const addressD=await addressData.find({email:req.session.email})
+      // console.log(cartData)
+      // console.log(userData)
+      // console.log(address)
+
+      console.log(" start code for coupon and wallet--------------------------------------------------------------------------------------------------------------")
+      console.log(req.session.couponId)
+
+      const totalprice = await cartData.aggregate([
+        {
+          $match: { username: req.session.username }
+        },
+        {
+          $group: { _id: "$productname", price: { $sum: "$price" }, quantity: { $sum: "$quantity" } }
+        },
+        {
+          $project: { _id: 0, amount: { $multiply: ["$price", "$quantity"] } }
+        },
+        {
+          $group: { _id: "null", total: { $sum: "$amount" } }
+        }
+      ])
+
+      // console.log(totalprice)
+
+      console.log(totalprice[0].total + " total cart amount found")
+
+
+
+
+      const checkCoupon = await CouponData.findOne({ couponId: req.session.couponId })
+      console.log(totalprice[0].total + " value money")
+
+      if (checkCoupon) {
+        console.log('coupon applied for this products')
+        couponAmount = totalprice[0].total - checkCoupon.amount
+        console.log(couponAmount)
+        amount = couponAmount
+        console.log(amount + "apply coupon amount")
+
+      } else {
+        console.log('coupon not applied for this product')
+        // couponAmount = req.body.price
+        // console.log(couponAmount)
+        amount = totalprice[0].total
+        console.log(amount + "without apply coupon")
+
+      }
+
+      console.log(amount + " amount after applying coupon")
+
+      console.log(req.session.walletOrder)
+
+      if (req.session.walletOrder) {
+        console.log(req.session.email)
+        const ogwallet = await user.findOne({ email: req.session.email })
+        console.log(ogwallet + "wallet amount to check the wallet")
+        ///////////////////////////////////////////////////////////code for the wallet update
+        let wallet = ogwallet.wallet - amount;
+        if (wallet < 0) {
+          wallet = 0;
+        }
+        console.log(wallet + " wallet amount of the order")
+        await user.updateOne({ username: req.session.username }, { $set: { wallet: wallet } });
+        /////////////////////////////////////////////////////////////////////////
+        console.log("wallet presented =====")
+
+        console.log(ogwallet.wallet)
+        amount = amount - ogwallet.wallet
+        if (amount < 1) {
+          amount = 1
+        }
+
+        // amount=amount-req.session.walletOrder
+
+      } else {
+        console.log("wallet  NOTTTTTT  presented =====")
+        amount = amount
+
+      }
+      // i removed *100 check og code------------------------------
+
+      console.log(amount + " amount after applying wallet")
+
+      req.session.checked = amount
+      console.log(req.session.checked)
+      console.log(" end code for coupon and wallet--------------------------------------------------------------------------------------------------------------")
+
+    } else {
+      amount = req.session.checked
+    }
+
+    console.log("checking the useraddress in the session")
+    console.log(req.session.userAddress)
+
+
+    console.log(cartProduct.length)
+    // console.log(addressD)
+    // console.log(addressD[0].address.pincode)
+
+    if (req.session.userAddress.newaddress) {
+      console.log(req.session.userAddress.fullname)
+      console.log(req.session.userAddress)
+      const newAdd = new addressData({
+
+        fullname: req.session.userAddress.fullname,
+        phonenumber: req.session.userAddress.phone,
+        address: {
+          pincode: req.session.userAddress.pincode,
+          housename: req.session.userAddress.housename,
+          state: req.session.userAddress.state,
+          city: req.session.userAddress.city,
+          // district:req.session.userAddress.district,
+          country: req.session.userAddress.country
+
+        },
+        primary: 0,
+
+
+
+      })
+
+
+      await newAdd.save();
+
+    }
+
+    console.log(req.session.razorpay + " checking the razorpay session")
+    if (req.session.razorpay) {
+
+      console.log("enetered into the condition to razorpay payment")
+
+      for (let i = 0; i < cartProduct.length; i++) {
+        console.log("enteredc into the forloop")
+        console.log(cartProduct)
+        console.log(cartProduct[i].quantity)
+        console.log(cartProduct[i].productname)
+        const newOrder = new orderData({
+          username: req.session.username,
+          quantity: cartProduct[i].quantity,
+          productname: cartProduct[i].productname,
+          price: cartProduct[i].price,
+          orderdate: date,
+          image: cartProduct[i].imagepath,
+          orderId: otpValue.OTP,
+          address: {
+            pincode: req.session.userAddress.pincode,
+            state: req.session.userAddress.state,
+            city: req.session.userAddress.city,
+            housename: req.session.userAddress.housename,
+            district: req.session.userAddress.district,
+            country: req.session.userAddress.country,
+
+          },
+          status: "Payment Failure",
+          cancel: 0,
+          category: cartProduct[i].category,
+          cod: 0,
+          totalAmount: amount
+        })
+        await newOrder.save();
+
+        // const updateStock=await productData.updateOne({productname:cartProduct[i].productname},{$inc:{stock:-cartProduct[i].quantity}})
+        // console.log(updateStock)
+
+      }
+      req.session.razorpay = null
+
+      console.log(req.session.razorpay + "after razorpay online payment")
+
+    }
+    else {
+
+      console.log("enetered into the condition to cod payment")
+
+      for (let i = 0; i < cartProduct.length; i++) {
+        console.log("enteredc into the forloop")
+        console.log(cartProduct)
+        console.log(cartProduct[i].quantity)
+        console.log(cartProduct[i].productname)
+        const newOrder = new orderData({
+          username: req.session.username,
+          quantity: cartProduct[i].quantity,
+          productname: cartProduct[i].productname,
+          price: cartProduct[i].price,
+          orderdate: date,
+          image: cartProduct[i].imagepath,
+          orderId: otpValue.OTP,
+          address: {
+            pincode: req.session.userAddress.pincode,
+            state: req.session.userAddress.state,
+            city: req.session.userAddress.city,
+            housename: req.session.userAddress.housename,
+            district: req.session.userAddress.district,
+            country: req.session.userAddress.country,
+
+          },
+          status: "Payment Failure",
+          cancel: 0,
+          category: cartProduct[i].category,
+          cod: 1,
+          totalAmount: amount
+        })
+        await newOrder.save();
+
+        // const updateStock=await productData.updateOne({productname:cartProduct[i].productname},{$inc:{stock:-cartProduct[i].quantity}})
+        // console.log(updateStock)
+
+      }
+    }
+
+    const order = await orderData.find({ orderId: otp })
+    console.log(order)
+    // req.session.couponId = null
+
+    console.log(req.session.username)
+
+    console.log("before delete the cart")
+
+
+    req.session.walletOrder = null
+
+    // const deleteCartData = await cartData.deleteMany({ username: req.session.username })
+
+    // console.log(deleteCartData)
+
+
+    // console.log(cartProduct[0].productname)
+    // console.log(cartProduct[0].price)
+
+    res.render("orderFailed", { order, success: "Order Placed Successfull" })
+
+  }
+  catch (e) {
+    console.log("problem withe the cashOnDekivery" + e)
+    res.redirect("/error")
+  }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//END payment failure code order333333333###################################################################33
 
 
 
 
 
 const cashOnDelivery = async (req, res) => {
-
   try {
 
+    console.log("entered to the cashOn DElivery")
+    console.log(req.session.checked + " ?????????????????????????????????????????????????????????????????????????")
+    const ogwallet = await user.findOne({ email: req.session.email })
+    console.log(ogwallet)
     let otpValue = orderId()
     console.log(otpValue)
     let otp = otpValue.OTP
-    let date = otpValue.timestamp
-
-    console.log("cashOnDelivery")
-
-    const cartProduct = await cartData.find({ username: req.session.username });
-    //const userData=await user.find({email:req.session.email});
-    //  const addressD=await addressData.find({email:req.session.email})
-    // console.log(cartData)
-    // console.log(userData)
-    // console.log(address)
-
-    console.log(" start code for coupon and wallet--------------------------------------------------------------------------------------------------------------")
-    console.log(req.session.couponId)
-
-    const totalprice = await cartData.aggregate([
-      {
-        $match: { username: req.session.username }
-      },
-      {
-        $group: { _id: "$productname", price: { $sum: "$price" }, quantity: { $sum: "$quantity" } }
-      },
-      {
-        $project: { _id: 0, amount: { $multiply: ["$price", "$quantity"] } }
-      },
-      {
-        $group: { _id: "null", total: { $sum: "$amount" } }
-      }
-    ])
-
-    // console.log(totalprice)
-
-    console.log(totalprice[0].total + " total cart amount found")
-
-
-
-
-    const checkCoupon = await CouponData.findOne({ couponId: req.session.couponId })
-    console.log(totalprice[0].total + " value money")
     let couponAmount
     let amount
-    if (checkCoupon) {
-      console.log('coupon applied for this products')
-      couponAmount = totalprice[0].total - checkCoupon.amount
-      console.log(couponAmount)
-      amount = couponAmount
-      console.log(amount + "apply coupon amount")
+    let date = otpValue.timestamp
+    req.session.orderId = otpValue.OTP
+    console.log(req.session.orderId)
+
+    console.log("cashOnDelivery")
+    const cartProduct = await cartData.find({ username: req.session.username });
+    if (!req.session.checked) {
 
 
-    } else {
-      console.log('coupon not applied for this product')
-      // couponAmount = req.body.price
-      // console.log(couponAmount)
-      amount = totalprice[0].total 
-      console.log(amount + "without apply coupon")
+      //const userData=await user.find({email:req.session.email});
+      //  const addressD=await addressData.find({email:req.session.email})
+      // console.log(cartData)
+      // console.log(userData)
+      // console.log(address)
 
-    }
+      console.log(" start code for coupon and wallet--------------------------------------------------------------------------------------------------------------")
+      console.log(req.session.couponId)
 
-    console.log(amount + " amount after applying coupon")
+      const totalprice = await cartData.aggregate([
+        {
+          $match: { username: req.session.username }
+        },
+        {
+          $group: { _id: "$productname", price: { $sum: "$price" }, quantity: { $sum: "$quantity" } }
+        },
+        {
+          $project: { _id: 0, amount: { $multiply: ["$price", "$quantity"] } }
+        },
+        {
+          $group: { _id: "null", total: { $sum: "$amount" } }
+        }
+      ])
 
-    console.log(req.session.walletOrder)
+      // console.log(totalprice)
 
-    if (req.session.walletOrder) {
-      const ogwallet = await user.findOne({ email: req.session.email })
-      ///////////////////////////////////////////////////////////code for the wallet update
-      let wallet = ogwallet.wallet - amount;
-      if (wallet < 0) {
-        wallet = 0;
+      console.log(totalprice[0].total + " total cart amount found")
+
+
+
+
+      const checkCoupon = await CouponData.findOne({ couponId: req.session.couponId })
+      console.log(totalprice[0].total + " value money")
+
+      if (checkCoupon) {
+        console.log('coupon applied for this products')
+        couponAmount = totalprice[0].total - checkCoupon.amount
+        console.log(couponAmount)
+        amount = couponAmount
+        console.log(amount + "apply coupon amount")
+
+
+      } else {
+        console.log('coupon not applied for this product')
+        // couponAmount = req.body.price
+        // console.log(couponAmount)
+        amount = totalprice[0].total
+        console.log(amount + "without apply coupon")
+
       }
-      console.log(wallet + " wallet amount of the order")
-      await user.updateOne({ username: req.session.username }, { $set: { wallet: wallet} });
-      /////////////////////////////////////////////////////////////////////////
-      console.log("wallet presented =====")
-     
-      console.log(ogwallet.wallet)
-      amount = amount - ogwallet.wallet
-          if (amount < 1) {
-            amount = 1
-          }
+
+      console.log(amount + " amount after applying coupon")
+
+      console.log(req.session.walletOrder)
+
+      if (req.session.walletOrder) {
+        const ogwallet = await user.findOne({ email: req.session.email })
+        ///////////////////////////////////////////////////////////code for the wallet update
+        let wallet = ogwallet.wallet - amount;
+        if (wallet < 0) {
+          wallet = 0;
+        }
+        console.log(wallet + " wallet amount of the order")
+        await user.updateOne({ username: req.session.username }, { $set: { wallet: wallet } });
+        /////////////////////////////////////////////////////////////////////////
+        console.log("wallet presented =====")
+
+        console.log(ogwallet.wallet)
+        amount = amount - ogwallet.wallet
+        if (amount < 1) {
+          amount = 1
+        }
 
 
-      // amount=amount-req.session.walletOrder
+        // amount=amount-req.session.walletOrder
+
+      } else {
+        console.log("wallet  NOTTTTTT  presented =====")
+        amount = amount
+
+      }
+      // i removed *100 check og code------------------------------
+
+      console.log(amount + " amount after applying wallet")
+
+      req.session.checked = amount
+      console.log(req.session.checked)
+      console.log(" end code for coupon and wallet--------------------------------------------------------------------------------------------------------------")
 
     } else {
-      console.log("wallet  NOTTTTTT  presented =====")
-      amount = amount
-
+      amount = req.session.checked
     }
-// i removed *100 check og code------------------------------
 
-    console.log(amount + " amount after applying wallet")
-
-
-    console.log(" end code for coupon and wallet--------------------------------------------------------------------------------------------------------------")
-
-
+    req.session.payCheck=null
 
     console.log("checking the useraddress in the session")
     console.log(req.session.userAddress)
@@ -470,7 +762,7 @@ const cashOnDelivery = async (req, res) => {
         })
         await newOrder.save();
 
-        const updateStock=await productData.updateOne({productname:cartProduct[i].productname},{$inc:{stock:-cartProduct[i].quantity}})
+        const updateStock = await productData.updateOne({ productname: cartProduct[i].productname }, { $inc: { stock: -cartProduct[i].quantity } })
         console.log(updateStock)
 
       }
@@ -512,7 +804,7 @@ const cashOnDelivery = async (req, res) => {
         })
         await newOrder.save();
 
-        const updateStock=await productData.updateOne({productname:cartProduct[i].productname},{$inc:{stock:-cartProduct[i].quantity}})
+        const updateStock = await productData.updateOne({ productname: cartProduct[i].productname }, { $inc: { stock: -cartProduct[i].quantity } })
         console.log(updateStock)
 
       }
@@ -526,12 +818,12 @@ const cashOnDelivery = async (req, res) => {
 
     console.log("before delete the cart")
 
-
+    req.session.checked = null
     const deleteCartData = await cartData.deleteMany({ username: req.session.username })
 
     console.log(deleteCartData)
 
-
+    req.session.walletOrder = null
     // console.log(cartProduct[0].productname)
     // console.log(cartProduct[0].price)
     res.render("userOrders", { order, success: "Order Placed Successfull" })
@@ -750,7 +1042,6 @@ const cancelOrder = async (req, res) => {
 
   }
 
-
 }
 
 
@@ -763,62 +1054,69 @@ const razorpayInstance = new Razorpay({
 
 const createOrder = async (req, res) => {
   try {
-
+    console.log("entered to the createoRDER")
+    const ogwallet = await user.findOne({ email: req.session.email })
+    console.log(ogwallet)
     console.log(req.session.couponId)
     const checkCoupon = await CouponData.findOne({ couponId: req.session.couponId })
     console.log(req.body.price + " value money")
     let couponAmount
     let amount
-    if (checkCoupon) {
-      console.log('coupon applied for this products')
-      couponAmount = req.body.price - checkCoupon.amount
-      console.log(couponAmount)
-      amount = couponAmount 
-      console.log(amount + "cehck")
+    if (!req.session.payCheck) {
+      if (checkCoupon) {
+        console.log('coupon applied for this products')
+        couponAmount = req.body.price - checkCoupon.amount
+        console.log(couponAmount)
+        amount = couponAmount
+        console.log(amount + "cehck")
 
+      } else {
+        console.log('coupon not applied for this product')
+        couponAmount = req.body.price
+        console.log(couponAmount)
+        amount = couponAmount
+        console.log(amount + "cehck")
 
-    } else {
-      console.log('coupon not applied for this product')
-      couponAmount = req.body.price
-      console.log(couponAmount)
-      amount = couponAmount
-      console.log(amount + "cehck")
-
-    }
-
-
-    
-    console.log(req.session.walletOrder)
-
-    if (req.session.walletOrder) {
-      const ogwallet = await user.findOne({ email: req.session.email })
-      ///////////////////////////////////////////////////////////code for the wallet update
-      let wallet = ogwallet.wallet - amount;
-      if (wallet < 0) {
-        wallet = 0;
       }
-      console.log(wallet + " wallet amount of the order")
-      await user.updateOne({ username: req.session.username }, { $set: { wallet: wallet} });
-      /////////////////////////////////////////////////////////////////////////
-      console.log("wallet presented =====")
-     
-      console.log(ogwallet.wallet)
-      amount = amount - ogwallet.wallet
-          if (amount < 1) {
-            amount = 1
-          }
 
+
+      console.log(req.session.walletOrder)
+
+      if (req.session.walletOrder) {
+        const ogwallet = await user.findOne({ email: req.session.email })
+        ///////////////////////////////////////////////////////////code for the wallet update
+        let wallet = ogwallet.wallet - amount;
+        if (wallet < 0) {
+          wallet = 0;
+        }
+        console.log(wallet + " wallet amount of the order")
+        // await user.updateOne({ username: req.session.username }, { $set: { wallet: wallet} });
+        /////////////////////////////////////////////////////////////////////////
+        console.log("wallet presented =====")
+
+        console.log(ogwallet.wallet)
+        amount = amount - ogwallet.wallet
+        if (amount < 1) {
+          amount = 1
+        }
+
+      } else {
+        console.log("wallet  NOTTTTTT  presented =====")
+        amount = amount
+
+      }
+      // i removed *100 check og code------------------------------
+      amount = amount * 100
+
+      req.session.payCheck = amount
+      console.log(req.session.payCheck)
     } else {
-      console.log("wallet  NOTTTTTT  presented =====")
-      amount = amount
-
+      amount = req.session.payCheck
     }
-// i removed *100 check og code------------------------------
-amount = amount*100
 
     console.log(amount + " amount after applying wallet")
 
-   
+
 
     const options = {
       amount: amount,
@@ -958,9 +1256,9 @@ const couponVerify = async (req, res) => {
               let totalAmount = totalprice[0].total
               cost = 1
               let inform = "Coupon has Applied: 1"
-              let msg="Coupon has Successfully Applied"
+              let msg = "Coupon has Successfully Applied"
               req.session.couponId = req.body.couponId
-              return res.json({ success: true, cost,msg, inform, totalAmount })
+              return res.json({ success: true, cost, msg, inform, totalAmount })
 
             } else {
               console.log(cost)
@@ -971,8 +1269,8 @@ const couponVerify = async (req, res) => {
               console.log("about the discount cost" + cost)
               console.log("about the total cost" + totalAmount)
               req.session.couponId = req.body.couponId
-              let msg="Coupon has Successfully Applied"
-              return res.json({ success: true, cost,msg, inform, totalAmount })
+              let msg = "Coupon has Successfully Applied"
+              return res.json({ success: true, cost, msg, inform, totalAmount })
             }
           }
 
@@ -1030,7 +1328,7 @@ const removeCoupon = async (req, res) => {
     console.log(removeTotal)
     req.session.couponId = null
     let msg = "Removed Coupon from Total Amount"
-    return res.json({ success: true,msg, removeTotal })
+    return res.json({ success: true, msg, removeTotal })
 
   } catch (e) {
     console.log("problem withe the removeCoupon" + e)
@@ -1041,147 +1339,6 @@ const removeCoupon = async (req, res) => {
 
 
 
-
-
-
-
-// const couponVerify = async (req, res) => {
-//   try {
-
-
-//     console.log(req.body.couponId)
-//     console.log(req.body.price)
-//     let totalAmount = req.body.price
-//     const checkCoupon = await CouponData.findOne({ couponId: req.body.couponId })
-//     console.log(checkCoupon)
-//     const couponArrayCheck = await user.findOne({ $and: [{ email: req.session.email }, { couponArray: { $in: [req.body.couponId] } }] })
-//     console.log("checking the elemet in present in the coupon array" + couponArrayCheck)
-
-
-//     const totalprice = await cartData.aggregate([
-//       {
-//         $match: { username: req.session.username }
-//       },
-//       {
-//         $group: { _id: "$productname", price: { $sum: "$price" }, quantity: { $sum: "$quantity" } }
-//       },
-//       {
-//         $project: { _id: 0, amount: { $multiply: ["$price", "$quantity"] } }
-//       },
-//       {
-//         $group: { _id: "null", total: { $sum: "$amount" } }
-//       }
-//     ])
-
-
-//     console.log(totalprice)
-
-//     if (checkCoupon) {
-//       if (totalAmount >= checkCoupon.minAmount) {
-//         let date = Date.now()
-//         console.log(date)
-
-//         const date1 = new Date(Number(date))
-//         console.log(date1)
-//         console.log(checkCoupon.endDate)
-
-//         const dateFirst = new Date(date1);
-//         const dateSecond = new Date(checkCoupon.endDate);
-
-
-//         if (dateFirst.getTime() < dateSecond.getTime()) {
-
-//           if (couponArrayCheck) {
-//             let totalValue = totalprice[0].total - checkCoupon.amount
-//             let total = totalprice[0].total
-//             console.log("Entered into the couponArrayCheck")
-//             let msg = "Coupon Already Applied"
-//             return res.json({ success: false, msg, totalValue, total })
-
-//           } else {
-//             let cost = totalAmount - checkCoupon.amount
-//             if (cost < 1) {
-//               console.log("price is negative")
-//               // let msg ="You cant Purchase "
-//               let totalAmount = totalprice[0].total
-//               cost = 1
-//               let inform = "Coupon has Applied: 1"
-//               req.session.couponId = req.body.couponId
-//               return res.json({ success: true, cost, inform, totalAmount })
-
-//             } else {
-//               console.log(cost)
-//               console.log(req.session.email)
-//               const pushcoupon = await user.updateOne({ email: req.session.email }, { $push: { couponArray: req.body.couponId } })
-//               console.log(pushcoupon)
-//               let inform = `Coupon Applied :${checkCoupon.amount}`
-//               console.log("about the discount cost" + cost)
-//               console.log("about the total cost" + totalAmount)
-//               req.session.couponId = req.body.couponId
-//               return res.json({ success: true, cost, inform, totalAmount })
-//             }
-//           }
-
-//         } else {
-
-//           console.log("no the checkcoupom")
-//           let msg = "Coupon Date has Expired"
-//           return res.json({ success: false, msg })
-//         }
-
-//       } else {
-//         console.log("no the amount")
-//         let msg = `Minimum Amount to Apply Coupon:${checkCoupon.minAmount}`
-//         return res.json({ success: false, msg })
-
-//       }
-
-
-//     } else {
-//       console.log("no the checkcoupom")
-//       let msg = "Enter Valid Coupon Id"
-//       return res.json({ success: false, msg })
-//     }
-
-//   } catch (e) {
-//     console.log("Problem with the couponVerify" + e)
-//     return res.json({ success: false, msg: "Internal Server Error" })
-//   }
-// }
-
-
-
-
-// const removeCoupon = async (req, res) => {
-//   try {
-//     console.log("entered into remove coupon")
-//     console.log(req.session.couponId)
-//     const checkCoupon = await CouponData.findOne({ couponId: req.session.couponId })
-//     console.log(checkCoupon)
-//     console.log(req.session.email)
-//     try {
-//       const pullcoupon = await user.updateOne({ email: req.session.email }, { $pull: { couponArray: req.session.couponId } });
-//       console.log('Coupon removed successfully:', pullcoupon);
-//       // Send a success response or perform additional actions if needed
-//     } catch (error) {
-//       console.error('Error removing coupon:', error);
-//       // Handle the error, send an appropriate response, or retry the operation
-//     }
-
-//     // const pullcoupon = await user.updateOne({ email:req.session.email }, { $pull: { couponArray: req.body.couponId } })
-//     // console.log(pullcoupon)
-//     console.log(checkCoupon.amount)
-//     let removeTotal = req.body.price
-//     console.log(removeTotal)
-//     req.session.couponId = null
-//     let msg = "Removed Coupon from Total Amount"
-//     return res.json({ success: true, removeTotal })
-
-//   } catch (e) {
-//     console.log("problem withe the removeCoupon" + e)
-//     res.redirect("/error")
-//   }
-// }
 
 
 const returnOrder = async (req, res) => {
@@ -1221,7 +1378,7 @@ const walletApply = async (req, res) => {
     if (wallet < 0) {
       wallet = 0;
     }
-
+    req.session.walletApply = ogwallet.wallet
     /////////////////////////////
 
     req.session.walletOrder = 11
@@ -1252,6 +1409,7 @@ const walletRemove = async (req, res) => {
 
     /////////////////////////////
     req.session.walletOrder = null
+    req.session.walletApply = null
     //////////////////////////////////
 
     return res.json({ success: true, removeWallet, wallet })
@@ -1271,38 +1429,38 @@ const walletRemove = async (req, res) => {
 
 //INVOICE
 
-const invoice=async (req,res)=>{
+const invoice = async (req, res) => {
   //data
-const orders=await orderData.find({orderId:req.query.orderId})
-console.log(orders)
-// const procheck=await orderData.find()
-// console.log(procheck + "=present")
-// const productDetail = await orderData.aggregate([{$match:{orderId:req.query.orderId}},
-//   {
-//     $lookup: {
-//       from: "productData", // Name of the foreign collection
-//       localField: "productname", // Field in the orderData collection
-//       foreignField: "productname", // Field in the productData collection
-//       as: "product" // Output array field name
-//     }
-//   }
-// ]);
+  const orders = await orderData.find({ orderId: req.query.orderId })
+  console.log(orders)
+  // const procheck=await orderData.find()
+  // console.log(procheck + "=present")
+  // const productDetail = await orderData.aggregate([{$match:{orderId:req.query.orderId}},
+  //   {
+  //     $lookup: {
+  //       from: "productData", // Name of the foreign collection
+  //       localField: "productname", // Field in the orderData collection
+  //       foreignField: "productname", // Field in the productData collection
+  //       as: "product" // Output array field name
+  //     }
+  //   }
+  // ]);
 
-// console.log(JSON.stringify(productDetail) + " 99999999999999999");
+  // console.log(JSON.stringify(productDetail) + " 99999999999999999");
 
-// let productLookUp=JSON.stringify(productDetail)
-// console.log(productDetail[0].username)
-let payment
-if(orders.cod==0){
-    payment="Online Payment"
-}else{
-  payment="Cash On Delivery"
-}
+  // let productLookUp=JSON.stringify(productDetail)
+  // console.log(productDetail[0].username)
+  let payment
+  if (orders.cod == 0) {
+    payment = "Online Payment"
+  } else {
+    payment = "Cash On Delivery"
+  }
   //data
 
 
-// copy
-const htmlContent = `
+  // copy
+  const htmlContent = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1398,57 +1556,81 @@ const htmlContent = `
 
 
 
-//table function for inserting dynamic product details into invoice
-function getDeliveryItemsHTML(orders){
-  let data = ""
-  for(let order of orders){
+  //table function for inserting dynamic product details into invoice
+  function getDeliveryItemsHTML(orders) {
+    let data = ""
+    for (let order of orders) {
       data += `
   <div class="table-row">
       <div class=" table-cell w-6/12 text-left font-bold py-1 px-4">${order.productname}</div>
       <div class=" table-cell w-[10%] text-center">${order.quantity}</div>
       <div class=" table-cell w-2/12 text-center">₹${order.price}</div>
-      <div class=" table-cell w-2/12 text-center">₹${order.price*order.quantity}</div>
+      <div class=" table-cell w-2/12 text-center">₹${order.price * order.quantity}</div>
   </div>
   `
+    }
+    return data
   }
-  return data
+
+  const browser = await puppeteer.launch({
+    executablePath: '/usr/bin/chromium-browser'
+  });
+  const page = await browser.newPage();
+  await page.setContent(htmlContent);
+
+
+  const pdfBuffer = await page.pdf();
+
+  await browser.close();
+
+  // const downloadsPath = path.join(os.homedir(), "Downloads");
+  // const pdfFilePath = path.join(downloadsPath, "invoice.pdf");
+
+
+  // fs.writeFileSync(pdfFilePath, pdfBuffer);
+
+  res.setHeader("Content-Length", pdfBuffer.length);
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader("Content-Disposition", "attachment; filename=invoice.pdf");
+  res.status(200).end(pdfBuffer);
+  // copy
 }
 
-const browser = await puppeteer.launch({
-  executablePath: '/usr/bin/chromium-browser'
-});
-const page = await browser.newPage();
-await page.setContent(htmlContent);
-
-
-const pdfBuffer = await page.pdf();
-
-await browser.close();
-
-// const downloadsPath = path.join(os.homedir(), "Downloads");
-// const pdfFilePath = path.join(downloadsPath, "invoice.pdf");
-
-
-// fs.writeFileSync(pdfFilePath, pdfBuffer);
-
-res.setHeader("Content-Length", pdfBuffer.length);
-res.setHeader("Content-Type", "application/pdf");
-res.setHeader("Content-Disposition", "attachment; filename=invoice.pdf");
-res.status(200).end(pdfBuffer);
-// copy
-}
 
 
 
+const discardAll = async (req, res) => {
+  try {
+    console.log("entered tom discardAll 1111111111111")
+    console.log(req.session.orderId)
+    console.log(req.session.couponId)
+    console.log(req.session.walletApply)
+    // const orderD = await orderData.find({ orderId: req.session.orderId})
+    // console.log(orderD)
+    if (!req.session.couponId && !req.session.walletApply) {
+      let msg = "Wallet Amount and Coupon Code is Not Apllied"
+      return res.json({ success: false, msg })
+    } else {
+      if (req.session.couponId) {
+        const pullcoupon = await user.updateOne({ email: req.session.email }, { $pull: { couponArray: req.session.couponId } });
+        req.session.couponId = null
+        console.log(pullcoupon)
+      }
+      if (req.session.walletApply) {
+        let walletApply = await user.updateOne({ username: req.session.username }, { $set: { wallet: req.session.walletApply } });
+        console.log(walletApply)
+        req.session.walletApply = null
+      }
 
-const paymentFailed=async(req,res)=>{
-  try{
-    console.log("problem with the paymentFailed")
-    res.render("orderFailed")
-
-  }catch(e){
+      console.log("check finished 000000000000000000000")
+      let msg = "Successfully Retrived Wallet and Coupon Offer"
+      req.session.checked = null
+      return res.json({ success: true, msg })
+      // res.redirect("/userorders")
+    }
+  } catch (e) {
     console.log("Problem with the paymentFailed ")
   }
 }
 
-module.exports = { displayCheckout, displayOrder, cashOnDelivery, cancelOrder, createOrder, fetchAdress, couponVerify, removeCoupon, returnOrder, walletApply, walletRemove,invoice,moreAddress,paymentFailed }
+module.exports = { displayCheckout, displayOrder, cashOnDelivery, cancelOrder, createOrder, fetchAdress, couponVerify, removeCoupon, returnOrder, walletApply, walletRemove, invoice, moreAddress, paymentFailure, discardAll }

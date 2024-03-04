@@ -180,8 +180,17 @@ route.get("/delwishlist/:wishId",middleware.userAuthorizeCheck,wishList.deleteWi
 
 
 
-route.post('/createOrder',middleware.userAuthorizeCheck, Order.createOrder);
-// route.get("/paymentfailure",Order.paymentFailed)
+route.post('/createOrder',middleware.userAuthorizeCheck, Order.createOrder)
+
+
+
+route.get("/paymentfailure",middleware.userAuthorizeCheck,Order.paymentFailure)
+route.post("/retryOrder",middleware.userAuthorizeCheck, Order.createOrder)
+route.post("/discardOrder",middleware.userAuthorizeCheck, Order.discardAll)
+
+
+
+
 route.post("/checkcoupon",Order.couponVerify)
 route.post("/returnorder",Order.returnOrder)
  route.get("/checkout",middleware.userAuthorizeCheck,Order.displayCheckout)

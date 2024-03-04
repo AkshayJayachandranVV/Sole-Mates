@@ -72,6 +72,7 @@ const productDetails = async (req, res) => {
     try {
 
         console.log(req.body)
+        console.log(req.body['offer-percentage'])
         let data = req.body
         console.log(data.stock)
         console.log(req.files)
@@ -147,14 +148,13 @@ const productDetails = async (req, res) => {
             }else{
                 offer=categoryOffer.offer 
             }
+            console.log("after checking"+offer)
 
             if(!offer){
-                offer=req.body['offer-percentage']
-            }else{
                 offer=0
             }
 
-
+            console.log("after 2nd  checking"+offer)
 
             //----------------------------------------------
             if(checkOffer){
@@ -163,7 +163,7 @@ const productDetails = async (req, res) => {
             }else{
                 OfferPrice = req.body.price 
             }
-
+      console.log(OfferPrice)
 
             // let offer
             // if(product[i].offer>=categoryOffer.offer){
@@ -408,11 +408,9 @@ const updateProduct = async (req, res) => {
             offer=Number(categoryOffer.offer )
             console.log(offer)
         }
-        if(!offer){
-            offer=req.body['offer-percentage']
-        }else{
-            offer=0
-        }
+          if(!offer){
+                offer=0
+            }
 
         //----------------------------------------------
         if(checkOffer){

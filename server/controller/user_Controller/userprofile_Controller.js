@@ -395,7 +395,8 @@ const profileYourOrders = async (req, res) => {
         _id: {
           orderId: "$orderId",
           date: "$orderdate",
-          totalAmount:"$totalAmount" 
+          totalAmount:"$totalAmount",
+          status:"$status" 
         },
         price: { $sum: "$price" },
         quantity: { $sum: "$quantity" },

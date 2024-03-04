@@ -191,8 +191,6 @@
                     <h3>Coupon Code</h3>
                     <p id="couponmsg"></p>
                     <button type="button" onclick="popupClose()">OK</button>
-
-                              
                 </div>
                 <div class="container mt-5">
                     <h2 class="mb-4">Shipping Details</h2>
@@ -227,7 +225,7 @@
                             <input type="text" aria-label="First name" class="form-control" name="coupon" value="{{walletAmount}}"
                                 id="walletCode" readonly>
                                 {{#if walletAmount}}
-                                  <button onclick="checkWallet()" class="btn btn-warning applyCoupon"
+                                <button onclick="checkWallet()" class="btn btn-warning applyCoupon"
                                 id="applyWallets">Apply</button>
                                 {{else}}
                                 <button onclick="checkWallet()" class="btn btn-warning applyCoupon" id="applyWallets" disabled>Apply</button>
@@ -655,7 +653,7 @@
                         };
                         var razorpayObject = new Razorpay(options);
                         razorpayObject.on('payment.failed', function (response) {
-                           // window.open("/paymentfailure", "_self")
+                           window.open("/paymentfailure", "_self")
                             alert("Payment Failed");
                         });
                         razorpayObject.open();
