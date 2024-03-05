@@ -108,9 +108,11 @@
                             <tr>
                                 <td><img src=" {{this.imagepath}}" alt="Image Alt Text" class=" w-25 h-25"></td>
                                 <td>{{this.productname}}</td>
-
+                                {{#ifEquals this.offerprice this.price}}
                                 <td>{{this.price}}</td>
-                               
+                                {{else}}
+                                <td>{{this.offerprice}}</td>
+                                {{/ifEquals}}
                                 <td>
                                     <button type="button" class="btn btn-outline-primary"><a
                                             href="/addtocart/{{this.productname}}">Add to Cart

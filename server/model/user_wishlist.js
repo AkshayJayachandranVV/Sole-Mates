@@ -26,6 +26,10 @@ const wishlistData=mongoose.Schema({
     username:{
         type:String,
         require:true
+    },
+    offerprice:{
+        type:Number,
+        require:true
     }
     
 

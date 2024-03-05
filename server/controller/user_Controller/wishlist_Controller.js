@@ -41,6 +41,7 @@ const addWishlist=async(req,res)=>{
          productname:proD.productname,
          imagepath:proD.imagepath[0],
          price:proD.price,
+         offerprice:proD.offerprice,
          username:req.session.username
 
   
