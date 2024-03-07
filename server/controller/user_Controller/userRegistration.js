@@ -110,7 +110,7 @@ const userRegister = async (req, res) => {
     //         res.redirect("/signup?uname=Your password needs to be strong");
     //     }
         else {
-            req.session.signup = true;
+            req.session.entered = "entered";
             req.session.forgot = false;
             console.log(req.session.signup)
             console.log(req.session.forgot)
@@ -290,6 +290,8 @@ const CheckUserIn = async (req, res) => {
 
     try {
 
+        console.log(req.body)
+
         console.log("check user try entererd")
 
         console.log("nop value not reached")
@@ -309,6 +311,7 @@ const CheckUserIn = async (req, res) => {
 
 
                     req.session.authenticated = true;
+                    req.session.entered = null;
                     req.session.username = checkUser.username;
                     req.session.email=checkUser.email
                     res.redirect("/")
@@ -453,7 +456,6 @@ const forgetPasssendEmail = expressAsyncHandler(async (req, res, next) => {
                             // res.redirect("/otplogin") 
                             return next();
 
-
                         }
                     });
                 }else{
@@ -484,7 +486,8 @@ const forgetPasssendEmail = expressAsyncHandler(async (req, res, next) => {
 const resetValidationOtp = async (req, res) => {
     try{
 
-    console.log("Entered in tooooooo the resetvalidationotp to forget password")
+    console.log("Entered in tooooooo the resetvalidationotp to forget password check fetch 7878787878787878787")
+    console.log(req.body)
     console.log(req.body.otp)
 
     console.log("firdt otp")
@@ -513,16 +516,57 @@ const resetValidationOtp = async (req, res) => {
 
         if (timeDifference <= expiryTimeInMilliseconds) {
 
-           
+            console.log("redirect code")
+            if(req.session.entered){
+                
+            const userValue = req.session.details
 
-            res.redirect("/resetPassword")
+            console.log(userValue)
+
+
+            const hashedpassword = await bcrypt.hash(userValue.password, 10)
+            console.log("after password")
+
+
+            const newUser = new user({
+
+                username: userValue.username,
+                email: userValue.email,
+                phonenumber: userValue.phonenumber,
+                password: hashedpassword,
+                isAdmin: 0,
+                status: 1
+                // confirmpassword:req.body.confirmpassword
+
+            })
+
+            console.log("beforre saving the file int db")
+
+            req.session.user = newUser
+            await newUser.save();
+
+                let signup="entered"
+                return res.json({ success: false,signup})
+
+            }else{
+
+                let forgot="entered"
+                return res.json({ success: false,forgot})
+                
+            }
+            
+
+
+            // res.redirect("/resetPassword")
 
             // res.redirect("/signup")
 
         } else {
-
-            console.log("invalid otp Timing")
-            res.redirect("/forgototplog?Incorrect=Otp has Expired")
+             console.log("invalid otp Timing")
+            let msg="Otp has Expired"
+            return res.json({ success: true,msg})
+           
+            // res.redirect("/forgototplog?Incorrect=Otp has Expired")
         }
 
 
@@ -530,7 +574,9 @@ const resetValidationOtp = async (req, res) => {
     else {
 
         console.log("invalid otp")
-        res.redirect("/forgototplog?Incorrect=Incorrect Otp Entered")
+        let msg="Incorrect Otp Entered"
+        return res.json({ success: true,msg})
+        // res.redirect("/forgototplog?Incorrect=Incorrect Otp Entered")
         // res.render("otpLogin")
     }
 }
@@ -684,7 +730,8 @@ let transporterresend = nodemailer.createTransport({
           res.status(500).send('Error sending email');
         } else {
           console.log("Email sent successfully!");
-          res.render("otpLogin")
+          res.redirect("/otplogin")
+        //   res.render("otpLogin")
           // return otp;
   
   

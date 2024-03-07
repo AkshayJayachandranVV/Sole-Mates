@@ -1198,7 +1198,6 @@ const fetchAdress = async (req, res) => {
 const couponVerify = async (req, res) => {
   try {
 
-
     console.log(req.body.couponId)
     console.log(req.body.price)
     let totalAmount = req.body.price

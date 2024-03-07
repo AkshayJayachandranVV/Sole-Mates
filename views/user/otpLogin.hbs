@@ -63,15 +63,15 @@
                                 <h3>Welcome Back ! <br>
                                     Please Sign in now</h3>
 
-                                    
-                                <form class="row contact_form" method="post" novalidate="novalidate">
+
+                                <form class="row contact_form" method="post"  novalidate="novalidate" id="myForm">
                                     <div class="col-md-12 form-group p_star">
 
                                     </div>
                                     <div class="col-md-12 form-group p_star">
                                         <p style="color: red;font: size 15px;" id="otp-seconds"></p>
-                                         <span style="color: red;" id="otpErr">{{Incorrect}}</span>
-                                        <input type="password" class="form-control" id="password" name="otp" value=""
+                                        <span style="color: red;" id="otpErr"></span>
+                                        <input type="password" class="form-control" id="password" name="otp" 
                                             placeholder="OTP">
                                     </div>
                                     <div class="col-md-12 form-group">
@@ -79,16 +79,22 @@
                                             <input type="checkbox" id="f-option" name="selector">
                                             <label for="f-option">Remember me</label>
                                         </div>
-                                        <button id="submit-button" type="submit" value="submit" class="btn_3">
+                                        {{!-- <button id="submit-button" value="submit" class="btn_3"
+                                            onclick="otpcheck()">
                                             Submit
-                                        </button>
+                                        </button> --}}
+                                        <button id="submit-button" class="btn_3" type="submit">Submit</button>
 
-                                           {{!-- <button id="resend-button" style="display: none;" id="submit-button" type="submit" value="submit" class="btn_3">
+                                        {{!-- <button id="resend-button" style="display: none;" id="submit-button"
+                                            type="submit" value="submit" class="btn_3">
                                             <a href="/resendotpexpire"> Resend</a>
                                         </button> --}}
-                                        <button id="resend-button" style="display: none; background-color: blue; border: 1px solid blue;" type="submit" class="btn_3">
-                                        <a href="/resendotpexpire" style="color: white; text-decoration: none;">Resend</a>
-                                    </button>
+                                        <button id="resend-button"
+                                            style="display: none; background-color: blue; border: 1px solid blue;"
+                                            type="submit" class="btn_3">
+                                            <a href="/resendotpexpire"
+                                                style="color: white; text-decoration: none;">Resend</a>
+                                        </button>
 
 
                                     </div>
@@ -117,48 +123,109 @@
 
     <script src="./assets_user/js/vendor/modernizr-3.5.0.min.js"></script>
 
-     <script>
-        setTimeout(()=>{
-            const value=document.getElementById("otpErr");
-            value.style.display="none"
-        },5000)
 
-        
+
+
+    <script>
+
+        // Use fetch to update the quantity in the database
+        document.getElementById('myForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+           let otppass = document.getElementById("password").value;
+            console.log(otppass)
+
+            // Send form data to server using fetch
+              fetch('/forgototpcheck', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                   otp: otppass,
+                   
+                }),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Network response was not ok.');
+                })
+                .then(data => {
+                    // Handle response data
+                    if (data.success) {
+                       showErrorMessage(`${data.msg}`)
+                    }else{
+                        if(data.signup){
+                           window.location.href = "/userLogin";
+                        }
+                        if(data.forgot){
+                           window.location.href = "/resetPassword";
+                        }
+                       
+                         //res.redirect("/resetPassword")
+                    }
+                    
+                   //  document.getElementById('otpErr').innerHTML = `${data.msg}`;
+                    console.log(data);           
+
+                })
+                .catch(error => {
+                    // Handle fetch errors
+                    console.error('Fetch error:', error);
+                });
+        });
+
+
     </script>
 
 
+<script>
+    function showErrorMessage(message) {
+    const otpErr = document.getElementById('otpErr');
+    otpErr.textContent = message;
+    otpErr.style.display = 'block'; // Ensure the message is visible
+    setTimeout(function() {
+        otpErr.style.display = 'none'; // Hide the message after 3 seconds
+    }, 3000);
+}
+</script>
+  
 
 
-        <script>
-            let seconds = 60;
 
-            const intervalId = setInterval(function() {
-                console.log(`Seconds: ${seconds}`);
-              document.getElementById("otp-seconds").innerHTML=`OTP will Expire on ${seconds} seconds`
+
+    <script>
+        let seconds = 60;
+
+        const intervalId = setInterval(function () {
+            //console.log(`Seconds: ${seconds}`);
+            document.getElementById("otp-seconds").innerHTML = `OTP will Expire on ${seconds} seconds`
 
             seconds--;
 
             if (seconds === 0) {
                 clearInterval(intervalId); // Stop the interval after 60 seconds
-            console.log('Interval stopped after 60 seconds.');
+                //console.log('Interval stopped after 60 seconds.');
 
-              document.getElementById("otp-seconds").innerHTML=`OTP has Expired`
+                document.getElementById("otp-seconds").innerHTML = `OTP has Expired`
 
-      }
-    }, 1000); // Run every 1000 milliseconds (1 second)
+            }
+        }, 1000); // Run every 1000 milliseconds (1 second)
 
-    intervalId()
+        intervalId()
     </script>
 
 
     <script>
-        setTimeout(()=>{
-            let submit=document.getElementById("submit-button")
-            let resend=document.getElementById("resend-button")
+        setTimeout(() => {
+            let submit = document.getElementById("submit-button")
+            let resend = document.getElementById("resend-button")
 
-            submit.style.display="none"
-            resend.style.display="inline"
-        },60*1000)
+            submit.style.display = "none"
+            resend.style.display = "inline"
+        }, 60 * 1000)
     </script>
 
 

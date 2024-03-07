@@ -80,16 +80,16 @@
                                     <td>{{this.price}}</td>
                                     <td>
                                         <span class="input-group-btn-vertical">
-                                            <button class="btn btn-touchspin js-touchspin bootstrap-touchspin-up p-3 "
+                                            <button style="width:40px"  class="btn btn-touchspin js-touchspin bootstrap-touchspin-up p-3 "
                                                 type="button"
                                                 onclick="updateProductQuantity('{{this.productname}}','{{this.price}}',{{this.quantity}},1)">
                                                 +
-                                            </button>
+                                            </button>   
                                             <br>
                                             <br>
                                             <p class="input-group form-control" id="{{this.productname}}">
                                                 {{this.quantity}}</p>
-                                            <button class="btn btn-touchspin js-touchspin bootstrap-touchspin-down p-3"
+                                            <button style="width:40px" class="btn btn-touchspin js-touchspin bootstrap-touchspin-down p-3"
                                                 type="button"
                                                 onclick="updateProductQuantity('{{this.productname}}','{{this.price}}' ,{{this.quantity}},-1)">
                                                 -

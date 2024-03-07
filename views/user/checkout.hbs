@@ -49,15 +49,21 @@
 
 
 
-                <div class="container-fluid">
+                <div class="container-fluid" style="margin-top: -150px;">
                     <div class="container py-5">
                         <div class="row g-4">
                             <div class="col-lg-12">
                                 <div class="row g-4">
                                     <h1 class="mb-4">Billing details</h1>
+                                    {{#if userAdd}}
+                                    {{else}}
+                                    <h3>You can Add Address in your Profile</h3>
+                                    <br>
+                                     <a href="/profile" class="btn btn-primary" style="width: 250px;">Add Profile</a>
+                                    {{/if}}
                                     {{#each userAdd}}
-                                    <div class="col-md-6 col-lg-4 col-xl-3 mx-3">
-                                        <div class="col-md-12 ">
+                                    <div class="col-md-6 col-lg-4 col-xl-3 mx-3" >
+                                        <div class="col-md-12 " >
                                             <div class="form-check">
                                                 <input class="form-check-input" name="addressCheck" type="radio"
                                                     value="" id="defaultCheck1" onchange="fetchAddress('{{this._id}}')"
@@ -105,7 +111,7 @@
                 <br>
 
                 <form action="/orderplaced" method="post">
-                    <h3>ADD ADDRESS</h3>
+                    <h2>ADD ADDRESS</h2>
                     <!-- Full Name -->
                     <div class="form-group">
                         <label for="fullname">Full Name:</label>

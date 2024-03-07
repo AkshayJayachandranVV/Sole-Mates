@@ -46,14 +46,16 @@ route.post("/userLogin", userRegister.CheckUserIn)
 route.get("/signup", userRegister.renderSignup);    
 route.post('/signup', userRegister.sendEmail,userRegister.userRegister);
 
+
+
+
 route.get("/forgetpassword", userRegister.renderOtpGeneration)
 route.post("/forgetpassword", [userRegister.forgetPasssendEmail, userRegister.forgotpasspost])
 
-
-
+////////////////////////////////////
 route.get("/forgototplog", userRegister.otpLogin)
-route.post("/forgototplog",userRegister.resetValidationOtp )
-
+route.post("/forgototpcheck",userRegister.resetValidationOtp )
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 route.get("/resetPassword", userRegister.renderforgetPassword)
 
