@@ -159,30 +159,22 @@
                         <label class="form-control-label">Stock</label>
                         <input type="number" name="stock" placeholder="Stock" min="1" class="form-control" required>
                       </div>
-                      <div>
-                        <input id="fileInput" type="file" multiple accept="image/*" name="avatar" />
-                      </div>
-                      <div class="container h-200">
-                        <div id="imageContainer">
-                          <div style="width: 20px; height: 20px;">
-                            <img id="image1" class="std" src="" alt="product-Image-1"
-                              style="max-width: 20px; max-height: 20px;">
-                          </div>
-                          <div style="width: 20px; height: 20px;">
-                            <img id="image2" class="std" src="" alt="product-Image-2"
-                              style="max-width: 20px; max-height: 20px;">
-                          </div>
-                          <div style="width: 20px; height: 20px;">
-                            <img id="image3" class="std" src="" alt="product-Image-3"
-                              style="max-width: 20px; max-height: 20px;">
-                          </div>
-                          <div style="width: 20px; height: 20px;">
-                            <img id="image4" class="std" src="" alt="product-Image-4"
-                              style="max-width: 20px; max-height: 20px;">
+                      ///////////////////////////////////////////////////////
+                      <div class="mb-3">
+                        <div>
+                          <input  type="file" multiple accept="image/*" id="imageInput" name="avatar" />
+                        </div>
+
+                         <canvas id="croppedCanvas" style="display: none;"></canvas>
+
+                        <div class="mb-3">
+                          <label class="form-label" for="basic-icon-default-message">Add image</label>
+                          <div id="imagePreview" class="mb-3 d-flex">
+                            <!-- Image previews will be shown here -->
                           </div>
                         </div>
                       </div>
-
+                      ///////////////////////////////////////////////////////////
                       <div class="form-group">
                         <input type="submit" value="ADD" class="btn btn-primary">
                       </div>
@@ -191,11 +183,44 @@
                 </div>
               </div>
             </div>
-                  
           </div>
 
+  <script defer src="https://cdn.crop.guide/loader/l.js?c=LXZBGM"></script>
 
-        <script>
+
+
+          <script>
+            document.getElementById('imageInput').addEventListener('change', function (event) {
+              var files = event.target.files;
+              console.log("=========")
+              var imagePreview = document.getElementById('imagePreview');
+
+              imagePreview.innerHTML = ''; // Clear previous previews
+
+              for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                  var img = document.createElement('img');
+                  img.src = e.target.result;
+                  img.width = 100; // Adjust as needed
+                  img.height = 100; // Adjust as needed
+                  img.style.marginBottom = '5px'; // Adjust as needed
+
+                  var container = document.createElement('div');
+                  container.classList.add('me-3', 'mb-3');
+                  container.appendChild(img);
+                  imagePreview.appendChild(container);
+                };
+
+                reader.readAsDataURL(file);
+              }
+            });
+          </script>
+
+
+          <!--<script>
     document.getElementById('fileInput').addEventListener('change', function (event) {
         event.preventDefault(); // Prevent form submission and page refresh
 
@@ -257,7 +282,7 @@
             reader.readAsDataURL(fileList[i]);
         }
     });
-</script>
+</script>-->
 
 
 
@@ -302,9 +327,10 @@
           </script>
 
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/assets_admin/vendors/js/vendor.bundle.base.js"></script>
 
-
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
         </div>
         <!-- main-panel ends -->
