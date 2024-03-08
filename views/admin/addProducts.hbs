@@ -1,233 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>ADMIN SOLE MATES</title>
-    <link rel="stylesheet" href="/assets_admin/vendors/mdi/css/materialdesignicons.min.css" />
-    <link rel="stylesheet" href="/assets_admin/vendors/flag-icon-css/css/flag-icon.min.css" />
-    <link rel="stylesheet" href="/assets_admin/vendors/css/vendor.bundle.base.css" />
-    <link rel="stylesheet" href="/assets_admin/vendors/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="/assets_admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />
-    <link rel="stylesheet" href="/assets_admin/css/style.css" />
-    <link rel="shortcut icon" href="/assets_admin/images/favicon.png" />
-  </head>
-  <body>
-    <div class="container-scroller">  
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>ADMIN SOLE MATES</title>
+  <link rel="stylesheet" href="/assets_admin/vendors/mdi/css/materialdesignicons.min.css" />
+  <link rel="stylesheet" href="/assets_admin/vendors/flag-icon-css/css/flag-icon.min.css" />
+  <link rel="stylesheet" href="/assets_admin/vendors/css/vendor.bundle.base.css" />
+  <link rel="stylesheet" href="/assets_admin/vendors/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/assets_admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />
+  <link rel="stylesheet" href="/assets_admin/css/style.css" />
+  <link rel="shortcut icon" href="/assets_admin/images/favicon.png" />
+  <style>
+    img.std {
+      height: 60%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-scroller">
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
-          <a class="sidebar-brand brand-logo" href="index.html"><img src="/assets_admin/images/logo.svg" alt="logo" /></a>
-          <a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="index.html"><img src="/assets_admin/images/logo-mini.svg" alt="logo" /></a>
+      <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
+        <a class="sidebar-brand brand-logo" href="index.html"><img src="/assets_admin/images/logo.svg" alt="logo" /></a>
+        <a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="index.html"><img
+            src="/assets_admin/images/logo-mini.svg" alt="logo" /></a>
+      </div>
+      <ul class="nav">
+        <li class="nav-item nav-profile">
+          <a href="#" class="nav-link">
+            <div class="nav-profile-image">
+              <img src="/assets_admin/images/faces/face1.jpg" alt="profile" />
+              <span class="login-status online"></span>
+              <!--change to offline or busy as needed-->
+            </div>
+            <div class="nav-profile-text d-flex flex-column pr-3">
+              <span class="font-weight-medium mb-2">Admin</span>
+            </div>
+            <span class="badge badge-danger text-white ml-3 rounded">3</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/dashboard">
+            <i class="mdi mdi-home menu-icon"></i>
+            <span class="menu-title">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/products">
+            <i class="mdi mdi-home menu-icon"></i>
+            <span class="menu-title">Products</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/users">
+            <i class="mdi mdi-contacts menu-icon"></i>
+            <span class="menu-title">Users</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/category">
+            <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+            <span class="menu-title">Category</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/orders">
+            <i class="mdi mdi-chart-bar menu-icon"></i>
+            <span class="menu-title">Orders</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/coupon">
+            <i class="mdi mdi-table-large menu-icon"></i>
+            <span class="menu-title">Coupon</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div class="container-fluid page-body-wrapper">
+      <div id="theme-settings" class="settings-panel">
+        <i class="settings-close mdi mdi-close"></i>
+        <p class="settings-heading">SIDEBAR SKINS</p>
+        <div class="sidebar-bg-options selected" id="sidebar-default-theme">
+          <div class="img-ss rounded-circle bg-light border mr-3"></div> Default
         </div>
-        <ul class="nav">
-          <li class="nav-item nav-profile">
-            <a href="#" class="nav-link">
-              <div class="nav-profile-image">
-                <img src="/assets_admin/images/faces/face1.jpg" alt="profile" />
-                <span class="login-status online"></span>
-                <!--change to offline or busy as needed-->
-              </div>
-              <div class="nav-profile-text d-flex flex-column pr-3">
-                <span class="font-weight-medium mb-2">Admin</span>
-              </div>
-              <span class="badge badge-danger text-white ml-3 rounded">3</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/dashboard">
-              <i class="mdi mdi-home menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
-            </a>
-          </li>
-             <li class="nav-item">
-            <a class="nav-link" href="/admin/products">
-              <i class="mdi mdi-home menu-icon"></i>
-              <span class="menu-title">Products</span>
-            </a>
-          </li>
-         
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/users">
-              <i class="mdi mdi-contacts menu-icon"></i>
-              <span class="menu-title">Users</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/category">
-              <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-              <span class="menu-title">Category</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/orders">
-              <i class="mdi mdi-chart-bar menu-icon"></i>
-              <span class="menu-title">Orders</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/coupon">
-              <i class="mdi mdi-table-large menu-icon"></i>
-              <span class="menu-title">Coupon</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div class="container-fluid page-body-wrapper">
-        <div id="theme-settings" class="settings-panel">
-          <i class="settings-close mdi mdi-close"></i>
-          <p class="settings-heading">SIDEBAR SKINS</p>
-          <div class="sidebar-bg-options selected" id="sidebar-default-theme">
-            <div class="img-ss rounded-circle bg-light border mr-3"></div> Default
-          </div>
-          <div class="sidebar-bg-options" id="sidebar-dark-theme">
-            <div class="img-ss rounded-circle bg-dark border mr-3"></div> Dark
-          </div>
-          <p class="settings-heading mt-2">HEADER SKINS</p>
-          <div class="color-tiles mx-0 px-4">
-            <div class="tiles light"></div>
-            <div class="tiles dark"></div>
-          </div>
+        <div class="sidebar-bg-options" id="sidebar-dark-theme">
+          <div class="img-ss rounded-circle bg-dark border mr-3"></div> Dark
         </div>
+        <p class="settings-heading mt-2">HEADER SKINS</p>
+        <div class="color-tiles mx-0 px-4">
+          <div class="tiles light"></div>
+          <div class="tiles dark"></div>
+        </div>
+      </div>
 
-         {{> admin_Header}}
+      {{> admin_Header}}
 
-        <div class="main-panel">
-          <div class="content-wrapper pb-0">
+      <div class="main-panel">
+        <div class="content-wrapper pb-0">
 
-            <div class="container mt-5">
-        <div class="row">
-          <div class="col">
+          <div class="container mt-5">
+            <div class="row">
+              <div class="col">
                 <div class="block">
                   <div class="title"><strong class="d-block">ADD PRODUCTS</strong><span class="d-block"></span></div>
-                  <div>  <p style="color:green" id="Success-message">{{successData}}</p></div>
+                  <div>
+                    <p style="color:green" id="Success-message">{{successData}}</p>
+                  </div>
                   <div class="block-body">
 
                     <p id="success">{{addData}}</p>
-                     <form action="/admin/upload" method="post" enctype="multipart/form-data">
+                    <form action="/admin/upload" method="post" enctype="multipart/form-data">
                       <div class="form-group">
                         <label class="form-control-label">Name Of Product</label>
-                        <input type="text" name="productname" placeholder="Product Name" class="form-control">
+                        <input type="text" name="productname" placeholder="Product Name" class="form-control" required>
                       </div>
-                      <div class="form-group">       
+                      <div class="form-group">
                         <label class="form-control-label">Category</label>
                         <br>
-                        <select class="btn btn-danger" name="category" id="category-names"> 
+                        <select class="btn btn-danger" name="category" id="category-names">
                           {{#each categorydata}}
-                            <option value="{{this.category}}" >{{this.category}}</option> 
-                           {{/each}}
+                          <option value="{{this.category}}">{{this.category}}</option>
+                          {{/each}}
                         </select>
                       </div>
-                        <div class="form-group">       
+                      <div class="form-group">
                         <label class="form-control-label">Price</label>
-                        <input type="number" id="price" name="price" placeholder="Price" class="form-control" min="1" oninput="validateInput(this)">
+                        <input type="number" id="price" name="price" placeholder="Price" class="form-control" min="1"
+                          oninput="validateInput(this)" required>
                       </div>
                       <div class="form-group">
-                      <label class="form-control-label">Mininmum Purchase Offer</label>
-                      <input type="number" id="offer" name="offer-percentage" placeholder="Offer" class="form-control" min="1" max="99" value=""   onkeyup="offerPrice()">
+                        <label class="form-control-label">Mininmum Purchase Offer</label>
+                        <input type="number" id="offer" name="offer-percentage" placeholder="Offer" class="form-control"
+                          min="1" max="99" value="" onkeyup="offerPrice()">
                       </div>
                       <div class="form-group">
-                      <label class="form-control-label">Offer Price</label>
-                      <input type="number" id="offer-price" name="offer-price" placeholder="Product Price" class="form-control"  >
+                        <label class="form-control-label">Offer Price</label>
+                        <input type="number" id="offer-price" name="offer-price" placeholder="Product Price"
+                          class="form-control">
                       </div>
-                        <div class="form-group">       
+                      <div class="form-group">
                         <label class="form-control-label">Description</label>
-                        <input type="text" name="description" placeholder="Description" class="form-control">
+                        <input type="text" name="description" placeholder="Description" class="form-control" required>
                       </div>
-                        <div class="form-group">       
+                      <div class="form-group">
                         <label class="form-control-label">Color</label>
-                        <input type="text" name="color" placeholder="Color" class="form-control">
+                        <input type="text" name="color" placeholder="Color" class="form-control" required>
                       </div>
-                      <div class="form-group">       
+                      <div class="form-group">
                         <label class="form-control-label">Waranty</label>
-                        <input type="text" name="waranty" placeholder="Waranty" class="form-control">
+                        <input type="text" name="waranty" placeholder="Waranty" class="form-control" required>
                       </div>
-                       <div class="form-group">       
+                      <div class="form-group">
                         <label class="form-control-label">Stock</label>
-                        <input type="number" name="stock" placeholder="Stock" min="1" class="form-control">
+                        <input type="number" name="stock" placeholder="Stock" min="1" class="form-control" required>
                       </div>
-                      <div>                 
-                        <input type="file" multiple  accept='image/*' name="avatar" />            
+                      <div>
+                        <input id="fileInput" type="file" multiple accept="image/*" name="avatar" />
                       </div>
-                       <div>
-                      <img src="" alt="product-Image-1">
-                      {{!-- <input type="file" accept='image/*' name="avatar" /> --}}
-                    </div>
-                    <div>
-                      <img src="" alt="product-Image-2">
-                      {{!-- <input type="file" accept='image/*' name="avatar" /> --}}
-                    </div>
-                    <div>
-                      <img src="" alt="product-Image-3">
-                      {{!-- <input type="file" accept='image/*' name="avatar" /> --}}
-                    </div>
-                    <div>
-                      <img src="" alt="product-Image-4">
-                      {{!-- <input type="file" accept='image/*' name="avatar" /> --}}
-                    </div>
-                      <div class="form-group">       
-                        <input type="submit" value="ADD" class="btn btn-primary">    
+                      <div class="container h-200">
+                        <div id="imageContainer">
+                          <div style="width: 20px; height: 20px;">
+                            <img id="image1" class="std" src="" alt="product-Image-1"
+                              style="max-width: 20px; max-height: 20px;">
+                          </div>
+                          <div style="width: 20px; height: 20px;">
+                            <img id="image2" class="std" src="" alt="product-Image-2"
+                              style="max-width: 20px; max-height: 20px;">
+                          </div>
+                          <div style="width: 20px; height: 20px;">
+                            <img id="image3" class="std" src="" alt="product-Image-3"
+                              style="max-width: 20px; max-height: 20px;">
+                          </div>
+                          <div style="width: 20px; height: 20px;">
+                            <img id="image4" class="std" src="" alt="product-Image-4"
+                              style="max-width: 20px; max-height: 20px;">
+                          </div>
+                        </div>
                       </div>
-                    
+
+                      <div class="form-group">
+                        <input type="submit" value="ADD" class="btn btn-primary">
+                      </div>
                     </form>
                   </div>
                 </div>
               </div>
-        </div>
-      </div>
-           
-
-   <script>
-     function offerPrice(){
-        let offer=parseFloat(document.getElementById("offer").value)
-        let orginalPrice=parseFloat(document.getElementById("price").value)
-        console.log(offer)
-        console.log(orginalPrice)
-        let OfferPrice =Math.floor(orginalPrice - (orginalPrice * (offer/ 100))) 
-        console.log(OfferPrice)
-        document.getElementById("offer-price").value=OfferPrice 
+            </div>
+                  
+          </div>
 
 
-      }
+        <script>
+    document.getElementById('fileInput').addEventListener('change', function (event) {
+        event.preventDefault(); // Prevent form submission and page refresh
 
-    </script>
+        const fileList = this.files;
+        const imageContainer = document.getElementById('imageContainer');
+        imageContainer.innerHTML = ''; // Clear previous images
 
+        const maxWidth = 200; // Maximum width of resized images
+        const maxHeight = 200; // Maximum height of resized images
 
+        for (let i = 0; i < fileList.length; i++) {
+            console.log(`File ${i + 1}: ${fileList[i].name}`);
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const img = new Image();
+                img.onload = function () {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
 
+                    // Calculate aspect ratio
+                    let width = img.width;
+                    let height = img.height;
+                    let aspectRatio = width / height;
 
-        
-<script>
-    setTimeout(()=>{
+                    // Calculate new dimensions while maintaining aspect ratio
+                    if (width > height) {
+                        width = maxWidth;
+                        height = width / aspectRatio;
+                    } else {
+                        height = maxHeight;
+                        width = height * aspectRatio;
+                    }
 
-        const data=document.getElementById("Success-message")
+                    // Set canvas dimensions
+                    canvas.width = width;
+                    canvas.height = height;
 
-         data.style.display="none"
-    },5000)
+                    // Draw image on canvas with resized dimensions
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    // Convert canvas to data URL
+                    const resizedImageUrl = canvas.toDataURL('image/jpeg');
+
+                    // Create img element with resized image
+                    const resizedImg = document.createElement('img');
+                    resizedImg.src = resizedImageUrl;
+                    resizedImg.alt = 'product-Image-' + (i + 1);
+                    resizedImg.style.maxWidth = `${maxWidth}px`;
+                    resizedImg.style.maxHeight = `${maxHeight}px`;
+
+                    // Append resized image to container
+                    imageContainer.appendChild(resizedImg);
+                };
+                img.src = event.target.result; // Set src to base64-encoded data URL
+            };
+            reader.onerror = function (event) {
+                console.error('Error reading file:', event.target.error);
+            };
+            reader.readAsDataURL(fileList[i]);
+        }
+    });
 </script>
 
 
-    <script>
-        function validateInput(input) {
-            const value = parseFloat(input.value);
 
-            if (isNaN(value) || value < 0) {
-                {{!-- alert("Please enter a positive number."); --}}
-                input.value = ""; // Clear the input
+          <script>
+            function offerPrice() {
+              let offer = parseFloat(document.getElementById("offer").value)
+              let orginalPrice = parseFloat(document.getElementById("price").value)
+              console.log(offer)
+              console.log(orginalPrice)
+              let OfferPrice = Math.floor(orginalPrice - (orginalPrice * (offer / 100)))
+              console.log(OfferPrice)
+              document.getElementById("offer-price").value = OfferPrice
+
+
             }
-        }
-    </script>
+
+          </script>
 
 
- 
 
-     
+
+
+          <script>
+            setTimeout(() => {
+
+              const data = document.getElementById("Success-message")
+
+              data.style.display = "none"
+            }, 5000)
+          </script>
+
+
+          <script>
+            function validateInput(input) {
+              const value = parseFloat(input.value);
+
+              if (isNaN(value) || value < 0) {
+                { { !--alert("Please enter a positive number."); --} }
+                input.value = ""; // Clear the input
+              }
+            }
+          </script>
+
+
+
+
+
 
         </div>
         <!-- main-panel ends -->
-          {{> admin_Footer}}
+        {{> admin_Footer}}
       </div>
       <!-- page-body-wrapper ends -->
-    
+
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
@@ -251,5 +335,6 @@
     <!-- Custom js for this page -->
     <script src="/assets_admin/js/dashboard.js"></script>
     <!-- End custom js for this page -->
-  </body>
+</body>
+
 </html>
