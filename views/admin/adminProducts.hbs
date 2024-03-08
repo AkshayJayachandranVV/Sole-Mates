@@ -168,14 +168,13 @@
                       <input type="hidden" name="oldproductname" value="{{this.productname}}">
                     </div>
                     <div class="form-group">
-                      <label class="form-control-label">Category</label>
-                      <select name="category" id="category-names">
-                        <option value="Casuals">Casuals</option>
-                        <option value="Formals">Formals</option>
-                        {{!-- <option value="Sports">Sports</option> --}}
-                        {{!-- <option value="offer testing">offer testing</option> --}}
-                      </select>
-                    </div>
+                    <label class="form-control-label">Category</label>
+                    <select class="btn btn-primary" name="category" class="form-control">
+                      {{#each ../categorydata}}
+                      <option value="{{this.category}}">{{this.category}}</option>
+                      {{/each}}
+                    </select>
+                  </div>
                     <div class="form-group">
                       <label class="form-control-label">Price</label>
                       <input type="number" id="price" name="price" min="1" placeholder="Price" class="form-control"
@@ -298,54 +297,54 @@
 
 
 
- <script>
+  <script>
     function loadImagePreviews(event, imagePreviewId) {
-        var files = event.target.files;
-        var imagePreview = document.getElementById(imagePreviewId);
+      var files = event.target.files;
+      var imagePreview = document.getElementById(imagePreviewId);
 
-        imagePreview.innerHTML = ''; // Clear previous previews
+      imagePreview.innerHTML = ''; // Clear previous previews
 
-        for (var i = 0; i < files.length; i++) {
-            var file = files[i];
-            var reader = new FileReader();
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        var reader = new FileReader();
 
-            reader.onload = function (e) {
-                var img = document.createElement('img');
-                img.src = e.target.result;
-                img.width = 100; // Adjust as needed
-                img.height = 100; // Adjust as needed
-                img.style.marginBottom = '5px'; // Adjust as needed
+        reader.onload = function (e) {
+          var img = document.createElement('img');
+          img.src = e.target.result;
+          img.width = 100; // Adjust as needed
+          img.height = 100; // Adjust as needed
+          img.style.marginBottom = '5px'; // Adjust as needed
 
-                var container = document.createElement('div');
-                container.classList.add('me-3', 'mb-3');
-                container.appendChild(img);
-                imagePreview.appendChild(container);
-            };
+          var container = document.createElement('div');
+          container.classList.add('me-3', 'mb-3');
+          container.appendChild(img);
+          imagePreview.appendChild(container);
+        };
 
-            reader.readAsDataURL(file);
-        }
+        reader.readAsDataURL(file);
+      }
     }
 
     document.getElementById('imageInput1').addEventListener('change', function (event) {
-        loadImagePreviews(event, 'imagePreview');
-        document.getElementById('scriptTag').src = 'https://cdn.crop.guide/loader/l.js?c=LXZBGM';
+      loadImagePreviews(event, 'imagePreview');
+      document.getElementById('scriptTag').src = 'https://cdn.crop.guide/loader/l.js?c=LXZBGM';
     });
 
     document.getElementById('imageInput2').addEventListener('change', function (event) {
-        loadImagePreviews(event, 'imagePreview');
-        document.getElementById('scriptTag').src = 'https://cdn.crop.guide/loader/l.js?c=LXZBGM';
+      loadImagePreviews(event, 'imagePreview');
+      document.getElementById('scriptTag').src = 'https://cdn.crop.guide/loader/l.js?c=LXZBGM';
     });
 
     document.getElementById('imageInput3').addEventListener('change', function (event) {
-        loadImagePreviews(event, 'imagePreview');
-        document.getElementById('scriptTag').src = 'https://cdn.crop.guide/loader/l.js?c=LXZBGM';
+      loadImagePreviews(event, 'imagePreview');
+      document.getElementById('scriptTag').src = 'https://cdn.crop.guide/loader/l.js?c=LXZBGM';
     });
 
     document.getElementById('imageInput4').addEventListener('change', function (event) {
-        loadImagePreviews(event, 'imagePreview');
-        document.getElementById('scriptTag').src = 'https://cdn.crop.guide/loader/l.js?c=LXZBGM';
+      loadImagePreviews(event, 'imagePreview');
+      document.getElementById('scriptTag').src = 'https://cdn.crop.guide/loader/l.js?c=LXZBGM';
     });
-</script>
+  </script>
 
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
