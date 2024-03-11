@@ -54,6 +54,34 @@
         .profile-details p {
             margin: 10px 0;
         }
+        /* Custom styling for pagination buttons */
+    .page-link {
+        color: #007bff; /* Blue color */
+        background-color: transparent;
+        border: 1px solid #007bff;
+        border-radius: 0.25rem;
+        padding: 0.375rem 0.75rem;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+            border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .page-link:hover {
+        color: #0056b3; /* Darker blue color on hover */
+        background-color: #f8f9fa; /* Light gray background on hover */
+        border-color: #007bff; /* Blue border color on hover */
+    }
+
+    .page-link:focus {
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Blue focus shadow */
+    }
+
+    .page-item.active .page-link {
+        z-index: 1;
+        color: #fff;
+        background-color: #007bff; /* Blue color for active button */
+        border-color: #007bff; /* Blue border color for active button */
+    }
+     
     </style>
 
 </head>
@@ -88,6 +116,7 @@
 
         <div class="product_image_area  ">
             <div class="container">
+                
                 <div class="table-responsive">
                     <table class="table align-middle">
                         <h2>Order Summary</h2>
@@ -122,7 +151,7 @@
                                     {{#ifEquals this.status "Payment Failure"}}
                                     <p style="color: red; font-size: 20px;">Payment Failed</p>
                                     {{else}}
-                                    <p style="color:green; font-size: 20px;">Order Placed</p>
+                                    <p style="color:green; font-size: 20px;">{{this.status}}</p>
                                     {{/ifEquals }}
                                 </td>
                                 <td>
@@ -150,17 +179,33 @@
                         {{/each}}
                     </table>
                 </div>
-
-
-
-
-
-
-
             </div>
         </div>
+        <br>
 
+        <div class="pagenation">
+            <nav aria-label="...">
+                <ul class="pagination justify-content-start"> <!-- Added justify-content-start class -->
+                    <div class="showing col col-xs-12" style="margin-left: -250px;">
+                        <span>SHOWING OF </span>
+                    </div>
 
+                    {{#if currentValue}}
+                    <li class="page-item">
+                        <a class="page-link"
+                            href="/orderhistorypagenation?previous=1&page={{currentValue}}">Previous</a>
+                    </li>
+                    {{/if}}
+                    <li class="page-item">
+                        <a class="page-link" href="/orderhistorypagenation?next=2&page={{currentValue}}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+<br>
+<br>
+<br>    
 
         <!--================End Single Product Area =================-->
 

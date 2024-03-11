@@ -42,21 +42,23 @@ const addToCart = async (req, res) => {
 
     try {
 
-        console.log("helooo to add to art")
+        console.log("helooo to add to art ---------------------------------------------------")
 
-        if (req.params.prodname) {
+        if (req.body.productId) {
 
-            console.log(req.params.prodname)
+            console.log(req.body.productId)
             console.log(req.session.username)
-            const cartCheck = await cartData.findOne({username:req.session.username, productname: req.params.prodname })
+            const cartCheck = await cartData.findOne({username:req.session.username, productname: req.body.productId })
 
             if(cartCheck){
-                res.redirect("/cart")
+                // res.redirect("/cart")
+
+                return res.json({ success: false})
 
             }
             else{
 
-            const addCart = await productData.findOne({ productname: req.params.prodname })
+            const addCart = await productData.findOne({ productname: req.body.productId })
 
 
             console.log(addCart.productname)
@@ -86,9 +88,11 @@ const addToCart = async (req, res) => {
 
             console.log("cart added succesfully")
 
-            const displayCart = await cartData.find({ username: req.session.username })
+            return res.json({ success: true})
 
-            res.redirect("/cart")
+            // const displayCart = await cartData.find({ username: req.session.username })
+
+            // res.redirect("/cart")
         }
 
         }

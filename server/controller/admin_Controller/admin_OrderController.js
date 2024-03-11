@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt")
 const productData = require("../../model/product_details")
 const catData = require("../../model/category_Model")
 const orderData=require("../../model/user_Orders")
+const walletHistory=require("../../model/wallet_Model")
 
 
 
@@ -146,6 +147,19 @@ const returnAccept=async(req,res)=>{
       await orderData.updateOne({ orderId:req.query.orderId, productname: req.query.proId },{ $set:{ status:"RETURN ACCEPTED" } })
       const orderD=await orderData.findOne({ orderId:req.query.orderId, productname: req.query.proId })
       await userData.updateOne({ username: req.session.username }, { $inc: { wallet: orderD.price }});
+      console.log(orderD.price)
+      console.log(userData)
+
+      const newWallet=new walletHistory({
+        username:req.session.username,
+        orderId:req.query.orderId,
+        date:orderD.orderdate,
+        spendmoney:orderD.totalAmount,
+        refundmoney:orderD.price,
+        status:"Return Order"
+   })
+   await newWallet.save();
+
       // await userData.updateOne({username:req.session.username },{ $set:{ wallet:orderD.price}})
       console.log(orderD.price)
       console.log(userData)

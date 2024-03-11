@@ -535,7 +535,8 @@ const resetValidationOtp = async (req, res) => {
                 phonenumber: userValue.phonenumber,
                 password: hashedpassword,
                 isAdmin: 0,
-                status: 1
+                status: 1,
+                wallet:0
                 // confirmpassword:req.body.confirmpassword
 
             })

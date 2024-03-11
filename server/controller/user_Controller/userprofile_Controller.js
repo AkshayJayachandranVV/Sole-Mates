@@ -3,6 +3,7 @@ const productData = require("../../model/product_details")
 const categoryData = require("../../model/category_Model")
 const addressData = require("../../model/user_address")
 const orderData = require("../../model/user_Orders")
+const walletHistory=require("../../model/wallet_Model")
 const expressAsyncHandler = require("express-async-handler");
 const dotenv = require("dotenv");
 const nodemailer = require("nodemailer");
@@ -381,6 +382,21 @@ const profileYourOrders = async (req, res) => {
   try {
     console.log(req.session.username)
 
+    let currentValue=req.query.page || 0
+
+    if(req.query.next){
+        currentValue++
+
+    }
+
+    if(req.query.previous){
+        currentValue--
+
+    }
+
+    // const orderList=await orderData.find({}).skip(currentValue*6).limit(6).sort({_id:-1})
+
+
     // const userOrder=await orderData.find({username:req.session.username})
 
   
@@ -388,6 +404,8 @@ const profileYourOrders = async (req, res) => {
 
   // console.log(userchechdata)
 
+  // 
+  
   const orderAggregate = await orderData.aggregate([
     { $match: { username: req.session.username, totalAmount: { $exists: true } } }, // Filter documents where totalAmount exists
     {
@@ -395,17 +413,17 @@ const profileYourOrders = async (req, res) => {
         _id: {
           orderId: "$orderId",
           date: "$orderdate",
-          totalAmount:"$totalAmount",
-          status:"$status" 
+          totalAmount: "$totalAmount",
+          status: "$status"
         },
         price: { $sum: "$price" },
-        quantity: { $sum: "$quantity" },
-       
+        quantity: { $sum: "$quantity" }
       }
     },
-    { $sort: { "_id.date": -1 } } // Sort based on the date field within the _id object in ascending order
+    { $sort: { "_id.date": -1 } }, // Sort based on the date field within the _id object in descending order
+    { $skip: (currentValue ) * 6 }, // Skip documents based on the page number
+    { $limit: 6 } // Limit the number of documents per page
   ]);
-  
 
   
 console.log(orderAggregate + " tttttttttttttttttttttttttttttttttttt")
@@ -439,7 +457,7 @@ console.log(orderAggregate + " tttttttttttttttttttttttttttttttttttt")
 
     console.log(orderAggregate)
 
-    res.render("yourOrders", { destructuredData })
+    res.render("yourOrders", { destructuredData,currentValue })
 
   }
   catch (e) {
@@ -452,15 +470,25 @@ console.log(orderAggregate + " tttttttttttttttttttttttttttttttttttt")
 const userOrderDetailsPage = async (req, res) => {
   try {
 
+
+    console.log("enteredd oro the userdetaisl page")
     console.log(req.query.orderId)
     // console.log(req.query.proId)
 
     let productOrder = await orderData.find({username:req.session.username, orderId: req.query.orderId })
     console.log(productOrder)
+    console.log(productOrder[0].coupon)
+    let couponAmount=productOrder[0].coupon
+    if(!couponAmount){
+      couponAmount=0
+    }
+    let walletAmount=((productOrder[0].price*productOrder[0].quantity)-productOrder[0].coupon)-productOrder[0].totalAmount
+    if(!walletAmount){
+      walletAmount=0
+    }
+    console.log(walletAmount)
 
-    res.render("userOrderDetails", { productOrder })
-
-
+    res.render("userOrderDetails", { productOrder,couponAmount,walletAmount })
 
   }
   catch (e) {
@@ -511,20 +539,70 @@ const profilefetchAddress=async(req,res)=>{
 
 
 
-//EDIT THE USER DETAILS PAGE
+//Wallet History
 
-// const updateProfile=async(req,res)=>{
+const displayWallet=async(req,res)=>{
+    try{
+      console.log(" entered t  the displayWallet")
+      console.log(req.session.username)
+      const walletMoney=await user.findOne({username:req.session.username})
+      let wallet=walletMoney.wallet
+      const walletData=await walletHistory.find({username:req.session.username}).sort({_id:-1})
+      console.log(walletData)
+      res.render("walletHistory",{walletData,wallet});
 
-//     try{
+    }
+    catch(e)
+    {
+        console.log("Problem withe displayWallet")
+        res.redirect("/error")
+    }
 
-//     }
-//     catch(e)
-//     {
-//         console.log("Problem withe ")
-//     }
+
+}
 
 
+
+// const searchOrders=async(req,res)=>{
+//   try{
+//     console.log("search oreders")
+//     console.log(req.body.orders)
+//     if (req.body.orders) {
+
+//       const filterOrders = req.body.orders;
+//       const regex = new RegExp(`${filterOrders}`, 'i');
+  
+//       const orderAggregate = await orderData.aggregate([
+//           { 
+//               $match: { 
+//                   username: req.session.username,
+//                   orderId: { $regex: regex }, // Using $regex to match orderId with the regex pattern
+//                   totalAmount: { $exists: true } 
+//               } 
+//           },
+//           {
+//               $group: {
+//                   _id: {
+//                       orderId: "$orderId",
+//                       date: "$orderdate",
+//                       totalAmount: "$totalAmount",
+//                       status: "$status" 
+//                   },
+//                   price: { $sum: "$price" },
+//                   quantity: { $sum: "$quantity" }
+//               }
+//           },
+//           { $sort: { "_id.date": -1 } } // Sort based on the date field within the _id object in descending order
+//       ]);
+//   }
+  
+
+//   }catch(e){
+//     console.log("problem wiuth the searchOrders")
+//   }
 // }
+
+
 
 
 
@@ -541,5 +619,7 @@ module.exports = {
   profileYourOrders,
   userOrderDetailsPage,
   profilefetchAddress,
-  displayChangePassword
+  displayChangePassword,
+  displayWallet,
+ 
 }

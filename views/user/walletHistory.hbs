@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>SOLE MATES</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/assets_user/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets_user/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets_user/css/flaticon.css">
+    <link rel="stylesheet" href="/assets_user/css/slicknav.css">
+    <link rel="stylesheet" href="/assets_user/css/animate.min.css">
+    <link rel="stylesheet" href="/assets_user/css/magnific-popup.css">
+    <link rel="stylesheet" href="/assets_user/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/assets_user/css/themify-icons.css">
+    <link rel="stylesheet" href="/assets_user/css/slick.css">
+    <link rel="stylesheet" href="/assets_user/css/nice-select.css">
+    <link rel="stylesheet" href="/assets_user/css/style.css">
+
+
+
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .profile-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        .profile-details {
+            text-align: center;
+        }
+
+        .profile-details p {
+            margin: 10px 0;
+        }
+        .wallet-icon {
+            font-size: 44px; /* Adjust the size of the wallet icon */
+            margin-right: 10px; /* Add some spacing between the icon and text */
+        }
+
+        .wallet-balance {
+            font-size: 38px; /* Adjust the font size of the wallet balance text */
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+
+
+<body>
+
+    {{> user_Header}}
+
+    <main>
+        <!-- Hero Area Start-->
+        <div class="slider-area ">
+            <div class="single-slider slider-height2 d-flex align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap text-center">
+                                <h2>Wallet History</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Hero Area End-->
+
+
+        <!--================Single Product Area =================-->
+
+
+        <div class="product_image_area  ">
+            <div class="container">
+        <p class="wallet-balance"><i class="fas fa-wallet wallet-icon"></i> Wallet: &#8377;{{wallet}}</p>
+        <br>
+        <br>
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>Order Id</th>
+                                <th>Date</th>
+                                <th>Spend Money</th>
+                                <th>Refunded Money</th>
+                                <th>Status</th>
+                                <th>Order Details</th>
+                            </tr>
+                        </thead>
+
+                        {{#each walletData}}
+                        <tbody>
+                            <tr>
+                                <td>{{this.orderId}}</td>
+                                <td>{{formatDate this.date}}</td>
+                                <td>{{this.spendmoney}}</td>
+                                <td>{{this.spendmoney}}</td>
+                                <td>{{this.status}}</td>
+                                <td>
+                                    <a class="btn btn-info" href="/userorderdetails?orderId={{this.orderId}}">Order
+                                        Details</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        {{/each}}
+
+                    </table>
+                    {{#if walletData}}
+                    {{else}}
+                    <h3 style="color: red;">There is no any Wallet Transaction for You</h3>
+                    {{/if}}
+                </div>
+                <br>
+                <br>
+                <a class="btn btn-danger ml-5" style="width: 250px;" href="/profile">Continue</a>
+            </div>
+        </div>
+
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <!--================End Single Product Area =================-->
+
+
+        <!-- subscribe part here -->
+        <section class="subscribe_part section_padding">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="subscribe_part_content">
+                            <h2>Get promotions & updates!</h2>
+                            <p>Seamlessly empower fully researched growth strategies and interoperable internal or
+                                “organic” sources credibly innovate granular internal .</p>
+                            <div class="subscribe_form">
+                                <input type="email" placeholder="Enter your mail">
+                                <a href="#" class="btn_1">Subscribe</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- subscribe part end -->
+    </main>
+
+
+    {{> user_Footer}}
+
+
+
+    <!--? Search model Begin -->
+    <div class="search-model-box">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-btn">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Searching key.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search model end -->
+
+    <!-- JS here -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets_user/js/vendor/modernizr-3.5.0.min.js"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="/assets_user/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="/assets_user/js/popper.min.js"></script>
+    <script src="/assets_user/js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="/assets_user/js/jquery.slicknav.min.js"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="/assets_user/js/owl.carousel.min.js"></script>
+    <script src="/assets_user/js/slick.min.js"></script>
+
+    <!-- One Page, Animated-HeadLin -->
+    <script src="/assets_user/js/wow.min.js"></script>
+    <script src="/assets_user/js/animated.headline.js"></script>
+    <script src="/assets_user/js/jquery.magnific-popup.js"></script>
+
+    <!-- Scroll up, nice-select, sticky -->
+    <script src="/assets_user/js/jquery.scrollUp.min.js"></script>
+    <script src="/assets_user/js/jquery.nice-select.min.js"></script>
+    <script src="/assets_user/js/jquery.sticky.js"></script>
+
+    <!-- contact js -->
+    <script src="/assets_user/js/contact.js"></script>
+    <script src="/assets_user/js/jquery.form.js"></script>
+    <script src="/assets_user/js/jquery.validate.min.js"></script>
+    <script src="/assets_user/js/mail-script.js"></script>
+    <script src="/assets_user/js/jquery.ajaxchimp.min.js"></script>
+
+    <!-- Jquery Plugins, main Jquery -->
+    <script src="/assets_user/js/plugins.js"></script>
+    <script src="/assets_user/js/main.js"></script>
+
+    <!-- swiper js -->
+    <script src="/assets_user/js/swiper.min.js"></script>
+    <!-- swiper js -->
+    <script src="/assets_user/js/mixitup.min.js"></script>
+    <script src="/assets_user/js/jquery.counterup.min.js"></script>
+    <script src="/assets_user/js/waypoints.min.js"></script>
+
+</body>
+
+</html>

@@ -83,6 +83,10 @@ const userOrder=mongoose.Schema({
     totalAmount:{
         type:Number,
         require:true
+    },
+    coupon:{
+        type:Number,
+        require:true
     }
 
 })

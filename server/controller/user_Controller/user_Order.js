@@ -5,6 +5,7 @@ const addressData = require("../../model/user_address")
 const cartData = require("../../model/user_cart")
 const orderData = require("../../model/user_Orders")
 const CouponData = require("../../model/coupon_Model")
+const walletHistory = require("../../model/wallet_Model")
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
@@ -25,7 +26,7 @@ const displayCheckout = async (req, res) => {
       console.log("entered limit if")
       Limit = "true"
     }
-    req.session.payCheck=null
+    req.session.payCheck = null
 
     // console.log(userAdd)
     res.render("checkout", { userAdd, Limit })
@@ -306,6 +307,7 @@ const paymentFailure = async (req, res) => {
     let otpValue = orderId()
     console.log(otpValue)
     let otp = otpValue.OTP
+    let couponPrice
     let couponAmount
     let amount
     req.session.orderId = otpValue.OTP
@@ -349,6 +351,12 @@ const paymentFailure = async (req, res) => {
 
       const checkCoupon = await CouponData.findOne({ couponId: req.session.couponId })
       console.log(totalprice[0].total + " value money")
+
+      if (checkCoupon) {
+        couponPrice = checkCoupon.amount
+      } else {
+        couponPrice = 0
+      }
 
       if (checkCoupon) {
         console.log('coupon applied for this products')
@@ -407,6 +415,12 @@ const paymentFailure = async (req, res) => {
 
     } else {
       amount = req.session.checked
+      const checkCoupon = await CouponData.findOne({ couponId: req.session.couponId })
+      if (checkCoupon) {
+        couponPrice = checkCoupon.amount
+      } else {
+        couponPrice = 0
+      }
     }
 
     console.log("checking the useraddress in the session")
@@ -475,7 +489,8 @@ const paymentFailure = async (req, res) => {
           cancel: 0,
           category: cartProduct[i].category,
           cod: 0,
-          totalAmount: amount
+          totalAmount: amount,
+          coupon: couponPrice
         })
         await newOrder.save();
 
@@ -518,7 +533,8 @@ const paymentFailure = async (req, res) => {
           cancel: 0,
           category: cartProduct[i].category,
           cod: 1,
-          totalAmount: amount
+          totalAmount: amount,
+          coupon: couponPrice
         })
         await newOrder.save();
 
@@ -583,6 +599,7 @@ const cashOnDelivery = async (req, res) => {
     console.log(req.session.checked + " ?????????????????????????????????????????????????????????????????????????")
     const ogwallet = await user.findOne({ email: req.session.email })
     console.log(ogwallet)
+    let couponPrice
     let otpValue = orderId()
     console.log(otpValue)
     let otp = otpValue.OTP
@@ -630,6 +647,12 @@ const cashOnDelivery = async (req, res) => {
 
       const checkCoupon = await CouponData.findOne({ couponId: req.session.couponId })
       console.log(totalprice[0].total + " value money")
+      if (checkCoupon) {
+        couponPrice = checkCoupon.amount
+      } else {
+        couponPrice = 0
+      }
+
 
       if (checkCoupon) {
         console.log('coupon applied for this products')
@@ -688,9 +711,16 @@ const cashOnDelivery = async (req, res) => {
 
     } else {
       amount = req.session.checked
+      const checkCoupon = await CouponData.findOne({ couponId: req.session.couponId })
+      if (checkCoupon) {
+        couponPrice = checkCoupon.amount
+      } else {
+        couponPrice = 0
+      }
+
     }
 
-    req.session.payCheck=null
+    req.session.payCheck = null
 
     console.log("checking the useraddress in the session")
     console.log(req.session.userAddress)
@@ -758,7 +788,8 @@ const cashOnDelivery = async (req, res) => {
           cancel: 0,
           category: cartProduct[i].category,
           cod: 0,
-          totalAmount: amount
+          totalAmount: amount,
+          coupon: couponPrice
         })
         await newOrder.save();
 
@@ -800,7 +831,8 @@ const cashOnDelivery = async (req, res) => {
           cancel: 0,
           category: cartProduct[i].category,
           cod: 1,
-          totalAmount: amount
+          totalAmount: amount,
+          coupon: couponPrice
         })
         await newOrder.save();
 
@@ -833,7 +865,6 @@ const cashOnDelivery = async (req, res) => {
     console.log("problem withe the cashOnDekivery" + e)
     res.redirect("/error")
   }
-
 
 
 }
@@ -1012,7 +1043,6 @@ const cashOnDelivery = async (req, res) => {
 //   }
 
 
-
 // }
 
 
@@ -1030,6 +1060,16 @@ const cancelOrder = async (req, res) => {
     // await userData.updateOne({username:req.session.username },{ $set:{ wallet:orderD.price}})
     if (orderD.cod == 0) {
       await user.updateOne({ username: req.session.username }, { $inc: { wallet: orderD.totalAmount } });
+
+      const newWallet = new walletHistory({
+        username: req.session.username,
+        orderId: req.query.orderId,
+        date: orderD.orderdate,
+        spendmoney: orderD.totalAmount,
+        refundmoney: orderD.totalAmount,
+        status: "Order Cancelled"
+      })
+      await newWallet.save();
     }
 
     res.redirect("/userorders")
@@ -1418,7 +1458,6 @@ const walletRemove = async (req, res) => {
     res.redirect("/error")
   }
 }
-
 
 
 

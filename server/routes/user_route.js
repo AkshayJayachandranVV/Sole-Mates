@@ -125,7 +125,7 @@ route.get("/hightolowcatpagenation",userProduct.HightoLow)
 
 //CART 
 route.get("/cart",addCart.userAuthorize,addCart.cartDisplay)
-route.get("/addtocart/:prodname",middleware.userAuthorizeCheck,addCart.addToCart)
+route.post("/addtocart",middleware.userAuthorizeCheck,addCart.addToCart)
 route.get("/decrementquantity/:proId",addCart.decrementData)
 route.get("/incrementquantity/:proId",addCart.incrementData)
 route.get("/removecart/:proId",middleware.userAuthorizeCheck,addCart.cartRemoving)
@@ -151,16 +151,13 @@ route.get("/userorderdetails",middleware.userAuthorizeCheck,profile.userOrderDet
 route.get("/addaddress",middleware.userAuthorizeCheck,profile.addAddress)
 route.post("/addaddress",profile.storeAddress)
 route.post("/changepassword",profile.otpValidationChangePass)
-
-
 route.get("/profileresetpass",middleware.userAuthorizeCheck,profile.displayChangePassword)
 route.post("/profileresetpass",middleware.userAuthorizeCheck,profile.newPasswordProfile)
-
-
+route.get("/wallethistory",middleware.userAuthorizeCheck,profile.displayWallet)
 route.post("/profile-fetchpassword",profile.profilefetchAddress)
+route.get("/orderhistorypagenation",middleware.userAuthorizeCheck,profile.profileYourOrders)
 
-
-
+// route.post("/searchOrder",middleware.userAuthorizeCheck,profile.searchOrders)
 
 
 

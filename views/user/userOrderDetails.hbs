@@ -114,7 +114,94 @@
         .coupon-div {
             margin-right: 290px;
         }
+
+      .success {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    width: 320px;
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    background: #E0F8C6; /* Brighter background color */
+    border-radius: 8px;
+    box-shadow: 0px 0px 5px -3px #111;
+}
+
+.success__icon {
+    width: 20px;
+    height: 20px;
+    transform: translateY(-2px);
+    margin-right: 8px;
+}
+
+.success__icon path {
+    fill: #A3D86E; /* Brighter fill color */
+}
+
+.success__title {
+    font-weight: 500;
+    font-size: 14px;
+    color: #3C8142; /* Brighter text color */
+}
+
+.success__close {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.success__close path {
+    fill: #3C8142; /* Brighter close icon color */
+}
+
+
+        .info {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            width: 320px;
+            padding: 12px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: start;
+            background: #D7F1FD;
+            border-radius: 8px;
+            border: 1px solid #509AF8;
+            box-shadow: 0px 0px 5px -3px #111;
+        }
+
+        .info__icon {
+            width: 20px;
+            height: 20px;
+            transform: translateY(-2px);
+            margin-right: 8px;
+        }
+
+        .info__icon path {
+            fill: #509AF8;
+        }
+
+        .info__title {
+            font-weight: 500;
+            font-size: 14px;
+            color: #0C2A75;
+        }
+
+        .info__close {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        .info__close path {
+            fill: #0C2A75;
+        }
     </style>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
 
 </head>
 
@@ -149,15 +236,37 @@
 
 
         <div class="product_image_area  ">
-
             <div class="container">
+                <div style="margin-top: -120px;">
+                    <div class="success">
+                        <div class="success__icon">
+                            <!-- Font Awesome coupon icon -->
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        <div class="success__title">
+                            <h5>Coupon Applied:{{couponAmount}} </h5>
+                        </div>
+                        <div class="success__close"></div>
+                    </div>
+
+                    <br>
+                    <br>
+                    <div class="info" style="margin-left: 400px;margin-top: -105px;">
+                        <div class="info__icon">
+                            <!-- Font Awesome wallet icon -->
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="info__title">
+                            <h5>Wallet Applied:{{walletAmount}}</h5>
+                        </div>
+                        <div class="info__close"></div>
+                    </div>
+                    <br>
+                    <br>
+                </div>
 
 
                 <div class="container mt-5">
-
-
-
-
 
                     <h2>Order Details</h2>
 
@@ -185,6 +294,7 @@
                                         <li class="list-group-item">Quantity:{{this.quantity }} </li>
                                         <!-- Add more items as needed -->
                                     </ul>
+                                    
                                     <h5 class="mt-4">Total Price: {{this.price}}</h5>
                                 </div>
                                 <div>
@@ -195,9 +305,13 @@
                                     {{#ifEquals this.status "CANCELLED"}}
                                     <h4 class="cancel-p" style="color: red;">Order Cancelled</h4>
                                     {{else}}
+                                    {{#ifEquals this.status "RETURN ACCEPTED"}}
+                                    {{else}}
                                     <button class="btn btn-primary ml-200"><a
                                             href="/cancelorder?orderId={{this.orderId}}&proId={{this.productname}}"
                                             onclick="return confirm('Are you sure you want to Cancel')">Cancel</a></button>
+                                    {{/ifEquals}}
+
                                     {{/ifEquals }}
                                     {{/ifNotEquals }}
 
@@ -208,6 +322,7 @@
                                     {{#ifEquals this.status "RETURN ACCEPTED"}}
                                     <h4 class="cancel-p" style="color:green;margin-left:340px;margin-top:-40px">RETURN
                                         ACCEPTED</h4>
+
                                     {{else ifEquals this.status "RETURN REJECTED"}}
                                     <h4 class="return-p" style="color: red;">RETURN REJECTED</h4>
                                     {{!-- <button o class="btn btn-primary ml-40">Return Order</button> --}}

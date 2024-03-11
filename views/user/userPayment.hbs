@@ -153,10 +153,135 @@
         .coupon-div {
             margin-right: 290px;
         }
-        #walletCode{
-             height: 60px;
+
+        #walletCode {
+            height: 60px;
             width: 140px;
 
+        }
+
+        .success {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            width: 320px;
+            padding: 12px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: start;
+            background: #EDFBD8;
+            border-radius: 8px;
+            box-shadow: 0px 0px 5px -3px #111;
+        }
+
+        .success__icon {
+            width: 20px;
+            height: 20px;
+            transform: translateY(-2px);
+            margin-right: 8px;
+        }
+
+        .success__icon path {
+            fill: #84D65A;
+        }
+
+        .success__title {
+            font-weight: 500;
+            font-size: 14px;
+            color: #2B641E;
+        }
+
+        .success__close {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        .success__close path {
+            fill: #2B641E;
+        }
+
+        .info {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            width: 320px;
+            padding: 12px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: start;
+            background: #D7F1FD;
+            border-radius: 8px;
+            border: 1px solid #509AF8;
+            box-shadow: 0px 0px 5px -3px #111;
+        }
+
+        .info__icon {
+            width: 20px;
+            height: 20px;
+            transform: translateY(-2px);
+            margin-right: 8px;
+        }
+
+        .info__icon path {
+            fill: #509AF8;
+        }
+
+        .info__title {
+            font-weight: 500;
+            font-size: 14px;
+            color: #0C2A75;
+        }
+
+        .info__close {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        .info__close path {
+            fill: #0C2A75;
+        }
+
+        .error {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            width: 320px;
+            padding: 12px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: start;
+            background: #FCE8DB;
+            border-radius: 8px;
+            box-shadow: 0px 0px 5px -3px #111;
+        }
+
+        .error__icon {
+            width: 20px;
+            height: 20px;
+            transform: translateY(-2px);
+            margin-right: 8px;
+        }
+
+        .error__icon path {
+            fill: #EF665B;
+        }
+
+        .error__title {
+            font-weight: 500;
+            font-size: 14px;
+            color: #71192F;
+        }
+
+        .error__close {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        .error__close path {
+            fill: #71192F;
         }
     </style>
 
@@ -192,6 +317,52 @@
                     <p id="couponmsg"></p>
                     <button type="button" onclick="popupClose()">OK</button>
                 </div>
+                <div style="margin-top: -120px;">
+                    <div class="success">
+                        <div class="success__icon">
+                            <svg fill="none" height="24" viewBox="0 0 24 24" width="24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path clip-rule="evenodd"
+                                    d="m12 1c-6.075 0-11 4.925-11 11s4.925 11 11 11 11-4.925 11-11-4.925-11-11-11zm4.768 9.14c.0878-.1004.1546-.21726.1966-.34383.0419-.12657.0581-.26026.0477-.39319-.0105-.13293-.0475-.26242-.1087-.38085-.0613-.11844-.1456-.22342-.2481-.30879-.1024-.08536-.2209-.14938-.3484-.18828s-.2616-.0519-.3942-.03823c-.1327.01366-.2612.05372-.3782.1178-.1169.06409-.2198.15091-.3027.25537l-4.3 5.159-2.225-2.226c-.1886-.1822-.4412-.283-.7034-.2807s-.51301.1075-.69842.2929-.29058.4362-.29285.6984c-.00228.2622.09851.5148.28067.7034l3 3c.0983.0982.2159.1748.3454.2251.1295.0502.2681.0729.4069.0665.1387-.0063.2747-.0414.3991-.1032.1244-.0617.2347-.1487.3236-.2554z"
+                                    fill="#393a37" fill-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="success__title">
+                            <h5>Coupon Code:Summer Sale</h5>
+                        </div>
+                        <div class="success__close"></div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="info">
+                        <div class="success__icon">
+                            <svg fill="none" height="24" viewBox="0 0 24 24" width="24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path clip-rule="evenodd"
+                                    d="m12 1c-6.075 0-11 4.925-11 11s4.925 11 11 11 11-4.925 11-11-4.925-11-11-11zm4.768 9.14c.0878-.1004.1546-.21726.1966-.34383.0419-.12657.0581-.26026.0477-.39319-.0105-.13293-.0475-.26242-.1087-.38085-.0613-.11844-.1456-.22342-.2481-.30879-.1024-.08536-.2209-.14938-.3484-.18828s-.2616-.0519-.3942-.03823c-.1327.01366-.2612.05372-.3782.1178-.1169.06409-.2198.15091-.3027.25537l-4.3 5.159-2.225-2.226c-.1886-.1822-.4412-.283-.7034-.2807s-.51301.1075-.69842.2929-.29058.4362-.29285.6984c-.00228.2622.09851.5148.28067.7034l3 3c.0983.0982.2159.1748.3454.2251.1295.0502.2681.0729.4069.0665.1387-.0063.2747-.0414.3991-.1032.1244-.0617.2347-.1487.3236-.2554z"
+                                    fill="#393a37" fill-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="info__title">
+                            <h5>Coupon Code:Mega Sale</h5>
+                        </div>
+                        <div class="info__close"></div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="error">
+                        <div class="success__icon">
+                            <svg fill="none" height="24" viewBox="0 0 24 24" width="24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path clip-rule="evenodd"
+                                    d="m12 1c-6.075 0-11 4.925-11 11s4.925 11 11 11 11-4.925 11-11-4.925-11-11-11zm4.768 9.14c.0878-.1004.1546-.21726.1966-.34383.0419-.12657.0581-.26026.0477-.39319-.0105-.13293-.0475-.26242-.1087-.38085-.0613-.11844-.1456-.22342-.2481-.30879-.1024-.08536-.2209-.14938-.3484-.18828s-.2616-.0519-.3942-.03823c-.1327.01366-.2612.05372-.3782.1178-.1169.06409-.2198.15091-.3027.25537l-4.3 5.159-2.225-2.226c-.1886-.1822-.4412-.283-.7034-.2807s-.51301.1075-.69842.2929-.29058.4362-.29285.6984c-.00228.2622.09851.5148.28067.7034l3 3c.0983.0982.2159.1748.3454.2251.1295.0502.2681.0729.4069.0665.1387-.0063.2747-.0414.3991-.1032.1244-.0617.2347-.1487.3236-.2554z"
+                                    fill="#393a37" fill-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="error__title"> <h5>Coupon Code:Holi Sale</h5></div>
+                        <div class="error__close"></div>
+                    </div>
+                </div>
                 <div class="container mt-5">
                     <h2 class="mb-4">Shipping Details</h2>
                     <hr>
@@ -220,70 +391,72 @@
                             {{!-- <input type="text" aria-label="Last name" class="form-control"> --}}
                         </div>
                         <div style="margin-top: 10%; margin-left: -610px;">
-                        <div class="input-group coupon-div">
-                            <span class="input-group-text">Apply For Wallet</span>
-                            <input type="text" aria-label="First name" class="form-control" name="coupon" value="{{walletAmount}}"
-                                id="walletCode" readonly>
+                            <div class="input-group coupon-div">
+                                <span class="input-group-text">Apply For Wallet</span>
+                                <input type="text" aria-label="First name" class="form-control" name="coupon"
+                                    value="{{walletAmount}}" id="walletCode" readonly>
                                 {{#if walletAmount}}
                                 <button onclick="checkWallet()" class="btn btn-warning applyCoupon"
-                                id="applyWallets">Apply</button>
+                                    id="applyWallets">Apply</button>
                                 {{else}}
-                                <button onclick="checkWallet()" class="btn btn-warning applyCoupon" id="applyWallets" disabled>Apply</button>
+                                <button onclick="checkWallet()" class="btn btn-warning applyCoupon" id="applyWallets"
+                                    disabled>Apply</button>
                                 {{/if}}
-                          
-                            <button onclick="removeWallet()" class="btn btn-warning removeCoupon"
-                                id="removeWallets">Remove</button>
+
+                                <button onclick="removeWallet()" class="btn btn-warning removeCoupon"
+                                    id="removeWallets">Remove</button>
+                            </div>
                         </div>
                     </div>
+
                 </div>
-
-            </div>
-            <h4 style="color: green;">Wallet:<p style="" id="wallet-amount" >{{walletAmount}}</p></h4>
-
-            <br>
-            <br>
-
-            <h4>Product Details</h4>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Product Name</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each cart}}
-                    <tr>
-                        <td>{{this.productname}}</td>
-
-                        <td>{{this.quantity}}</td>
-                        <td>{{this.price}}</td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-            <hr>
-
-            <div class="mt-3">
-                <h4 style="color: green;" id="couponInform"></h4>
-                <h4 style="margin-left: 70%;">Total : Rs. <p style="font-size: 28px;" id="total-price">
-                        {{totalValue}}</p>
+                <h4 style="color: green;">Wallet:<p style="" id="wallet-amount">{{walletAmount}}</p>
                 </h4>
-                <p style="margin-left: 780px;"><del style="font-size: 26px;" id="orginal-price"></del></p>
 
-                </h4>
+                <br>
+                <br>
+
+                <h4>Product Details</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each cart}}
+                        <tr>
+                            <td>{{this.productname}}</td>
+
+                            <td>{{this.quantity}}</td>
+                            <td>{{this.price}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
                 <hr>
-                <!-- Payment buttons -->
-                <p id="cartotal" hidden>{{userin}}</p>
+
                 <div class="mt-3">
-                    <a href="/cod" class="btn btn-primary">COD Payment</a>
+                    <h4 style="color: green;" id="couponInform"></h4>
+                    <h4 style="margin-left: 70%;">Total : Rs. <p style="font-size: 28px;" id="total-price">
+                            {{totalValue}}</p>
+                    </h4>
+                    <p style="margin-left: 780px;"><del style="font-size: 26px;" id="orginal-price"></del></p>
 
-                    <button class="btn btn-primary pay">Online
-                        Payment</button>
+                    </h4>
+                    <hr>
+                    <!-- Payment buttons -->
+                    <p id="cartotal" hidden>{{userin}}</p>
+                    <div class="mt-3">
+                        <a href="/cod" class="btn btn-primary">COD Payment</a>
+
+                        <button class="btn btn-primary pay">Online
+                            Payment</button>
+                    </div>
+
                 </div>
-
-            </div>
             </div>
 
             </div>
@@ -356,9 +529,9 @@
         function removeWallet() {
             console.log("hyyy removeWallet");
 
-            
-              let total = document.getElementById("orginal-price").innerText
-                console.log(total)
+
+            let total = document.getElementById("orginal-price").innerText
+            console.log(total)
 
             fetch('/removewallet', {
                 method: 'POST',
@@ -366,7 +539,7 @@
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    price:total
+                    price: total
                 }),
             })
                 .then(response => {
@@ -377,18 +550,18 @@
                 })
                 .then(data => {
                     if (data.success) {
-                          console.log("entred into the data succes removewallet")
+                        console.log("entred into the data succes removewallet")
                         console.log(data.msg)
                         const apply = document.getElementById('applyWallets')
                         const remove = document.getElementById('removeWallets')
                         remove.classList.add('removeCoupon')
                         console.log(apply)
                         apply.classList.remove('removeCoupon')
-                        document.getElementById("total-price").innerHTML = `${data.removeWallet}`;           
-                         document.getElementById("wallet-amount").innerHTML = `${data.wallet}`;
+                        document.getElementById("total-price").innerHTML = `${data.removeWallet}`;
+                        document.getElementById("wallet-amount").innerHTML = `${data.wallet}`;
                         document.getElementById("orginal-price").style.display = "none";
-                         document.getElementById("walletCode").value = `${data.wallet}`;
-                   
+                        document.getElementById("walletCode").value = `${data.wallet}`;
+
                     } else {
                         // Handle error case if needed
                         //pop.classList.add("popupOpen");
@@ -408,7 +581,7 @@
 
 
 
-  
+
 
 
     <script>
@@ -424,10 +597,10 @@
             console.log("hyyy checkWallet");
 
             let walletAmount = document.getElementById("wallet-amount").innerText;
-            
+
             console.log(walletAmount);
-              let total = document.getElementById("total-price").innerText
-                console.log(total)
+            let total = document.getElementById("total-price").innerText
+            console.log(total)
 
             fetch('/applywallet', {
                 method: 'POST',
@@ -436,7 +609,7 @@
                 },
                 body: JSON.stringify({
                     wallet: walletAmount,
-                    price:total
+                    price: total
                 }),
             })
                 .then(response => {
@@ -457,7 +630,7 @@
                         //document.getElementById("couponInform").innerHTML = `${data.inform}`;
                         document.getElementById("orginal-price").innerHTML = `${data.ogamount}`;
                         document.getElementById("wallet-amount").innerHTML = `${data.wallet}`;
-                         document.getElementById("walletCode").value = `${data.wallet}`;
+                        document.getElementById("walletCode").value = `${data.wallet}`;
                     } else {
                         // Handle error case if needed
                         //pop.classList.add("popupOpen");
@@ -476,7 +649,7 @@
     </script>
 
 
-    
+
 
     <script>
         let total = document.getElementById("total-price").innerText
@@ -511,12 +684,12 @@
                         remove.classList.add('removeCoupon')
                         console.log(apply)
                         apply.classList.remove('removeCoupon')
-                         document.getElementById("couponmsg").innerHTML = `${data.msg}`;
+                        document.getElementById("couponmsg").innerHTML = `${data.msg}`;
                         document.getElementById("total-price").innerHTML = `${data.removeTotal}`;
                         document.getElementById("orginal-price").style.display = "none";
                     } else {
                         // Handle error case if needed
-                          console.log(data);
+                        console.log(data);
                         console.log("error with data in removeCoupon")
                     }
                 })
@@ -563,11 +736,11 @@
                 .then(data => {
                     if (data.success) {
 
-                          pop.classList.add("popupOpen")
-                          
+                        pop.classList.add("popupOpen")
+
                         const apply = document.getElementById('applyCoupons');
                         const remove = document.getElementById('removeCoupons');
-                       remove.classList.remove('removeCoupon');
+                        remove.classList.remove('removeCoupon');
                         apply.classList.add('removeCoupon');// Assuming this class name should be applied here
                         document.getElementById("orginal-price").style.display = "inline";
                         document.getElementById("total-price").innerHTML = `${data.cost}`;
@@ -593,7 +766,7 @@
         }
 
     </script>
-    
+
 
 
 
@@ -653,7 +826,7 @@
                         };
                         var razorpayObject = new Razorpay(options);
                         razorpayObject.on('payment.failed', function (response) {
-                           window.open("/paymentfailure", "_self")
+                            window.open("/paymentfailure", "_self")
                             alert("Payment Failed");
                         });
                         razorpayObject.open();

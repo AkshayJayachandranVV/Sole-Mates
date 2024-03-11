@@ -127,7 +127,13 @@
                                         <a href="/productdetails/{{this.productname}}"> <img
                                                 src="{{this.imagepath.[0]}}" alt="" class="h-50"></a>
                                         <div class="img-cap">
-                                            <span><a href="/addtocart/{{this.productname}}">Add to cart</a></span>
+                                          <span><button type="button" style="background-color: #f81f1f; border: none;" onclick="addProductToCart('{{this.productname}}')">Add to cart</button></span>
+
+                                           
+                                            {{!-- <button class="add-to-cart" type="button"
+                                                onclick="addProductToCart('{{this.productname}}')">
+                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                            </button> --}}
                                         </div>
                                         <div class="favorit-items">
 
@@ -139,12 +145,12 @@
                                         <h3><a href="/productdetails/{{this.productname}}">{{this.productname}}</a></h3>
                                         {{!-- <span>{{this.price}}</span> --}}
                                         {{#ifEquals this.offerprice this.price}}
-                                           <span style="font-size: 26px;" class="price">Rs.{{this.price}}</span>
+                                        <span style="font-size: 26px;" class="price">Rs.{{this.price}}</span>
                                         {{else}}
-                                         <span style="font-size: 26px;" class="price">Rs.{{this.offerprice}}</span>
+                                        <span style="font-size: 26px;" class="price">Rs.{{this.offerprice}}</span>
                                         <span style="margin-left: 15px;"><del style="font-size: 20px;"
-                                         id="orginal-price">{{this.price}}</del></span>
-                                       
+                                                id="orginal-price">{{this.price}}</del></span>
+
                                         {{/ifEquals}}
                                     </div>
                                 </div>
@@ -339,6 +345,66 @@
     <!-- Search model end -->
 
     <!-- JS here -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Use fetch to update the quantity in the database
+        function addProductToCart(productId) {
+
+            console.log(productId)
+            fetch('/addtocart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    productId: productId,
+                }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+
+                    if (data.success) {
+
+                        function callFun() {
+                            Swal.fire({
+                                icon: "success",
+                                text: "Product added to cart",
+
+                            });
+                        }
+                        callFun()
+
+
+                    } else {
+                         function callFun() {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Product Already Exist",
+
+                            });
+                        }
+                        callFun()
+
+
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating quantity:', error);
+                });
+
+        }
+
+    </script>
+
 
     <script src="./assets_user/js/vendor/modernizr-3.5.0.min.js"></script>
     <!-- Jquery, Popper, Bootstrap -->
