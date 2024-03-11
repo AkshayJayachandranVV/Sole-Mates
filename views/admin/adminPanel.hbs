@@ -276,15 +276,13 @@
                       </p>
                     </div>
                     <div class="col-sm-5 text-md-right">
-                      {{!-- <button type="button"
-                        class="btn btn-icon-text mb-3 mb-sm-0 btn-inverse-primary font-weight-normal">
-                        <i class="mdi mdi-email btn-icon-prepend"></i>Download Report </button> --}}
+
 
 
                       <div class="dropdown">
                         <button class="btn p-0" type="button" id="cardOpt6" data-bs-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false">
-                          <i class="bx bx-dots-vertical-rounded">Sales Report</i>
+                          <i class="bx bx-dots-vertical-rounded"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="cardOpt6">
                           <h3>Sales Report</h3>
@@ -303,209 +301,224 @@
                       </div>
 
 
-
-                      {{!--
-                    </div> --}}
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <div class="card mb-3 mb-sm-0">
-                        <div class="card-body py-3 px-4">
-                          <p class="m-0 survey-head">Total Users</p>
-                          <div class="d-flex justify-content-between align-items-end flot-bar-wrapper">
-                            <div>
-                              <h3 class="m-0 survey-value">{{userCount}}</h3>
-                              {{!-- <p class="text-success m-0">-310 avg. sales</p> --}}
+                      <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="cardOpt6"
+                          data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Sales Report
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
+                          <form id="reportForm" class="p-2" action="salesReport" method="post">
+                            <h3 class="mb-3">Sales Report</h3>
+                            <div class="form-group">
+                              <label for="startDate">Start Date:</label>
+                              <input type="date" class="form-control" id="startDate" name="startDate">
                             </div>
-                            {{!-- <div id="earningChart" class="flot-chart"></div> --}}
+                            <div class="form-group">
+                              <label for="endDate">End Date:</label>
+                              <input type="date" class="form-control" id="endDate" name="endDate">
+                            </div>
+                            <button class="btn btn-warning mt-3" type="submit">Download Report</button>
+                          </form>
+                        </div>
+                      </div>
+
+
+
+
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="card mb-3 mb-sm-0">
+                          <div class="card-body py-3 px-4">
+                            <p class="m-0 survey-head">Total Users</p>
+                            <div class="d-flex justify-content-between align-items-end flot-bar-wrapper">
+                              <div>
+                                <h3 class="m-0 survey-value">{{userCount}}</h3>
+                                {{!-- <p class="text-success m-0">-310 avg. sales</p> --}}
+                              </div>
+                              {{!-- <div id="earningChart" class="flot-chart"></div> --}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="card mb-3 mb-sm-0">
+                          <div class="card-body py-3 px-4">
+                            <p class="m-0 survey-head">Product Products</p>
+                            <div class="d-flex justify-content-between align-items-end flot-bar-wrapper">
+                              <div>
+                                <h3 class="m-0 survey-value">{{productCount}}</h3>
+                                {{!-- <p class="text-danger m-0">-310 avg. sales</p> --}}
+                              </div>
+                              {{!-- <div id="productChart" class="flot-chart"></div> --}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="card">
+                          <div class="card-body py-3 px-4">
+                            <p class="m-0 survey-head">Orders</p>
+                            <div class="d-flex justify-content-between align-items-end flot-bar-wrapper">
+                              <div>
+                                <h3 class="m-0 survey-value">{{orderCount}}</h3>
+                                {{!-- <p class="text-success m-0">-310 avg. sales</p> --}}
+                              </div>
+                              {{!-- <div id="orderChart" class="flot-chart"></div> --}}
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div class="col-sm-4">
-                      <div class="card mb-3 mb-sm-0">
-                        <div class="card-body py-3 px-4">
-                          <p class="m-0 survey-head">Product Products</p>
-                          <div class="d-flex justify-content-between align-items-end flot-bar-wrapper">
-                            <div>
-                              <h3 class="m-0 survey-value">{{productCount}}</h3>
-                              {{!-- <p class="text-danger m-0">-310 avg. sales</p> --}}
-                            </div>
-                            {{!-- <div id="productChart" class="flot-chart"></div> --}}
+                    <div class="row my-3">
+                      <div class="col-sm-12">
+                        <div class="flot-chart-wrapper">
+
+                          <div class="canva-div-2">
+                            <canvas id="my-2-Chart" width="200" height="100"></canvas>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="card">
-                        <div class="card-body py-3 px-4">
-                          <p class="m-0 survey-head">Orders</p>
-                          <div class="d-flex justify-content-between align-items-end flot-bar-wrapper">
-                            <div>
-                              <h3 class="m-0 survey-value">{{orderCount}}</h3>
-                              {{!-- <p class="text-success m-0">-310 avg. sales</p> --}}
-                            </div>
-                            {{!-- <div id="orderChart" class="flot-chart"></div> --}}
+
+
+                          <div class="canva-div">
+                            <canvas id="myChart" width="200" height="100"></canvas>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row my-3">
-                    <div class="col-sm-12">
-                      <div class="flot-chart-wrapper">
 
-                        <div class="canva-div-2">
-                          <canvas id="my-2-Chart" width="200" height="100"></canvas>
+
+
                         </div>
 
 
-                        <div class="canva-div">
-                          <canvas id="myChart" width="200" height="100"></canvas>
-                        </div>
+
+
+                        {{!-- <button onclick="activateChart('day')">Daily</button>
+                        <button onclick="activateChart('month')">Monthly</button>
+                        <button onclick="activateChart('year')">Yearly</button> --}}
 
 
 
                       </div>
-
-
-
-
-                      {{!-- <button onclick="activateChart('day')">Daily</button>
-                      <button onclick="activateChart('month')">Monthly</button>
-                      <button onclick="activateChart('year')">Yearly</button> --}}
-
-
-
                     </div>
-                  </div>
 
 
 
 
 
 
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <p class="text-muted mb-0"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                        eiusmod tempor incididunt ut labore et dolore. <b>Learn More</b>
-                      </p>
-                    </div>
-                    <div class="col-sm-4">
-                      <p class="mb-0 text-muted">Sales Revenue</p>
-                      <h5 class="d-inline-block survey-value mb-0"> $2,45,500 </h5>
-                      <p class="d-inline-block text-danger mb-0"> last 2 months </p>
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <p class="text-muted mb-0"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                          eiusmod tempor incididunt ut labore et dolore. <b>Learn More</b>
+                        </p>
+                      </div>
+                      <div class="col-sm-4">
+                        <p class="mb-0 text-muted">Sales Revenue</p>
+                        <h5 class="d-inline-block survey-value mb-0"> $2,45,500 </h5>
+                        <p class="d-inline-block text-danger mb-0"> last 2 months </p>
+                      </div>
                     </div>
                   </div>
                 </div>
+
               </div>
 
             </div>
 
+            {{!-- <div class="row col-12">
+
+              <div class="order-statics">
+                <h3>Order Statistics</h3>
+
+                {{#each orderCategorydata}}
+
+                <ul>
+                  <li>{{this._id}}:{{this.count}}</li>
+                </ul>
+
+                {{/each}}
+
+
+                <h3>Category Sales</h3>
+                {{#each categoryData}}
+
+                <ul>
+                  <li>{{this._id}}:{{this.count}}</li>
+                </ul>
+
+                {{/each}}
+              </div>
+
+            </div> --}}
+
+
+
+
+            {{!-- {{#each yearAndmonth}}
+            <p id="year">Year: {{this.year}}
+            <p> Month: {{this.month}}</p>
+            {{/each}} --}}
+
+            {{!-- <div class="canva-div">
+              <canvas id="myChart" width="200" height="100"></canvas>
+            </div> --}}
+
+
+
+
+
+
           </div>
-
-          {{!-- <div class="row col-12">
-
-            <div class="order-statics">
-              <h3>Order Statistics</h3>
-
-              {{#each orderCategorydata}}
-
-              <ul>
-                <li>{{this._id}}:{{this.count}}</li>
-              </ul>
-
-              {{/each}}
-
-
-              <h3>Category Sales</h3>
-              {{#each categoryData}}
-
-              <ul>
-                <li>{{this._id}}:{{this.count}}</li>
-              </ul>
-
-              {{/each}}
-            </div>
-
-          </div> --}}
-
-
-
-
-          {{!-- {{#each yearAndmonth}}
-          <p id="year">Year: {{this.year}}
-          <p> Month: {{this.month}}</p>
-          {{/each}} --}}
-
-          {{!-- <div class="canva-div">
-            <canvas id="myChart" width="200" height="100"></canvas>
-          </div> --}}
-
-
-
-
-
-
+          <!-- main-panel ends -->
+          {{> admin_Footer}}
         </div>
-        <!-- main-panel ends -->
-        {{> admin_Footer}}
+        <!-- page-body-wrapper ends -->
+
       </div>
-      <!-- page-body-wrapper ends -->
-
-    </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-    <script src="/assets_admin/vendors/js/vendor.bundle.base.js"></script>
+      <!-- container-scroller -->
+      <!-- plugins:js -->
+      <script src="/assets_admin/vendors/js/vendor.bundle.base.js"></script>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          console.log("hai 1");
 
+          // Fetch sales data from the server
+          fetch('/admin/sales')
+            .then(response => response.json())
+            .then(data => {
+              // Process the data and create the Chart.js chart
 
+              // Extracting labels and counts from the fetched data
+              const labels = data.map(entry => `${entry._id.year} - ${entry._id.month} - ${entry._id.day}`);
+              console.log(labels)
+              const counts = data.map(entry => entry.count);
 
+              // Get the canvas context
+              const ctx = document.getElementById('my-2-Chart').getContext('2d');
 
-
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        console.log("hai 1");
-
-        // Fetch sales data from the server
-        fetch('/admin/sales')
-          .then(response => response.json())
-          .then(data => {
-            // Process the data and create the Chart.js chart
-
-            // Extracting labels and counts from the fetched data
-            const labels = data.map(entry => `${entry._id.year} - ${entry._id.month} - ${entry._id.day}`);
-            console.log(labels)
-            const counts = data.map(entry => entry.count);
-
-            // Get the canvas context
-            const ctx = document.getElementById('my-2-Chart').getContext('2d');
-
-            // Create a bar chart using Chart.js
-            new Chart(ctx, {
-              type: 'line',
-              data: {
-                labels: labels,
-                datasets: [{
-                  label: 'Orders per Day',
-                  data: counts,
-                  backgroundColor: ['rgba(75, 192, 192, 0.2)', "green", "red"],
-                  borderColor: 'rgba(75, 192, 192, 1)',
-                  borderWidth: 1
-                }]
-              }
-            });
-          })
-          .catch(error => console.error('Error fetching chart data:', error));
-      });
-    </script>
+              // Create a bar chart using Chart.js
+              new Chart(ctx, {
+                type: 'line',
+                data: {
+                  labels: labels,
+                  datasets: [{
+                    label: 'Orders per Day',
+                    data: counts,
+                    backgroundColor: ['rgba(75, 192, 192, 0.2)', "green", "red"],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                  }]
+                }
+              });
+            })
+            .catch(error => console.error('Error fetching chart data:', error));
+        });
+      </script>
 
 
 
@@ -513,66 +526,66 @@
 
 
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        console.log("hai 2");
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          console.log("hai 2");
 
-        // Fetch sales data from the server
-        fetch('/admin/sales')
-          .then(response => response.json())
-          .then(data => {
-            // Process the data and create the Chart.js chart
+          // Fetch sales data from the server
+          fetch('/admin/sales')
+            .then(response => response.json())
+            .then(data => {
+              // Process the data and create the Chart.js chart
 
-            // Extracting labels and counts from the fetched data
-            const labels = data.map(entry => `${entry._id.year} - ${entry._id.month}`);
-            console.log(labels)
-            const counts = data.map(entry => entry.count);
+              // Extracting labels and counts from the fetched data
+              const labels = data.map(entry => `${entry._id.year} - ${entry._id.month}`);
+              console.log(labels)
+              const counts = data.map(entry => entry.count);
 
-            // Get the canvas context
-            const ctx = document.getElementById('myChart').getContext('2d');
+              // Get the canvas context
+              const ctx = document.getElementById('myChart').getContext('2d');
 
-            // Create a bar chart using Chart.js
-            new Chart(ctx, {
-              type: 'bar',
-              data: {
-                labels: labels,
-                datasets: [{
-                  label: 'Orders per month',
-                  data: counts,
-                  backgroundColor: ['rgba(75, 192, 192, 0.2)', "green", "red"],
-                  borderColor: 'rgba(75, 192, 192, 1)',
-                  borderWidth: 1
-                }]
-              }
-            });
-          })
-          .catch(error => console.error('Error fetching chart data:', error));
-      });
-    </script>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+              // Create a bar chart using Chart.js
+              new Chart(ctx, {
+                type: 'bar',
+                data: {
+                  labels: labels,
+                  datasets: [{
+                    label: 'Orders per month',
+                    data: counts,
+                    backgroundColor: ['rgba(75, 192, 192, 0.2)', "green", "red"],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                  }]
+                }
+              });
+            })
+            .catch(error => console.error('Error fetching chart data:', error));
+        });
+      </script>
 
 
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="/assets_admin/vendors/chart.js/Chart.min.js"></script>
-    <script src="/assets_admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-    <script src="/assets_admin/vendors/flot/jquery.flot.js"></script>
-    <script src="/assets_admin/vendors/flot/jquery.flot.resize.js"></script>
-    <script src="/assets_admin/vendors/flot/jquery.flot.categories.js"></script>
-    <script src="/assets_admin/vendors/flot/jquery.flot.fillbetween.js"></script>
-    <script src="/assets_admin/vendors/flot/jquery.flot.stack.js"></script>
-    <script src="/assets_admin/vendors/flot/jquery.flot.pie.js"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="/assets_admin/js/off-canvas.js"></script>
-    <script src="/assets_admin/js/hoverable-collapse.js"></script>
-    <script src="/assets_admin/js/misc.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page -->
-    <script src="/assets_admin/js/dashboard.js"></script>
-    <!-- End custom js for this page -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+      <!-- endinject -->
+      <!-- Plugin js for this page -->
+      <script src="/assets_admin/vendors/chart.js/Chart.min.js"></script>
+      <script src="/assets_admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+      <script src="/assets_admin/vendors/flot/jquery.flot.js"></script>
+      <script src="/assets_admin/vendors/flot/jquery.flot.resize.js"></script>
+      <script src="/assets_admin/vendors/flot/jquery.flot.categories.js"></script>
+      <script src="/assets_admin/vendors/flot/jquery.flot.fillbetween.js"></script>
+      <script src="/assets_admin/vendors/flot/jquery.flot.stack.js"></script>
+      <script src="/assets_admin/vendors/flot/jquery.flot.pie.js"></script>
+      <!-- End plugin js for this page -->
+      <!-- inject:js -->
+      <script src="/assets_admin/js/off-canvas.js"></script>
+      <script src="/assets_admin/js/hoverable-collapse.js"></script>
+      <script src="/assets_admin/js/misc.js"></script>
+      <!-- endinject -->
+      <!-- Custom js for this page -->
+      <script src="/assets_admin/js/dashboard.js"></script>
+      <!-- End custom js for this page -->
 
 
 </body>

@@ -162,6 +162,7 @@ const salesReport =async (req,res)=> {
         }
       ]);
       console.log(category);
+
       const status = await orderData.aggregate([
           {
             $match: {
@@ -178,7 +179,53 @@ const salesReport =async (req,res)=> {
               }
             }
         ]);
-  
+
+
+
+        const onlineData = await orderData.aggregate([
+          {
+            $match: {
+              orderdate: {
+                $gte: new Date(startDate),
+                $lte: new Date(endDate),
+              },
+              cod: 0 // Include the cod condition here
+            }
+          },
+          {
+            $group: {
+              _id: null,
+              totalMoney: { $sum: "$price" }
+            }
+          }
+        ]);
+
+
+
+        
+        const codData = await orderData.aggregate([
+          {
+            $match: {
+              orderdate: {
+                $gte: new Date(startDate),
+                $lte: new Date(endDate),
+              },
+              cod: 1 // Include the cod condition here
+            }
+          },
+          {
+            $group: {
+              _id: null,
+              totalMoney: { $sum: "$price" }
+            }
+          }
+        ]);
+        
+
+console.log(onlineData[0].totalMoney)
+console.log(codData[0].totalMoney)
+
+
       const htmlContent = `
               <!DOCTYPE html>
               <html lang="en">
@@ -197,6 +244,9 @@ const salesReport =async (req,res)=> {
                   Start Date: ${startDate}<br>
                   End Date: ${endDate}<br> 
                   <h3>Total Revenue:${revenue}</h3>
+                  <h3>Total Sales(COD):${onlineData[0].totalMoney}</h3>
+                  <h3>Total Sales(Online):${onlineData[0].totalMoney}</h3>
+
                   <center>
                   <h3>Total Sales</h3>
                   
