@@ -132,6 +132,7 @@ const allCollectionDisplay = async (req, res) => {
         // const product = await productData.find({ list:0 })
         const category = await categoryData.find({ list: 0 })
         let currentPage = req.query.page || 0
+        let hidLimit
         console.log(currentPage)
         let allcollection="allcollection"
 
@@ -155,7 +156,11 @@ const allCollectionDisplay = async (req, res) => {
         let countCurrent = currentPage + 1
         const product = await productData.find({ list: 0 }).skip(currentPage * 6).limit(6)
 
-        res.render("formalStore", { product, data: "All Collection", category, cat: "All Collection",allcollection, currentPage, countLimit, countCurrent })
+        if((currentPage+1)==countLimit){
+            hidLimit="success"
+        }
+
+        res.render("formalStore", { product, data: "All Collection", category, cat: "All Collection",allcollection, currentPage, countLimit, countCurrent,hidLimit })
 
 
 
@@ -188,6 +193,7 @@ const displayProduct = async (req, res) => {
         let cat = req.params.id
         console.log(req.params.id)
         let pagenationcat = cat
+        let hidLimit
         let categoryFind = cat || req.query.nextcat || req.query.previouscat
         let displayProduct="displayProduct"
 
@@ -217,7 +223,19 @@ const displayProduct = async (req, res) => {
         const category = await categoryData.find({ list: 0 })
         const product = await productData.find({ list: 0, category: categoryFind }).skip(currentPage*6).limit(6)
         console.log(product)
-        res.render("formalStore", { product, category, categoryFind, pagenationcat,currentPage,displayProduct})
+    
+
+        const proCount = await productData.find({ list: 0, category: categoryFind }).count()
+        let countLimit = Math.ceil(proCount / 6);
+        let countCurrent = currentPage + 1
+        // const product = await productData.find({ list: 0 }).skip(currentPage * 6).limit(6)
+
+        if((currentPage+1)==countLimit){
+            hidLimit="success"
+        }
+
+
+        res.render("formalStore", { product, category, categoryFind, pagenationcat,currentPage,displayProduct,countLimit,countCurrent,hidLimit })
 
     }
     catch (e) {
@@ -289,13 +307,13 @@ const lowToHigh=async(req,res)=>{
             // res.render("formalStore", { product, data: "All Collection",category,cat:"All Collection" ,nextValue,skipValue})
             currentPage--
         }
-        const proCount = await productData.find({ list: 0 }).count()
-        let countLimit = Math.ceil(proCount / 6);
-        let countCurrent = currentPage + 1
         let product
+        let hidLimit
         let cat
         let categoryFind
-    
+        let proCount 
+        let countLimit 
+        let countCurrent
         
         if(!req.query.data){
             console.log("enteredd into the if")
@@ -303,14 +321,32 @@ const lowToHigh=async(req,res)=>{
            console.log(product.length+ " length of cominhg product")
            cat="All Collection"
            lowtohigh="lowToHigh"
+           proCount = await productData.find({ list: 0 }).count()
+           countLimit = Math.ceil(proCount / 6);
+           countCurrent = currentPage + 1
         }else{
             console.log("enteredd into the else")
            product = await productData.find({category:req.query.data, list: 0 }).skip(currentPage * 6).limit(6).sort({price:1})
            categoryFind=req.query.data
            lowtohighcat="lowtohigh"
+           proCount = await productData.find({category:req.query.data, list: 0 }).count()
+           countLimit = Math.ceil(proCount / 6);
+           countCurrent = currentPage + 1
         }
 
-        res.render("formalStore", { product, data: "All Collection", category, cat: "All Collection", currentPage,pagenationcat, countLimit,lowtohigh,lowtohighcat, countCurrent,categoryFind })
+
+        // const proCount = await productData.find({ list: 0 }).count()
+        // let countLimit = Math.ceil(proCount / 6);
+        // let countCurrent = currentPage + 1
+        // const product = await productData.find({ list: 0 }).skip(currentPage * 6).limit(6)
+
+        if((currentPage+1)==countLimit){
+            hidLimit="success"
+        }
+
+
+
+        res.render("formalStore", { product, data: "All Collection", category, cat: "All Collection", currentPage,pagenationcat, countLimit,lowtohigh,lowtohighcat, countCurrent,categoryFind,hidLimit })
 
     }catch(e){
         console.log("problem with the lowToHigh"+e)
@@ -330,7 +366,7 @@ const HightoLow=async(req,res)=>{
         let sort="success"
         let hightolow
         let pagenationcat=req.query.data
-       
+        let hidLimit
         // const product = await productData.find({ list:0 })
         const category = await categoryData.find({ list: 0 })
         let currentPage = req.query.page || 0
@@ -352,26 +388,35 @@ const HightoLow=async(req,res)=>{
             // res.render("formalStore", { product, data: "All Collection",category,cat:"All Collection" ,nextValue,skipValue})
             currentPage--
         }
-        const proCount = await productData.find({ list: 0 }).count()
-        let countLimit = Math.ceil(proCount / 6);
-        let countCurrent = currentPage + 1
+    
 
         let product
         let cat
         let categoryFind
+        let proCount 
+        let countLimit
+        let countCurrent
         if(!req.query.data){
              product = await productData.find({ list: 0 }).skip(currentPage * 6).limit(6).sort({price:-1})
              cat="All Collection"
              hightolow="hightolow"
+             proCount = await productData.find({ list: 0 }).count()
+             countLimit = Math.ceil(proCount / 6);
+             countCurrent = currentPage + 1
         }else{
              product = await productData.find({category:req.query.data, list: 0 }).skip(currentPage * 6).limit(6).sort({price:-1})
              categoryFind=req.query.data
              hightolowcat="hightolow"
+             proCount = await productData.find({category:req.query.data,list:0 }).count()
+             countLimit = Math.ceil(proCount / 6);
+             countCurrent = currentPage + 1
         }
 
-        
-        
-        res.render("formalStore", { product, data: "All Collection", category, cat: "All Collection", currentPage,pagenationcat, countLimit,hightolow,hightolowcat, countCurrent,categoryFind })
+        if((currentPage+1)==countLimit){
+            hidLimit="success"
+        }
+3     
+        res.render("formalStore", { product, data: "All Collection", category, cat: "All Collection", currentPage,pagenationcat, countLimit,hightolow,hightolowcat, countCurrent,categoryFind,hidLimit })
 
     }catch(e){
         console.log("problem with the lowToHigh"+e)

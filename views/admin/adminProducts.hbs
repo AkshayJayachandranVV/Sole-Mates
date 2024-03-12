@@ -13,6 +13,69 @@
   <link rel="stylesheet" href="/assets_admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />
   <link rel="stylesheet" href="/assets_admin/css/style.css" />
   <link rel="shortcut icon" href="/assets_admin/images/favicon.png" />
+
+  <style>
+    .image-container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .image-container>div {
+      flex: 0 0 auto;
+      margin-right: 10px;
+      /* Adjust as needed */
+    }
+
+    .image-container img {
+      max-width: 100px;
+      /* Adjust as needed */
+      height: auto;
+      margin-bottom: 5px;
+      /* Adjust as needed */
+    }
+
+    <style>.image-container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .image-container>div {
+      flex: 0 0 auto;
+      margin-right: 20px;
+      /* Adjust as needed */
+    }
+
+    .image-container img {
+      max-width: 150px;
+      /* Increase the max-width */
+      height: auto;
+      margin-bottom: 10px;
+      /* Adjust as needed */
+    }
+
+    .image-preview-row {
+      display: flex;
+      /* Use flexbox to arrange items in a row */
+      flex-wrap: wrap;
+      /* Allow items to wrap to the next line */
+    }
+
+    .image-preview-container {
+      display: flex;
+      /* Use flexbox for the container */
+    }
+
+    .image-preview {
+      flex: 1;
+      /* Each image preview takes equal space */
+      margin-right: 10px;
+      /* Adjust spacing between images */
+      margin-bottom: 10px;
+      /* Adjust spacing between rows */
+    }
+  </style>
+
+  </style>
 </head>
 
 <body>
@@ -168,13 +231,13 @@
                       <input type="hidden" name="oldproductname" value="{{this.productname}}">
                     </div>
                     <div class="form-group">
-                    <label class="form-control-label">Category</label>
-                    <select class="btn btn-primary" name="category" class="form-control">
-                      {{#each ../categorydata}}
-                      <option value="{{this.category}}">{{this.category}}</option>
-                      {{/each}}
-                    </select>
-                  </div>
+                      <label class="form-control-label">Category</label>
+                      <select class="btn btn-primary" name="category" class="form-control">
+                        {{#each ../categorydata}}
+                        <option value="{{this.category}}">{{this.category}}</option>
+                        {{/each}}
+                      </select>
+                    </div>
                     <div class="form-group">
                       <label class="form-control-label">Price</label>
                       <input type="number" id="price" name="price" min="1" placeholder="Price" class="form-control"
@@ -212,45 +275,44 @@
                     </div>
                     <div>
                       <img src="{{this.imagepath.[0]}}" alt="product-Image-1">
-                      <input id="imageInput1" type="file" accept='image/*' name="avatar" />
+                      <input id="imageInput1_{{@key}}" type="file" accept="image/*" name="avatar"
+                        onchange="loadImagePreviews(event, 'imagePreview1_{{@key}}')">
                     </div>
                     <div>
                       <img src="{{this.imagepath.[1]}}" alt="product-Image-2">
-                      <input id="imageInput2" type="file" accept='image/*' name="avatar" />
+                      <input id="imageInput2_{{@key}}" type="file" accept="image/*" name="avatar"
+                        onchange="loadImagePreviews(event, 'imagePreview2_{{@key}}')">
                     </div>
                     <div>
                       <img src="{{this.imagepath.[2]}}" alt="product-Image-3">
-                      <input id="imageInput3" type="file" accept='image/*' name="avatar" />
+                      <input id="imageInput3_{{@key}}" type="file" accept="image/*" name="avatar"
+                        onchange="loadImagePreviews(event, 'imagePreview3_{{@key}}')">
                     </div>
                     <div>
                       <img src="{{this.imagepath.[3]}}" alt="product-Image-4">
-                      <input id="imageInput4" type="file" accept='image/*' name="avatar" />
+                      <input id="imageInput4_{{@key}}" type="file" accept="image/*" name="avatar"
+                        onchange="loadImagePreviews(event, 'imagePreview4_{{@key}}')">
                     </div>
-                    <div id="imagePreview"></div>
-                    {{!-- <div>
-                      <img src="{{this.imagepath.[0]}}" alt="product-Image-1">
-                      <input type="file" accept='image/*' name="avatar" />
+
+                    <!-- Selected Images Preview -->
+                    <h5>Selected Images</h5>
+                    <div class="image-preview-row">
+                      <div class="image-preview-container">
+                        <div id="imagePreview1_{{@key}}" class="image-preview"></div>
+                        <div id="imagePreview2_{{@key}}" class="image-preview"></div>
+                      </div>
+                      <div id="imagePreview3_{{@key}}" class="image-preview"></div>
+                      <div id="imagePreview4_{{@key}}" class="image-preview"></div>
                     </div>
-                    <div>
-                      <img src="{{this.imagepath.[1]}}" alt="product-Image-2">
-                      <input type="file" accept='image/*' name="avatar" />
+
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
-                    <div>
-                      <img src="{{this.imagepath.[2]}}" alt="product-Image-3">
-                      <input type="file" accept='image/*' name="avatar" />
-                    </div>
-                    <div>
-                      <img src="{{this.imagepath.[3]}}" alt="product-Image-4">
-                      <input type="file" accept='image/*' name="avatar" />
-                    </div> --}}
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
                   </div>
                 </div>
               </div>
-            </div>
           </form>
         </td>
         <td><img src="{{this.imagepath.[0]}}" alt="Image Alt Text" style="width:auto; height:100px"></td>
@@ -260,6 +322,7 @@
         </table>
       </div>
       <!-- main-panel ends -->
+      <br>
       <div class="pagenation">
         <nav aria-label="...">
           <ul class="pagination">
@@ -273,12 +336,17 @@
               <a class="page-link" href="/admin/productpagenation?previous=1&page={{currentValue}}">Previous</a>
             </li>
             {{/if}}
-            <li class="page-item">
+            {{#if hidLimit}}
+            {{else}}
+             <li class="page-item">
               <a class="page-link" href="/admin/productpagenation?next=2&page={{currentValue}}">Next</a>
             </li>
+            {{/if}}
+           
           </ul>
         </nav>
       </div>
+      <br>
       {{> admin_Footer}}
     </div>
     <!-- page-body-wrapper ends -->
@@ -295,9 +363,36 @@
 
   <script defer src="https://cdn.crop.guide/loader/l.js?c=LXZBGM"></script>
 
-
-
   <script>
+    function loadImagePreviews(event, imagePreviewId) {
+      var files = event.target.files;
+      var imagePreview = document.getElementById(imagePreviewId);
+
+      imagePreview.innerHTML = ''; // Clear previous previews
+
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          var img = document.createElement('img');
+          img.src = e.target.result;
+          img.style.width = '150px'; // Adjust as needed
+          img.style.height = '150px'; // Adjust as needed
+          img.style.marginBottom = '5px'; // Adjust as needed
+
+          var container = document.createElement('div');
+          container.classList.add('me-3', 'mb-3');
+          container.appendChild(img);
+          imagePreview.appendChild(container);
+        };
+
+        reader.readAsDataURL(file);
+      }
+      document.getElementById('scriptTag').src = 'https://cdn.crop.guide/loader/l.js?c=LXZBGM';
+    }
+  </script>
+  <!-- <script>
     function loadImagePreviews(event, imagePreviewId) {
       var files = event.target.files;
       var imagePreview = document.getElementById(imagePreviewId);
@@ -344,7 +439,7 @@
       loadImagePreviews(event, 'imagePreview');
       document.getElementById('scriptTag').src = 'https://cdn.crop.guide/loader/l.js?c=LXZBGM';
     });
-  </script>
+  </script>-->
 
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

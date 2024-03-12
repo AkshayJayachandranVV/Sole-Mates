@@ -29,7 +29,17 @@ const displayCouponPage=async(req,res)=>{
 
       const coupon=await couponData.find({}).skip(currentValue*6).limit(6).sort({_id:-1})
 
-        res.render("adminCoupon",{coupon,already,lessPrice,currentValue})
+      const proCount = await couponData.find({ }).count()
+      let countLimit = Math.ceil(proCount / 6);
+      let countCurrent = currentValue + 1
+      let hidLimit
+      // const product = await productData.find({ list: 0 }).skip(currentPage * 6).limit(6)
+
+      if((currentValue+1)==countLimit){
+          hidLimit="success"
+      }
+
+        res.render("adminCoupon",{coupon,already,lessPrice,currentValue,hidLimit})
 
     }catch(e){
         console.log("problem withe displayCouponPage"+e)

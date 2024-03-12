@@ -44,6 +44,17 @@ const productDisplay = async (req, res) => {
         console.log(categorydata+"loooking the catr data")
         console.log(categorydata.category)
 
+
+        const proCount = await productData.find({ }).count()
+        let countLimit = Math.ceil(proCount / 6);
+        let countCurrent = currentValue + 1
+        let hidLimit
+        // const product = await productData.find({ list: 0 }).skip(currentPage * 6).limit(6)
+
+        if((currentValue+1)==countLimit){
+            hidLimit="success"
+        }
+
         if (productList) {
 
             console.log("enterd if hghbjjnjnjnjnj")
@@ -53,7 +64,7 @@ const productDisplay = async (req, res) => {
             //     console.log("enterd if")
             //     res.render("adminProducts", { productList, success })
             // }
-            res.render("adminProducts", { productList, success, currentValue,categorydata })
+            res.render("adminProducts", { productList, success, currentValue,categorydata,hidLimit })
 
         }
 

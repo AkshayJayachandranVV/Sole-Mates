@@ -135,6 +135,33 @@
         .profile-info {
             margin-top: 80px;
         }
+
+        .form-group.row {
+            margin-bottom: 20px;
+            /* Add bottom margin to each form group */
+        }
+
+        .form-group.row label {
+            font-weight: bold;
+            /* Make labels bold */
+        }
+
+        .form-group.row .col-sm-9 {
+            margin-top: 10px;
+            /* Add top margin to the input fields */
+        }
+
+        /* Adjust margin and padding for specific form elements if needed */
+        #name,
+        #email,
+        #phone,
+        #wallet,
+        #address {
+            margin-right: 10px;
+            /* Add right margin to input fields */
+            padding: 5px;
+            /* Add padding to input fields */
+        }
     </style>
 
 </head>
@@ -163,7 +190,7 @@
         <!--================Single Product Area =================-->
         <div class="product_image_area  ">
             <div class="container">
-                <aside>
+                <aside style="margin-top: -40px;">
                     <!-- Your profile sidebar content goes here -->
                     <div class="profile-info">
                     </div>
@@ -184,10 +211,10 @@
                 </aside>
 
 
-                <div class="container profile-container">
+                <div class="container profile-container" style="margin-top: -20px;">
                     <div class="container mt-5 ">
 
-                        <div class="profile-details">
+                        <div class="profile-details" >
                             <h1 class="mb-4">User Profile</h1>
                             <form action="/updateProfile" method="post" class="needs-validation" novalidate>
                                 <div class="form-group row">
@@ -198,7 +225,7 @@
                                         <div class="invalid-feedback">Please enter your name.</div>
                                     </div>
                                 </div>
-                               
+
 
                                 <div class="form-group row">
                                     <label for="email" class="col-sm-3 col-form-label"><strong>Email:</strong></label>
@@ -233,7 +260,7 @@
                                     <div class="col-sm-9">
                                         <input type="text" id="address" name="address" class="form-control"
                                             value="{{userAddress.address.housename}} {{userAddress.address.city}} {{userAddress.address.district}} {{userAddress.address.pincode}} {{userAddress.address.state}} {{userAddress.address.country}}"
-                                           style="width: 350px;"   readonly>
+                                            style="width: 350px;" readonly>
                                         <div class="invalid-feedback">Please enter your address.</div>
                                     </div>
                                 </div>

@@ -127,9 +127,11 @@
                                         <a href="/productdetails/{{this.productname}}"> <img
                                                 src="{{this.imagepath.[0]}}" alt="" class="h-50"></a>
                                         <div class="img-cap">
-                                          <span><button type="button" style="background-color: #f81f1f; border: none;" onclick="addProductToCart('{{this.productname}}')">Add to cart</button></span>
+                                            <span><button type="button" style="background-color: #f81f1f; border: none;"
+                                                    onclick="addProductToCart('{{this.productname}}')">Add to
+                                                    cart</button></span>
 
-                                           
+
                                             {{!-- <button class="add-to-cart" type="button"
                                                 onclick="addProductToCart('{{this.productname}}')">
                                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -176,11 +178,22 @@
                                     <a class="page-link"
                                         href="/lowtohighcatpagenation?data={{categoryFind}}&page={{currentPage}}&previous=1">Previous</a>
                                 </li>
+                                {{else}}
+                                <li class="page-item">
+                                    <a id="previousLink" class="page-link" href="#" onclick="return false;">Previous</a>
+                                </li>
                                 {{/if}}
+                                {{#if hidLimit}}
+                                <li class="page-item">
+                                    <a id="nextLink" class="page-link" href="#" onclick="return false;">Next</a>
+                                </li>
+                                {{else}}
                                 <li class="page-item">
                                     <a class="page-link"
                                         href="/lowtohighcatpagenation?data={{categoryFind}}&page={{currentPage}}&next=2">Next</a>
                                 </li>
+                                {{/if}}
+
                             </ul>
                         </nav>
                     </div>
@@ -198,11 +211,21 @@
                                     <a class="page-link"
                                         href="/hightolowcatpagenation?data={{categoryFind}}&page={{currentPage}}&previous=1">Previous</a>
                                 </li>
+                                {{else}}
+                                <li class="page-item">
+                                    <a id="previousLink" class="page-link" href="#" onclick="return false;">Previous</a>
+                                </li>
                                 {{/if}}
+                                {{#if hidLimit}}
+                                <li class="page-item">
+                                    <a id="nextLink" class="page-link" href="#" onclick="return false;">Next</a>
+                                </li>
+                                {{else}}
                                 <li class="page-item">
                                     <a class="page-link"
                                         href="/hightolowcatpagenation?data={{categoryFind}}&page={{currentPage}}&next=2">Next</a>
                                 </li>
+                                {{/if}}
                             </ul>
                         </nav>
                     </div>
@@ -220,11 +243,21 @@
                                     <a class="page-link"
                                         href="/categorypagenation?previouscat={{categoryFind}}&page={{currentPage}}">Previous</a>
                                 </li>
+                                {{else}}
+                                <li class="page-item">
+                                    <a id="previousLink" class="page-link" href="#" onclick="return false;">Previous</a>
+                                </li>
                                 {{/if}}
+                                {{#if hidLimit}}
+                                <li class="page-item">
+                                    <a id="nextLink" class="page-link" href="#" onclick="return false;">Next</a>
+                                </li>
+                                {{else}}
                                 <li class="page-item">
                                     <a class="page-link"
                                         href="/categorypagenation?nextcat={{categoryFind}}&page={{currentPage}}">Next</a>
                                 </li>
+                                {{/if}}
                             </ul>
                         </nav>
                     </div>
@@ -243,11 +276,21 @@
                                     <a class="page-link"
                                         href="/lowtohighpagenation?previous=2&page={{currentPage}}">Previous</a>
                                 </li>
+                                {{else}}
+                                <li class="page-item">
+                                    <a id="previousLink" class="page-link" href="#" onclick="return false;">Previous</a>
+                                </li>
                                 {{/if}}
+                                {{#if hidLimit}}
+                                <li class="page-item">
+                                    <a id="nextLink" class="page-link" href="#" onclick="return false;">Next</a>
+                                </li>
+                                {{else}}
                                 <li class="page-item">
                                     <a class="page-link"
                                         href="/lowtohighpagenation?next=1&page={{currentPage}}">Next</a>
                                 </li>
+                                {{/if}}
                             </ul>
                         </nav>
                     </div>
@@ -265,11 +308,21 @@
                                     <a class="page-link"
                                         href="/hightolowpagenation?previous=2&page={{currentPage}}">Previous</a>
                                 </li>
+                                {{else}}
+                                <li class="page-item">
+                                    <a id="previousLink" class="page-link" href="#" onclick="return false;">Previous</a>
+                                </li>
                                 {{/if}}
+                                {{#if hidLimit}}
+                                <li class="page-item">
+                                    <a id="nextLink" class="page-link" href="#" onclick="return false;">Next</a>
+                                </li>
+                                {{else}}
                                 <li class="page-item">
                                     <a class="page-link"
                                         href="/hightolowpagenation?next=1&page={{currentPage}}">Next</a>
                                 </li>
+                                {{/if}}
                             </ul>
                         </nav>
                     </div>
@@ -286,10 +339,21 @@
                                 <li class="page-item">
                                     <a class="page-link" href="/pagenation?previous=2&page={{currentPage}}">Previous</a>
                                 </li>
+                                {{else}}
+                                <li class="page-item">
+                                    <a id="previousLink" class="page-link" href="#" onclick="return false;">Previous</a>
+                                </li>
                                 {{/if}}
+                                {{#if hidLimit}}
+                                <li class="page-item">
+                                    <a id="nextLink" class="page-link" href="#" onclick="return false;">Next</a>
+                                </li>
+                                {{else}}
                                 <li class="page-item">
                                     <a class="page-link" href="/pagenation?next=1&page={{currentPage}}">Next</a>
                                 </li>
+                                {{/if}}
+
                             </ul>
                         </nav>
                     </div>
@@ -384,7 +448,7 @@
 
 
                     } else {
-                         function callFun() {
+                        function callFun() {
                             Swal.fire({
                                 icon: "error",
                                 title: "Oops...",

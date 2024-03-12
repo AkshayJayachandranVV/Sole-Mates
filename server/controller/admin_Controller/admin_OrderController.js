@@ -38,7 +38,18 @@ const displayOrder=async(req,res)=>{
 
         // const orderValue=await orderData.find({}).sort({_id:-1})
 
-        res.render("adminOrders",{orderList,currentValue});
+
+        const proCount = await orderData.find({ }).count()
+        let countLimit = Math.ceil(proCount / 6);
+        let countCurrent = currentValue + 1
+        let hidLimit
+        // const product = await productData.find({ list: 0 }).skip(currentPage * 6).limit(6)
+
+        if((currentValue+1)==countLimit){
+            hidLimit="success"
+        }
+
+        res.render("adminOrders",{orderList,currentValue,hidLimit});
 
     }
     catch(e)

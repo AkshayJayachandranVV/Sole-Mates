@@ -285,9 +285,13 @@
                   <a class="page-link" href="/admin/couponpagenation?previous=1&page={{currentValue}}">Previous</a>
                 </li>
                 {{/if}}
+                {{#if hidLimit}}
+                {{else}}
                 <li class="page-item">
                   <a class="page-link" href="/admin/couponpagenation?next=2&page={{currentValue}}">Next</a>
                 </li>
+                {{/if}}
+
               </ul>
             </nav>
           </div>

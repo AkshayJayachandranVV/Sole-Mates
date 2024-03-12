@@ -32,7 +32,17 @@ const showUser = async (req, res) => {
 
         // console.log(value)
 
-        res.render("adminUsers",{userList,currentValue})
+        const proCount = await userData.find({ }).count()
+        let countLimit = Math.ceil(proCount / 6);
+        let countCurrent = currentValue + 1
+        let hidLimit
+        // const product = await productData.find({ list: 0 }).skip(currentPage * 6).limit(6)
+
+        if((currentValue+1)==countLimit){
+            hidLimit="success"
+        }
+
+        res.render("adminUsers",{userList,currentValue,hidLimit})
 
     }
     catch (e) {

@@ -209,9 +209,12 @@
                                     <a class="page-link" href="/admin/orderpagenation?previous=1&page={{currentValue}}">Previous</a>
                                 </li>
                                 {{/if}}
-                                <li class="page-item">
+                                {{#if hidLimit}}
+                                {{else}}
+                                 <li class="page-item">
                                     <a class="page-link" href="/admin/orderpagenation?next=2&page={{currentValue}}" >Next</a>
                                 </li>
+                                {{/if}}                 
                             </ul>
                         </nav>
                     </div>

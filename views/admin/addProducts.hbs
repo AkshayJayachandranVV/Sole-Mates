@@ -159,13 +159,12 @@
                         <label class="form-control-label">Stock</label>
                         <input type="number" name="stock" placeholder="Stock" min="1" class="form-control" required>
                       </div>
-                      ///////////////////////////////////////////////////////
                       <div class="mb-3">
                         <div>
-                          <input  type="file" multiple accept="image/*" id="imageInput" name="avatar" />
+                          <input type="file" multiple accept="image/*" id="imageInput" name="avatar" />
                         </div>
 
-                         <canvas id="croppedCanvas" style="display: none;"></canvas>
+                        <canvas id="croppedCanvas" style="display: none;"></canvas>
 
                         <div class="mb-3">
                           <label class="form-label" for="basic-icon-default-message">Add image</label>
@@ -174,7 +173,6 @@
                           </div>
                         </div>
                       </div>
-                      ///////////////////////////////////////////////////////////
                       <div class="form-group">
                         <input type="submit" value="ADD" class="btn btn-primary">
                       </div>
@@ -185,7 +183,7 @@
             </div>
           </div>
 
-  <script defer src="https://cdn.crop.guide/loader/l.js?c=LXZBGM"></script>
+          <script defer src="https://cdn.crop.guide/loader/l.js?c=LXZBGM"></script>
 
 
 
@@ -204,8 +202,8 @@
                 reader.onload = function (e) {
                   var img = document.createElement('img');
                   img.src = e.target.result;
-                  img.width = 100; // Adjust as needed
-                  img.height = 100; // Adjust as needed
+                  img.style.width = '150px'; // Adjust as needed
+                  img.style.height = '150px'; // Adjust as needed
                   img.style.marginBottom = '5px'; // Adjust as needed
 
                   var container = document.createElement('div');
@@ -327,10 +325,10 @@
           </script>
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/assets_admin/vendors/js/vendor.bundle.base.js"></script>
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script src="/assets_admin/vendors/js/vendor.bundle.base.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
         </div>
         <!-- main-panel ends -->
