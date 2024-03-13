@@ -431,6 +431,16 @@ console.log(orderAggregate + " tttttttttttttttttttttttttttttttttttt")
 
     // console.log(orderAggregate._id.orderId)
     // console.log(orderAggregate._id.date)
+
+    const proCount = await orderData.find({ }).count()
+    let countLimit = Math.ceil(proCount / 6);
+    let countCurrent = currentValue + 1
+    let hidLimit
+    // const product = await productData.find({ list: 0 }).skip(currentPage * 6).limit(6)
+
+    if((currentValue+1)==countLimit){
+        hidLimit="success"
+    }
     
      let aggregateDestructure=[]
 
@@ -457,7 +467,7 @@ console.log(orderAggregate + " tttttttttttttttttttttttttttttttttttt")
 
     console.log(orderAggregate)
 
-    res.render("yourOrders", { destructuredData,currentValue })
+    res.render("yourOrders", { destructuredData,currentValue,hidLimit })
 
   }
   catch (e) {
@@ -482,7 +492,7 @@ const userOrderDetailsPage = async (req, res) => {
     if(!couponAmount){
       couponAmount=0
     }
-    let walletAmount=((productOrder[0].price*productOrder[0].quantity)-productOrder[0].coupon)-productOrder[0].totalAmount
+    let walletAmount=(productOrder[0].cartAmount-productOrder[0].coupon)-productOrder[0].totalAmount
     if(!walletAmount){
       walletAmount=0
     }

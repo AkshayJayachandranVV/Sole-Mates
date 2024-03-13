@@ -174,35 +174,28 @@ const cartDisplay = async (req, res) => {
 
 
 const cartRemoving = async (req, res) => {
-
     try {
-
-        console.log(req.params.proId)
+        console.log(req.params.proId);
 
         if (req.params.proId) {
-            console.log("entered into the cart rmoval")
-            const deleteData = await cartData.deleteOne({ username: req.session.username }, { productname: req.params.proId })
+            console.log("Entered into the cart removal");
+            
+            // Combine both conditions into a single filter object
+            const deleteData = await cartData.deleteOne({ 
+                username: req.session.username,
+                productname: req.params.proId
+            });
 
-            //i have changed gere i added to find the product withe username in the session to delete the cart of the particular user
-            // const deleteDt=await cartData.findOne({productname:req.params.proId})
-            console.log(deleteData)
+            console.log(deleteData);
         }
 
-
-
-
-        res.redirect("/cart")
-        // res.render("addToCart",{displayCart})
-
+        res.redirect("/cart");
+    } catch (e) {
+        console.log("Error occurred in cartRemoving:", e);
+        res.redirect("/error");
     }
-    catch (e) {
-        console.log("the error is present in cartRemoving")
-        res.redirect("/error")
-    }
+};
 
-
-
-}
 
 
 

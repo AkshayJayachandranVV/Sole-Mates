@@ -316,6 +316,21 @@ const paymentFailure = async (req, res) => {
     cartProduct = await cartData.find({ username: req.session.username });
     console.log("cashOnDelivery")
 
+    const cartprice = await cartData.aggregate([
+      {
+        $match: { username: req.session.username }
+      },
+      {
+        $group: { _id: "$productname", price: { $sum: "$price" }, quantity: { $sum: "$quantity" } }
+      },
+      {
+        $project: { _id: 0, amount: { $multiply: ["$price", "$quantity"] } }
+      },
+      {
+        $group: { _id: "null", total: { $sum: "$amount" } }
+      }
+    ])
+
     if (!req.session.checked) {
 
       //const userData=await user.find({email:req.session.email});
@@ -490,7 +505,8 @@ const paymentFailure = async (req, res) => {
           category: cartProduct[i].category,
           cod: 0,
           totalAmount: amount,
-          coupon: couponPrice
+          coupon: couponPrice,
+          cartAmount:cartprice[0].total
         })
         await newOrder.save();
 
@@ -534,7 +550,8 @@ const paymentFailure = async (req, res) => {
           category: cartProduct[i].category,
           cod: 1,
           totalAmount: amount,
-          coupon: couponPrice
+          coupon: couponPrice,
+          cartAmount:cartprice[0].total
         })
         await newOrder.save();
 
@@ -608,6 +625,21 @@ const cashOnDelivery = async (req, res) => {
     let date = otpValue.timestamp
     req.session.orderId = otpValue.OTP
     console.log(req.session.orderId)
+
+    const cartprice = await cartData.aggregate([
+      {
+        $match: { username: req.session.username }
+      },
+      {
+        $group: { _id: "$productname", price: { $sum: "$price" }, quantity: { $sum: "$quantity" } }
+      },
+      {
+        $project: { _id: 0, amount: { $multiply: ["$price", "$quantity"] } }
+      },
+      {
+        $group: { _id: "null", total: { $sum: "$amount" } }
+      }
+    ])
 
     console.log("cashOnDelivery")
     const cartProduct = await cartData.find({ username: req.session.username });
@@ -789,7 +821,8 @@ const cashOnDelivery = async (req, res) => {
           category: cartProduct[i].category,
           cod: 0,
           totalAmount: amount,
-          coupon: couponPrice
+          coupon: couponPrice,
+          cartAmount:cartprice[0].total
         })
         await newOrder.save();
 
@@ -832,7 +865,8 @@ const cashOnDelivery = async (req, res) => {
           category: cartProduct[i].category,
           cod: 1,
           totalAmount: amount,
-          coupon: couponPrice
+          coupon: couponPrice,
+          cartAmount:cartprice[0].total
         })
         await newOrder.save();
 
@@ -1052,21 +1086,27 @@ const cancelOrder = async (req, res) => {
 
   try {
 
+    console.log("enter cncelorder----------------------------------")
+
     console.log(req.query.orderId)
     console.log(req.query.proId)
 
     await orderData.updateOne({ orderId: req.query.orderId, productname: req.query.proId }, { $set: { status: "CANCELLED" } })
     const orderD = await orderData.findOne({ orderId: req.query.orderId, productname: req.query.proId })
     // await userData.updateOne({username:req.session.username },{ $set:{ wallet:orderD.price}})
+    console.log(orderD)
+    let waletPrice=orderD.price*orderD.quantity
     if (orderD.cod == 0) {
-      await user.updateOne({ username: req.session.username }, { $inc: { wallet: orderD.totalAmount } });
+      await user.updateOne({ username: req.session.username }, { $inc: { wallet:waletPrice } });
+
+     
 
       const newWallet = new walletHistory({
         username: req.session.username,
         orderId: req.query.orderId,
         date: orderD.orderdate,
-        spendmoney: orderD.totalAmount,
-        refundmoney: orderD.totalAmount,
+        spendmoney: waletPrice,
+        refundmoney: waletPrice,
         status: "Order Cancelled"
       })
       await newWallet.save();

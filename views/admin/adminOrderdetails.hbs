@@ -58,12 +58,12 @@
               <span class="menu-title">Category</span>
             </a>
           </li>
-          {{!-- <li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link" href="/admin/orders">
               <i class="mdi mdi-chart-bar menu-icon"></i>
               <span class="menu-title">Orders</span>
             </a>
-          </li> --}}
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="/admin/coupon">
               <i class="mdi mdi-table-large menu-icon"></i>
@@ -128,9 +128,9 @@
       <div class="col">
         <h3>Product Details</h3>
         <ul>
-          <li>Feature 1: Lorem ipsum dolor sit amet</li>
-          <li>Feature 2: Consectetur adipiscing elit</li>
-          <li>Feature 3: Sed do eiusmod tempor incididunt ut labore</li>
+          <li>Product:{{orderDetails.productname}} </li>
+          <li>Price{{orderDetails.price}}</li>
+          <li>Quantity:{{orderDetails.quantity}}</li>
           <!-- Add more features as needed -->
         </ul>
       </div>

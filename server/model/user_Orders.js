@@ -87,6 +87,10 @@ const userOrder=mongoose.Schema({
     coupon:{
         type:Number,
         require:true
+    },
+    cartAmount:{
+        type:Number,
+        require:true
     }
 
 })
