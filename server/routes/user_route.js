@@ -44,7 +44,7 @@ route.post("/otplogin",userRegister.otpValidation)
 route.get("/userLogin", userRegister.userLogin)
 route.post("/userLogin", userRegister.CheckUserIn)
 route.get("/signup", userRegister.renderSignup);    
-route.post('/signup', userRegister.sendEmail,userRegister.userRegister);
+route.post('/signup',[ userRegister.sendEmail,userRegister.userRegister]);
 
 
 

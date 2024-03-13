@@ -48,9 +48,15 @@ const userLogin=async(req,res)=>{
 const renderSignup=async(req,res)=>{
  
     try{
-
-        const unameValidate = req.query.uname
-    
+  console.log(req.query.email )
+  console.log(req.query.uname )
+  console.log(req.query.Invalid )
+  console.log(req.query.nameCheck)     
+        const unameValidate = req.query.uname    
+        const emailValidate = req.query.email 
+        const emailCheck= req.query.Invalid
+        const unameExist=req.query.nameCheck
+        
     if (req.query.uname ) {
         console.log("it has enterd into the signup if phase")
         const { username, email, phonenumber, password } = req.session.details
@@ -58,7 +64,38 @@ const renderSignup=async(req,res)=>{
         res.render("userSignup", { unameValidate,username, email, phonenumber, password });
     } else {
         console.log("it has enterd into the signup else code")
-        res.render('userSignup')
+        if (req.query.email ) {
+            console.log("it has enterd into the email if phase")
+            const { username, email, phonenumber, password } = req.session.details
+            console.log(req.session.details)
+            res.render("userSignup", { emailValidate,username, email, phonenumber, password });
+        } else {
+            console.log("it has enterd into the email else code")
+
+            if (req.query.Invalid) {
+                console.log("it has enterd into the Invalid Invalid phase")
+                // const { username, email, phonenumber, password } = req.session.details
+                // console.log(req.session.details)
+                res.render("userSignup", { emailCheck});
+            } else {
+                console.log("it has enterd into the email invalid code")
+
+                if (req.query.nameCheck) {
+                    console.log("it has enterd into the Invalid namecheck phase")
+                    // const { username, email, phonenumber, password } = req.session.details
+                    // console.log(req.session.details)
+                    res.render("userSignup", { unameExist});
+                } else {
+                    console.log("it has enterd into the email namecheck code")
+                   
+                    res.render('userSignup')
+                }
+               
+                // res.render('userSignup')
+            }
+            // res.render('userSignup')
+        }
+        // res.render('userSignup')
     }
 
        
@@ -97,7 +134,7 @@ const userRegister = async (req, res) => {
 
         }
         else if (emailExist) {
-            res.redirect("/signup?uname=Already have an Account")
+            res.redirect("/signup?email=Already have an Account")
         }
         else if (!email.match(/^[A-Za-z\._\-[0-9]+@[A-Za-z]+\.[a-z]{2,}$/)) {
             res.redirect("/signup?uname=Invald Email")
@@ -360,8 +397,18 @@ let transporter = nodemailer.createTransport({
 const sendEmail = expressAsyncHandler(async (req, res, next) => {
     try {
 
+        const nameExist = await user.findOne({ username: req.body.username })
+        if(!nameExist){
+
         if (req.body.email !== undefined) {
 
+            console.log("enetered first")
+
+            const emailExist = await user.findOne({ email: req.body.email })
+            
+
+            if(!emailExist){
+                console.log("enetered second")
             const phone = req.body.phonenumber
             console.log("sendemail entered")
             console.log(req.body.email)
@@ -395,10 +442,17 @@ const sendEmail = expressAsyncHandler(async (req, res, next) => {
 
                 }
             });
+        }else{
+            res.redirect("/signup?Invalid=Already have an Account")
+
         }
+        }else{
+            res.redirect("/signup?Invalid=Please Enter Valid Email")
+        }
+    }else{
+        res.redirect("/signup?nameCheck=Username Already Existed")
     }
-
-
+    }
     catch (error) {
         console.error(error);
         res.status(500).send('Error sending email');

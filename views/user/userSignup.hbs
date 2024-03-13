@@ -58,18 +58,24 @@
                         <div class="login_part_form">
                             <div class="login_part_form_iner">
                                 <h3>Create Account <br>
-                                    Please Sign up now</h3>         
+                                    Please Sign up now</h3>  
+                                    <h5>{{emailValidate}}</h5>  
+
                                 <form class="row contact_form"  method="post" novalidate="novalidate">
                                     <div class="col-md-12 form-group p_star">
                                         <input type="text" class="form-control" id="name" name="username" value="{{username}}"
-                                            placeholder="Username" onkeyup="validatUsername()" required>
+                                            placeholder="Username" onkeyup="validatUsername()" required>    
                                             <span id="usernameErr"></span>
+                                             <span style="color:red" id="username-error">{{unameValidate}}</span>
+                                             <span style="color:red" id="unameCheck-error">{{unameExist}}</span>
                                     </div>
                                    
                                      <div class="col-md-12 form-group p_star">
                                         <input type="text" class="form-control" id="email" name="email" value="{{email}}"
                                             placeholder="Email" onkeyup="validatEmail()" required>
                                             <span id="emailErr"></span>
+                                             <span style="color:red" id="email-error">{{emailValidate}}</span>
+                                               <span style="color:red" id="test-error">{{emailCheck}}</span>
                                     </div>
                                     
                                     <div class="col-md-12 form-group p_star">
@@ -124,6 +130,32 @@
         
     </script>
 
+     <script>
+        setTimeout(()=>{
+            const value=document.getElementById("email-error");
+            value.style.display="none"
+        },5000)
+
+        
+    </script>
+
+    <script>
+        setTimeout(()=>{
+            const value=document.getElementById("test-error");
+            value.style.display="none"
+        },5000)
+
+        
+    </script>
+
+   <script>
+        setTimeout(()=>{
+            const value=document.getElementById("unameCheck-error");
+            value.style.display="none"
+        },5000)
+
+        
+    </script>
 
 
 
