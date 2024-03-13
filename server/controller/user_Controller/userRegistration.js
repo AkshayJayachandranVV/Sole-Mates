@@ -86,8 +86,7 @@ const renderSignup=async(req,res)=>{
                     // console.log(req.session.details)
                     res.render("userSignup", { unameExist});
                 } else {
-                    console.log("it has enterd into the email namecheck code")
-                   
+                    console.log("it has enterd into the email namecheck code")                 
                     res.render('userSignup')
                 }
                
