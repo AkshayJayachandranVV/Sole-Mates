@@ -69,16 +69,16 @@
 
                                     </div>
                                     <div class="col-md-12 form-group p_star">
-                                        <p style="color: red;font: size 15px;" id="otp-seconds"></p>
+                                        <p style="color: red; font-size: 15px;" id="otp-seconds"></p>
                                         <span style="color: red;" id="otpErr"></span>
                                         <input type="password" class="form-control" id="password" name="otp" 
-                                            placeholder="OTP">
+                                            placeholder="OTP" required>
                                     </div>
                                     <div class="col-md-12 form-group">
-                                        <div class="creat_account d-flex align-items-center">
+                                        {{!-- <div class="creat_account d-flex align-items-center">
                                             <input type="checkbox" id="f-option" name="selector">
                                             <label for="f-option">Remember me</label>
-                                        </div>
+                                        </div> --}}
                                         {{!-- <button id="submit-button" value="submit" class="btn_3"
                                             onclick="otpcheck()">
                                             Submit
@@ -191,12 +191,10 @@
     }, 3000);
 }
 </script>
-  
 
 
 
-
-    <script>
+ <script>
         let seconds = 60;
 
         const intervalId = setInterval(function () {
@@ -228,9 +226,7 @@
         }, 60 * 1000)
     </script>
 
-
-
-
+------------------------------------------------------------------------------------
 
     <!-- Jquery, Popper, Bootstrap -->
     <script src="./assets_user/js/vendor/jquery-1.12.4.min.js"></script>

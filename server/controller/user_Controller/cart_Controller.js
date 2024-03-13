@@ -44,6 +44,11 @@ const addToCart = async (req, res) => {
 
         console.log("helooo to add to art ---------------------------------------------------")
 
+        if (!req.session.authenticated) {
+            let noEntryCart="not entry"
+            return res.json({ success: true,noEntryCart})
+        }
+
         if (req.body.productId) {
 
             console.log(req.body.productId)
@@ -53,7 +58,9 @@ const addToCart = async (req, res) => {
             if(cartCheck){
                 // res.redirect("/cart")
 
-                return res.json({ success: false})
+                let CartPresent="true"
+
+                return res.json({ success: true,CartPresent})
 
             }
             else{
@@ -87,8 +94,10 @@ const addToCart = async (req, res) => {
             await newCart.save()
 
             console.log("cart added succesfully")
+            let validCart="true"
 
-            return res.json({ success: true})
+            return res.json({ success: true,validCart})
+
 
             // const displayCart = await cartData.find({ username: req.session.username })
 

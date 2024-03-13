@@ -62,24 +62,24 @@
                                 <form class="row contact_form"  method="post" novalidate="novalidate">
                                     <div class="col-md-12 form-group p_star">
                                         <input type="text" class="form-control" id="name" name="username" value="{{username}}"
-                                            placeholder="Username" onkeyup="validatUsername()" >
+                                            placeholder="Username" onkeyup="validatUsername()" required>
                                             <span id="usernameErr"></span>
                                     </div>
                                    
                                      <div class="col-md-12 form-group p_star">
                                         <input type="text" class="form-control" id="email" name="email" value="{{email}}"
-                                            placeholder="Email" onkeyup="validatEmail()">
+                                            placeholder="Email" onkeyup="validatEmail()" required>
                                             <span id="emailErr"></span>
                                     </div>
                                     
                                     <div class="col-md-12 form-group p_star">
                                         <input type="text" class="form-control" id="phone" name="phonenumber" value="{{phonenumber}}"
-                                            placeholder="Phonenumber" onkeyup="validatPhone()">
+                                            placeholder="Phonenumber" onkeyup="validatPhone()" required>
                                             <span id="phoneErr"></span>
                                     </div>
                                     <div class="col-md-12 form-group p_star">
                                         <input type="password" class="form-control" id="password" name="password" value="{{password}}"
-                                            placeholder="Password" onkeyup="validatPassword()">
+                                            placeholder="Password" onkeyup="validatPassword()" required>
                                             <span id="passwordErr"></span>
                                     </div>
                                     <div class="col-md-12 form-group">

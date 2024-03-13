@@ -137,11 +137,20 @@
                                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                             </button> --}}
                                         </div>
-                                        <div class="favorit-items">
+ <div class="favorit-items">
+    <span>
+        <button type="button" style="border: none; background-color: transparent;" onclick="addProductToWishList('{{this.productname}}')">
+            <svg class="flaticon-heart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32">
+                <path fill="red" stroke="black" stroke-width="2" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" class="heart-path"/>
+            </svg>
+        </button>
+    </span>
+</div>
 
-                                            <a href="/addwishlist/{{this.productname}}"> <span
-                                                    class="flaticon-heart"></span></a>
-                                        </div>
+
+
+
+
                                     </div>
                                     <div class="popular-caption">
                                         <h3><a href="/productdetails/{{this.productname}}">{{this.productname}}</a></h3>
@@ -413,6 +422,67 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
+     <script>
+        // Use fetch to update the quantity in the database
+        function addProductToWishList(productId) {
+
+            console.log(productId)
+            fetch('/addwishlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    productId: productId,
+                }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+
+                    if(data.noEntry){
+                         window.location.href = '/userLogin';
+                    }
+
+                    if (data.valid) {
+
+                        function callFun() {
+                            Swal.fire({
+                                icon: "success",
+                                text: "Product added to WishList",
+
+                            });
+                        }
+                        callFun()
+
+
+                    } if(data.presentList) {
+                        function callFun() {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Wishlist",
+                                text: "Product Already Exist",
+
+                            });
+                        }
+                        callFun()
+
+
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating quantity:', error);
+                });
+
+        }
+
+    </script>
+
     <script>
         // Use fetch to update the quantity in the database
         function addProductToCart(productId) {
@@ -435,7 +505,11 @@
                 })
                 .then(data => {
 
-                    if (data.success) {
+                     if(data.noEntryCart){
+                         window.location.href = '/userLogin';
+                    }
+
+                    if (data.validCart) {
 
                         function callFun() {
                             Swal.fire({
@@ -447,11 +521,11 @@
                         callFun()
 
 
-                    } else {
+                    } if(data.CartPresent) {
                         function callFun() {
                             Swal.fire({
                                 icon: "error",
-                                title: "Oops...",
+                                title: "Cart",
                                 text: "Product Already Exist",
 
                             });
@@ -468,6 +542,8 @@
         }
 
     </script>
+
+
 
 
     <script src="./assets_user/js/vendor/modernizr-3.5.0.min.js"></script>

@@ -29,9 +29,21 @@ const displayWishlist=async(req,res)=>{
 const addWishlist=async(req,res)=>{
    
     try{
-        console.log(req.params.proId)
+        console.log("req.session.authenticated")
+        console.log(req.session.authenticated)
+        if (!req.session.authenticated) {
+            let noEntry="not entry"
+            return res.json({ success: true,noEntry})
+        }
+        console.log(req.body.productId + "55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555")
 
-        const proD=await productData.findOne({productname:req.params.proId})
+        const proD=await productData.findOne({productname:req.body.productId})
+
+        const presentList=await wishlistData.findOne({username:req.session.username,productname:req.body.productId})
+
+        if(presentList){
+            return res.json({ success: true,presentList})
+        }
         console.log(proD.imagepath[0])
 
         console.log(req.session.username)
@@ -43,16 +55,20 @@ const addWishlist=async(req,res)=>{
          price:proD.price,
          offerprice:proD.offerprice,
          username:req.session.username
-
-  
-
+ 
         })
 
         await newWish.save()
 
-        const displayCart= await wishlistData.find({username:req.session.username})  
+        console.log("cart added succesfully")
+
+        let valid="true"
+
+        return res.json({ success: true,valid})
+
+        // const displayCart= await wishlistData.find({username:req.session.username})  
         
-        res.redirect("/wishlist")
+        // res.redirect("/wishlist")
 
         // res.render("userWishlist",{displayCart})
 

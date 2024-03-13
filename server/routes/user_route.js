@@ -125,7 +125,7 @@ route.get("/hightolowcatpagenation",userProduct.HightoLow)
 
 //CART 
 route.get("/cart",addCart.userAuthorize,addCart.cartDisplay)
-route.post("/addtocart",middleware.userAuthorizeCheck,addCart.addToCart)
+route.post("/addtocart",addCart.addToCart)
 route.get("/decrementquantity/:proId",addCart.decrementData)
 route.get("/incrementquantity/:proId",addCart.incrementData)
 route.get("/removecart/:proId",middleware.userAuthorizeCheck,addCart.cartRemoving)
@@ -168,7 +168,7 @@ route.get("/orderhistorypagenation",middleware.userAuthorizeCheck,profile.profil
 
 // USER WISHLIST
 route.get("/wishlist",middleware.userAuthorizeCheck,wishList.displayWishlist)
-route.get("/addwishlist/:proId",middleware.userAuthorizeCheck,wishList.addWishlist)
+route.post("/addwishlist",wishList.addWishlist)
 route.get("/delwishlist/:wishId",middleware.userAuthorizeCheck,wishList.deleteWishlist)
 
 
