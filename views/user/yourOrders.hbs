@@ -197,10 +197,11 @@
                     </li>
                     {{/if}}
                     {{#if hidLimit}}
+                      
                     {{else}}
-                      <li class="page-item">
-                        <a class="page-link" href="/orderhistorypagenation?next=2&page={{currentValue}}">Next</a>
-                    </li>
+                       <li class="page-item">
+                                    <a id="nextLink" class="page-link" href="#" onclick="return false;">Next</a>
+                                </li>
                     {{/if}}
                   
                 </ul>
