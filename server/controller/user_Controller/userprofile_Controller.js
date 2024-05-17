@@ -394,6 +394,8 @@ const profileYourOrders = async (req, res) => {
 
     }
 
+    console.log(currentValue)
+
     // const orderList=await orderData.find({}).skip(currentValue*6).limit(6).sort({_id:-1})
 
 
@@ -432,15 +434,18 @@ console.log(orderAggregate + " tttttttttttttttttttttttttttttttttttt")
     // console.log(orderAggregate._id.orderId)
     // console.log(orderAggregate._id.date)
 
-    const proCount = await orderData.find({ }).count()
+    const proCount = await orderData.find({username: req.session.username}).count()
     let countLimit = Math.ceil(proCount / 6);
     let countCurrent = currentValue + 1
     let hidLimit
     // const product = await productData.find({ list: 0 }).skip(currentPage * 6).limit(6)
+    console.log(currentValue)
+    console.log(countLimit)
 
     if((currentValue+1)==countLimit){
         hidLimit="success"
     }
+    console.log(hidLimit)
 
     
      let aggregateDestructure=[]

@@ -1509,6 +1509,9 @@ const walletRemove = async (req, res) => {
 
 const invoice = async (req, res) => {
   //data
+
+  console.log("entered to the invoice -------------------------------------------")
+  console.log( req.query.orderId)
   const orders = await orderData.find({ orderId: req.query.orderId })
   console.log(orders)
   // const procheck=await orderData.find()

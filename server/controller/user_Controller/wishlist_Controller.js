@@ -92,7 +92,8 @@ const deleteWishlist=async(req,res)=>{
     if(req.params.wishId)
         {
             console.log("entered into the wishlist rmoval")
-            const deleteData=await wishlistData.deleteOne({username: req.session.username },{productname:req.params.proId})
+            const deleteData=await wishlistData.deleteOne({username:req.session.username,productname:req.params.wishId})
+            // const deleteData= await cartData.deleteOne({username: req.session.username,productname: req.params.proId });
 
             //i have changed gere i added to find the product withe username in the session to delete the cart of the particular user
             // const deleteDt=await cartData.findOne({productname:req.params.proId})
@@ -105,9 +106,6 @@ const deleteWishlist=async(req,res)=>{
     console.log("problem with the deleteWishlist"+e)
     res.redirect("/error")
  }
-
-
-
 
 }
 

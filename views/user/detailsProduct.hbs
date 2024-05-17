@@ -34,6 +34,35 @@
             transform: scale(2);
             /* Zoom the image when it's hovered */
         }
+
+        .add-to-cart {
+            background-color: #828bb2;
+            /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background-color: #191d34;
+            /* Darker Green */
+        }
+        .addcart{
+            margin-left: -150px;
+            margin-top: 50px;
+        }
+        .addwishlist{
+            margin-left: 300px;
+            margin-top: -61px;
+        }
     </style>
 
 </head>
@@ -64,7 +93,7 @@
 
 
         <div class="product_image_area  ">
-            <div class="container">
+            <div class="container" style="margin-top: -150px;">
 
 
 
@@ -104,15 +133,15 @@
                     <div class="col-lg-12 text-center d-flex justify-content-center">
                         <div class="single_product_text ">
                             <h3> {{productD.productname}}</h3>
-                            <p>
+                            <h3>
 
                                 {{productD.productname}}
-                            </p>
-
-                            <p>
-
+                            </h3>
+                            <div style="margin-top: -20px;">
+                            <p><h5>Description</h5>
                                 {{productD.description}}
                             </p>
+                            </div>
 
                             {{#ifEquals productD.offerprice productD.price}}
                             <span style="font-size: 28px;" class="price">Rs.{{productD.price}}</span>
@@ -122,7 +151,7 @@
                                     id="orginal-price">{{productD.price}}</del></span>
                             {{/ifEquals}}
 
-                            <div class="card_area" style="margin-left: -40px;">
+                            <div class="card_area" style="margin-left: -40px;margin-top: 4px;">
                                 <div class="product_count_area">
                                     <p>Quantity</p>
                                     <div class="product_count d-inline-block">
@@ -135,9 +164,16 @@
                                     </div>
                                     {{!-- <p>Rs.{{productD.price}}</p> --}}
                                 </div>
-                                <div class="add_to_cart">
-                                    <a href="/addtocart/{{productD.productname}}" class="btn_3">add to cart</a>
+                                <div class="addcart">
+                                    <button class="add-to-cart" type="button"
+                                        onclick="addProductToCart('{{productD.productname}}')">Add to Cart</button>
                                 </div>
+
+                                 <div class="addwishlist">
+                                    <button class="add-to-cart" type="button"
+                                        onclick="addProductToWishList('{{productD.productname}}')">Add to WishList</button>
+                                </div>
+                             
                             </div>
                         </div>
                     </div>
@@ -187,6 +223,139 @@
     <!-- Search model end -->
 
     <!-- JS here -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+
+     <script>
+        // Use fetch to update the quantity in the database
+        function addProductToWishList(productId) {
+
+            console.log(productId)
+            fetch('/addwishlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    productId: productId,
+                }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+
+                    if(data.noEntry){
+                         window.location.href = '/userLogin';
+                    }
+
+                    if (data.valid) {
+
+                        function callFun() {
+                            Swal.fire({
+                                icon: "success",
+                                text: "Product added to WishList",
+
+                            });
+                        }
+                        callFun()
+
+
+                    } if(data.presentList) {
+                        function callFun() {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Wishlist",
+                                text: "Product Already Exist",
+
+                            });
+                        }
+                        callFun()
+
+
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating quantity:', error);
+                });
+
+        }
+
+    </script>
+
+
+
+
+    <script>
+        // Use fetch to update the quantity in the database
+        function addProductToCart(productId) {
+
+            console.log(productId)
+            fetch('/addtocart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    productId: productId,
+                }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+
+                    if (data.noEntryCart) {
+                        window.location.href = '/userLogin';
+                    }
+
+                    if (data.validCart) {
+
+                        function callFun() {
+                            Swal.fire({
+                                icon: "success",
+                                text: "Product added to cart",
+
+                            });
+                        }
+                        callFun()
+
+
+                    } if (data.CartPresent) {
+                        function callFun() {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Cart",
+                                text: "Product Already Exist",
+
+                            });
+                        }
+                        callFun()
+
+
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating quantity:', error);
+                });
+
+        }
+
+    </script>
+
+
+
+
+
 
     <script>
         const image = document.getElementById('image');
