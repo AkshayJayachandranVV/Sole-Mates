@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce
+spec:
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: solemates
+  template:
+    metadata: 
+      labels:
+        app: solemates
+    spec: 
+      containers:
+        - name: solemates
+          image: akshayjayachandranvv/solemates:latest
